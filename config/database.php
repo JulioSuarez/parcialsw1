@@ -63,6 +63,18 @@ return [
             ]) : [],
         ],
 
+        // firebase google by Julico
+
+        'firebase' => [
+            'driver' => 'firebase',
+            'project_id' => env('FIREBASE_PROJECT_ID'),
+            'key_file' => env('FIREBASE_KEY_FILE', null),
+            'database_uri' => env('FIREBASE_DATABASE_URL'),
+            'database_secret' => env('FIREBASE_DATABASE_SECRET', null),
+        ],
+
+
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
