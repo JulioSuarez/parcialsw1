@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
     }
     public function cargarUsuario(){
         $user = new User();
-        $user->nombre = 'Julio';
-        $user->correo = 'julio@correo.com';
+        $user->name = 'Julio';
+        $user->email = 'julio@correo.com';
         $user->fecha_nacimiento = '1991-02-16';
         $user->genero = 'M';
         $user->password = bcrypt('password');
