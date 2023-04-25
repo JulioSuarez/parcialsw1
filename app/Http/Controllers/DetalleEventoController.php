@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\venta_detalle;
+use App\Models\detalle_evento;
 use Illuminate\Http\Request;
 
-class VentaDetalleController extends Controller
+class DetalleEventoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class VentaDetalleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(venta_detalle $venta_detalle)
+    public function show(detalle_evento $detalle_evento)
     {
         //
     }
@@ -42,7 +42,7 @@ class VentaDetalleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(venta_detalle $venta_detalle)
+    public function edit(detalle_evento $detalle_evento)
     {
         //
     }
@@ -50,7 +50,7 @@ class VentaDetalleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, venta_detalle $venta_detalle)
+    public function update(Request $request, detalle_evento $detalle_evento)
     {
         //
     }
@@ -58,7 +58,7 @@ class VentaDetalleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(venta_detalle $venta_detalle)
+    public function destroy(detalle_evento $detalle_evento)
     {
         //
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\fotografo;
+use App\Models\planes;
 use Illuminate\Http\Request;
 
-class FotografoController extends Controller
+class PlanesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class FotografoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(fotografo $fotografo)
+    public function show(planes $planes)
     {
         //
     }
@@ -42,7 +42,7 @@ class FotografoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(fotografo $fotografo)
+    public function edit(planes $planes)
     {
         //
     }
@@ -50,7 +50,7 @@ class FotografoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, fotografo $fotografo)
+    public function update(Request $request, planes $planes)
     {
         //
     }
@@ -58,7 +58,7 @@ class FotografoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(fotografo $fotografo)
+    public function destroy(planes $planes)
     {
         //
     }
