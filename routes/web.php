@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EventoController;
+use App\Http\Controllers\FotoestudioController;
+use App\Http\Controllers\OrganizadorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuscripcionController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +32,32 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    ////////////////////////////////////////////////////////////////////////////////clientes
+    Route::resource('cliente',ClienteController::class)//->except(['show'])
+    ->Parameters(['cliente' => 'c'])->names('Cliente');
+
+    ////////////////////////////////////////////////////////////////////////////////suscripcion
+    Route::resource('suscripcion',SuscripcionController::class)
+    ->Parameters(['suscripcion' => 's'])->names('suscripcion');
+
+    ////////////////////////////////////////////////////////////////////////////////eventos
+    Route::resource('evento',EventoController::class)
+    ->Parameters(['evento' => 'e'])->names('evento');
+
+    ////////////////////////////////////////////////////////////////////////////////organizadores
+    Route::resource('organizadores',OrganizadorController::class)
+    ->Parameters(['organizadores' => 'o'])->names('organizadores');
+
+    ////////////////////////////////////////////////////////////////////////////////fotoestudio
+    Route::resource('fotoestudio',FotoestudioController::class)
+    ->Parameters(['fotoestudio' => 'f'])->names('fotoestudio');
+
+    ////////////////////////////////////////////////////////////////////////////////ventas
+    Route::resource('ventas',VentaController::class)
+    ->Parameters(['ventas' => 'v'])->names('ventas');
+
+    ////////////////////////////////////////////////////////////////////////////////
 });
 
 require __DIR__.'/auth.php';
