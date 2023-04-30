@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('orden_pagos', function (Blueprint $table) {
             $table->id();
+            //monto
+            $table->string('monto');
+            //fecha limite
+            $table->string('fecha_limite');
+            //descripcion
+            $table->string('descripcion');
+            //estado
+            $table->string('estado');
+            //metodo qr
+            $table->string('metodo_qr');
+            
             $table->timestamps();
         });
     }

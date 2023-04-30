@@ -21,6 +21,11 @@
                         {{ __('Template') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('Cliente.index')" :active="request()->routeIs('Cliente.index')">
+                        {{ __('Cliente') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

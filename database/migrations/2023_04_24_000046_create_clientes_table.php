@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
+            $table->string('foto_perfil')->nullable();
+            $table->string('foto_portada')->nullable();
+            $table->string('telefono')->nullable();
+
+            $table->unsignedBigInteger('id_plan');
+            $table->foreign('id_plan')->references('id')->on('planes');
+
+            $table->unsignedBigInteger('id_usuario');
+            $table->foreign('id_usuario')->references('id')->on('users');
+
             $table->timestamps();
         });
     }

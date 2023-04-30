@@ -1386,6 +1386,9 @@
                                                             <img class="w-full rounded-circle" alt="Image placeholder"
                                                                 src="../assets/img/team-3.jpg" />
                                                         </a>
+                                                        @can('organizador')
+
+                                                        @endcan
                                                         <div data-target="tooltip"
                                                             class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
                                                             role="tooltip">

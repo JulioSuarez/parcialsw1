@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('invitacion_eventos', function (Blueprint $table) {
             $table->id();
+            $table->string('entrada_qr');
+
+            $table->unsignedBigInteger('id_cliente');
+            $table->foreign('id_cliente')->references('id')->on('clientes');
+            $table->unsignedBigInteger('id_evento');
+            $table->foreign('id_evento')->references('id')->on('eventos');
             $table->timestamps();
         });
     }

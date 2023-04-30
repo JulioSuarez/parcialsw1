@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
+            //monto
+            $table->string('monto');
+            //fecha
+            $table->date('fecha');
+            //comprobante
+            $table->string('comprobante');
+            //id orden de pago
+            $table->unsignedBigInteger('id_orden_pago');
+            $table->foreign('id_orden_pago')->references('id')->on('orden_pagos');
+            
             $table->timestamps();
         });
     }

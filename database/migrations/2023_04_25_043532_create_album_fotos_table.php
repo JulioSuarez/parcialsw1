@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('album_fotos', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre_album');
+            $table->string('descripcion');
+            $table->string('foto_path');
+            $table->unsignedBigInteger('id_cliente');
+            $table->foreign('id_cliente')->references('id')->on('clientes');
             $table->timestamps();
         });
     }
