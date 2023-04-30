@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
-<<<<<<< Updated upstream
             //evento_name
             $table->string('evento_name');
             //descripcion
@@ -33,17 +32,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_fotoestudio');
             $table->foreign('id_fotoestudio')->references('id')->on('fotoestudios');
 
-=======
-            $table->string('evento_name');
-            $table->string('descripcion')->nullable();
-            $table->date('fecha');
-            $table->time('hora');
-            $table->string('ubicacion');
-            $table->unsignedBigInteger('id_organizacion');
-            $table->foreign('id_organizacion')->references('id')->on('organizadors');
-            $table->unsignedBigInteger('id_fotoestudio');
-            $table->foreign('id_fotoestudio')->references('id')->on('fotoestudios');
->>>>>>> Stashed changes
             $table->timestamps();
         });
     }

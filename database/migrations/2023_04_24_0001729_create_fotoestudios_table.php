@@ -15,10 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('razon_social');
             $table->string('nit')->nullable();
-<<<<<<<< Updated upstream:database/migrations/2023_04_24_0001729_create_fotoestudios_table.php
             $table->integer('puntuacion')->nullable();
-========
->>>>>>>> Stashed changes:database/migrations/2023_04_24_000729_create_fotoestudios_table.php
             $table->timestamps();
         });
     }

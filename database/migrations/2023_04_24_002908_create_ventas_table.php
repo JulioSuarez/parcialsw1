@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
-<<<<<<< Updated upstream
             $table->integer('precio_total');
 
             //id_cliente
@@ -23,13 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_fotoestudio');
             $table->foreign('id_fotoestudio')->references('id')->on('fotoestudios');
 
-=======
-            $table->decimal('precio_total');
-            $table->unsignedBigInteger('id_cliente');
-            $table->foreign('id_cliente')->references('id')->on('clientes');
-            $table->unsignedBigInteger('id_fotoestudio');
-            $table->foreign('id_fotoestudio')->references('id')->on('fotoestudios');
->>>>>>> Stashed changes
             $table->timestamps();
         });
     }

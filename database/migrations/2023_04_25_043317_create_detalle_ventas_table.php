@@ -13,23 +13,14 @@ return new class extends Migration
     {
         Schema::create('detalle_ventas', function (Blueprint $table) {
             $table->id();
-<<<<<<< Updated upstream
             $table->integer('cantidad');
             $table->integer('precio_unitario');
             $table->string('formato');
 
-=======
->>>>>>> Stashed changes
             $table->unsignedBigInteger('id_venta');
             $table->foreign('id_venta')->references('id')->on('ventas');
             $table->unsignedBigInteger('id_foto');
             $table->foreign('id_foto')->references('id')->on('fotos');
-<<<<<<< Updated upstream
-=======
-            $table->integer('cantidad');
-            $table->decimal('precio');
-            $table->string('formato');
->>>>>>> Stashed changes
             $table->timestamps();
         });
     }
