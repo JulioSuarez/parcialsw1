@@ -438,7 +438,7 @@
                 </div>
                 <!-- ./Statistics Cards -->
                 <center>123123123123123123123</center>
-
+                @yield('content')
 
 
 

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\fotoestudio;
 use Illuminate\Http\Request;
-use Aws\Rekognition\RekognitionClient;
 use Aws\Exception\AwsException;
+use Aws\Rekognition\RekognitionClient;
 
 class FotoestudioController extends Controller
 {

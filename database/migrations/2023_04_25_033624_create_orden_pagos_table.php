@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orden_pagos', function (Blueprint $table) {
             $table->id();
             //monto
+<<<<<<< Updated upstream:database/migrations/2023_04_25_043624_create_orden_pagos_table.php
             $table->string('monto');
             //fecha limite
             $table->string('fecha_limite');
@@ -24,6 +25,17 @@ return new class extends Migration
             //metodo qr
             $table->string('metodo_qr');
             
+=======
+            $table->decimal('monto');
+            //descripcion
+            $table->string('descripcion');
+            //estado
+            $table->boolean('estado');
+            //fecha limite
+            $table->date('fecha_limite');
+            //forma de pago
+            $table->string('metodo_qr');
+>>>>>>> Stashed changes:database/migrations/2023_04_25_033624_create_orden_pagos_table.php
             $table->timestamps();
         });
     }

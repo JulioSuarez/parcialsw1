@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('fotos', function (Blueprint $table) {
             $table->id();
+<<<<<<< Updated upstream
 
             $table->string('foto_path');
 
@@ -25,6 +26,13 @@ return new class extends Migration
             $table->unsignedBigInteger('id_album_fotos');
             $table->foreign('id_album_fotos')->references('id')->on('album_fotos');
 
+=======
+            $table->string('path');
+            $table->unsignedBigInteger('id_fotoestudio');
+            $table->foreign('id_fotoestudio')->references('id')->on('fotoestudios');
+            $table->unsignedBigInteger('id_evento');
+            $table->foreign('id_evento')->references('id')->on('eventos');
+>>>>>>> Stashed changes
             $table->timestamps();
         });
     }

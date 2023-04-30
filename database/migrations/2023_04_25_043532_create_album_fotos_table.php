@@ -15,9 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('nombre_album');
             $table->string('descripcion');
+<<<<<<< Updated upstream
             $table->string('foto_path');
             $table->unsignedBigInteger('id_cliente');
             $table->foreign('id_cliente')->references('id')->on('clientes');
+=======
+            //foto path
+            $table->string('foto_path');
+            // $table->unsignedBigInteger('id_foto');
+            // $table->foreign('id_foto')->references('id')->on('fotos');
+>>>>>>> Stashed changes
             $table->timestamps();
         });
     }
