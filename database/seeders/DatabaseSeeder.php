@@ -30,5 +30,13 @@ class DatabaseSeeder extends Seeder
         $user->password = bcrypt('password');
         $user->profile_photo_path = '';
         $user->save();
+        $user = new User();
+        $user->name = 'Diana';
+        $user->email = 'diana@correo.com';
+        $user->fecha_nacimiento = '1999-11-02';
+        $user->genero = 'F';
+        $user->password = bcrypt('password');
+        $user->profile_photo_path = '';
+        $user->save();
     }
 }
