@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
             //monto
-            $table->string('monto');
+            $table->decimal('monto');
             //fecha
             $table->date('fecha');
             //comprobante
@@ -22,7 +22,7 @@ return new class extends Migration
             //id orden de pago
             $table->unsignedBigInteger('id_orden_pago');
             $table->foreign('id_orden_pago')->references('id')->on('orden_pagos');
-            
+
             $table->timestamps();
         });
     }

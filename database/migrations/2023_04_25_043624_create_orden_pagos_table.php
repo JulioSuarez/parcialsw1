@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orden_pagos', function (Blueprint $table) {
             $table->id();
             //monto
-            $table->string('monto');
+            $table->decimal('monto');
             //fecha limite
             $table->string('fecha_limite');
             //descripcion
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('estado');
             //metodo qr
             $table->string('metodo_qr');
-            
+
             $table->timestamps();
         });
     }

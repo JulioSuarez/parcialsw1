@@ -63,3 +63,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/template', function () {return view('template.template');})->name('template');
+Route::get('/template2', function () {return view('template.profile');})->name('template2');
+Route::get('/template3', function () {return view('template.dashboard');})->name('template3');

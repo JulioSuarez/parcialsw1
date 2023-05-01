@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('planes', function (Blueprint $table) {
             $table->id();
             $table->string('tipo_plan');
-            $table->string('precio');
+            $table->decimal('precio');
             $table->timestamps();
         });
     }

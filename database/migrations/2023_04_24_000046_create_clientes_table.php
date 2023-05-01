@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('foto_portada')->nullable();
             $table->string('telefono')->nullable();
 
-            $table->unsignedBigInteger('id_plan');
+            $table->unsignedBigInteger('id_plan')->nullable();
             $table->foreign('id_plan')->references('id')->on('planes');
 
             $table->unsignedBigInteger('id_usuario');
