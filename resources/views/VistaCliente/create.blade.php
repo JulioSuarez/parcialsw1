@@ -1,7 +1,91 @@
 @extends('template.profile')
 
 @section('jcst')
-    {{-- formulario para crear cliente --}}
+    {{-- titulo centrado --}}
+    <div class="my-6 flex justify-center">
+        <h1 class="text-3xl text-gray-900 dark:text-gray-100">Lista de Clientes</h1>
+    </div>
+
+
+    {{-- tabla de planes --}}
+
+    <div class="flex justify-center">
+        <div class="w-fit">
+            <div class="bg-white shadow-md rounded my-6">
+                <table class="text-left w-full border-collapse">
+                    <thead class="bg-blue-500 text-white">
+                        <tr
+                        class="text-xs font-semibold tracking-wide text-center uppercase border-b dark:border-gray-700 text-gray-300 h-12 bg-gray-800">
+                        <th class="px-4 py-3">ID</th>
+                        <th class="px-4 py-3">Nombre</th>
+                        <th class="px-4 py-3">Correo</th>
+                        <th class="px-4 py-3">Fecha Nacimiento</th>
+                        <th class="px-4 py-3">Genero</th>
+                        <th class="px-4 py-3">Telefono</th>
+                        <th class="px-4 py-3">Foto Perfil</th>
+                        <th class="px-4 py-3">Foto Portada</th>
+                        <th class="px-4 py-3">Plan</th>
+                        <th class="px-4 py-3">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {{-- @dd($clientes) --}}
+                        @forelse ($usuario as $c)
+                            <tr class="text-center bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+                                <td class="py-4 px-6 text-sm border-b border-grey-light">{{ $c->id }}</td>
+                                <td class="py-4 px-6 text-sm border-b border-grey-light">{{ $c->name }}</td>
+                                <td class="py-4 px-6 text-sm border-b border-grey-light">{{ $c->email }}</td>
+                                <td class="py-4 px-6 text-sm border-b border-grey-light">{{ $c->fecha_nacimiento }}</td>
+                                <td class="py-4 px-6 text-sm border-b border-grey-light uppercase">{{ $c->genero }}</td>
+                                <td class="py-4 px-6 text-sm border-b border-grey-light">{{ $c->telefono }}</td>
+                                <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
+                                    <div class="flex px-2 py-1">
+                                        <img src="{{ asset('img/fotosClientes/'.$c->foto_perfil) }}"
+                                            class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
+                                            alt="xd" />
+                                    </div>
+                                </td>
+                                <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
+                                    <div class="flex px-2 py-1">
+                                        <img src="{{ asset('img/fotosClientes/'.$c->foto_portada) }}"
+                                            class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
+                                            alt="xd" />
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6 text-sm border-b border-grey-light">{{ $c->id_plan }}</td>
+                                {{-- Acciones --}}
+                                <td class="py-4 px-6 border-b border-grey-light">
+                                    <div class="flex justify-center">
+                                        <a href="{{ route('Cliente.edit', $c->id) }}"
+                                            class="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline inline-block">
+                                            Editar
+                                        </a>
+                                        <form action="{{ route('Cliente.destroy', $c->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline inline-block"
+                                                type="submit">
+                                                Eliminar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr class="hover:bg-grey-lighter">
+                                <td class="py-4 px-6 border-b border-grey-light">Tipo de plan</td>
+                                <td class="py-4 px-6 border-b border-grey-light">precio</td>
+                                <td class="py-4 px-6 border-b border-grey-light">
+                                    acciones
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     {{-- titulo centrado --}}
     <div class="my-6 flex justify-center">

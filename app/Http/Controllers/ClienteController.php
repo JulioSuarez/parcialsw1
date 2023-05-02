@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class ClienteController extends Controller
 {
@@ -14,8 +16,10 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return view('VistaCliente.index');
-        // return view('template.profile');
+        $authController = new AuthenticatedSessionController();
+        $usuario = $authController->dashboard();
+
+        return view('VistaCliente.index',compact('usuario'));
     }
 
     /**
@@ -23,7 +27,9 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('VistaCliente.create');
+        $authController = new AuthenticatedSessionController();
+        $usuario = $authController->dashboard();
+        return view('VistaCliente.create', compact('usuario'));
     }
 
     /**
@@ -58,17 +64,18 @@ class ClienteController extends Controller
         $u->fecha_nacimiento = $request->fecha_nacimiento;
         $u->genero = $request->genero;
         $u->password = Hash::make($request->password);
-
         $u->save();
+        $id_user = User::where('name', $u->name)->first();
+        // dd($id_user->id);
         $c = new cliente();
         $c->foto_perfil = $foto_perfil;
         $c->foto_portada = $foto_portada;
         $c->telefono = $request->telefono;
         $c->id_plan = 1;
-        $c->user_id = $u->id;
+        $c->user_id = $id_user->id;
 
-        // dd($c);
         $c->save();
+        // dd($c);
 
         return redirect()->route('Cliente.index');
     }
@@ -103,5 +110,15 @@ class ClienteController extends Controller
     public function destroy(cliente $cliente)
     {
         //
+    }
+
+    public function apiJS()
+    {
+        $id = auth()->user()->id;
+        $usuario = User::join('clientes', 'clientes.user_id', '=', 'users.id')
+            ->where('user_id', '=', $id)->first();
+        return response()->json([
+            'usuario' => $usuario
+        ]);
     }
 }

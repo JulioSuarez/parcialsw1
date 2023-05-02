@@ -10,11 +10,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+use App\Models\cliente;
+use App\Models\User;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
+    public function dashboard()
+    {
+        $id = auth()->user()->id;
+        $usuario = User::join('clientes','clientes.user_id','=','users.id')
+        ->where('user_id','=',$id)->first();
+        // dd($usuario);
+        return $usuario;
+    }
+
+
     public function create(): View
     {
         return view('auth.login');

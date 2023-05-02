@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_plan')->nullable();
             $table->foreign('id_plan')->references('id')->on('planes');
 
-            $table->unsignedBigInteger('id_usuario');
-            $table->foreign('id_usuario')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps();
         });
