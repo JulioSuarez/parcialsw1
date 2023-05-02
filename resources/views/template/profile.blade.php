@@ -41,7 +41,7 @@
         <div class="h-19.5">
             <i class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
                 sidenav-close></i>
-            <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="{{ route('template2') }}">
+            <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="{{ route('dashboard') }}">
                 {{-- target="_blank" --}}
                 <img src="../assets/img/logo-ct.png"
                     class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8"
@@ -139,7 +139,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Billing</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Organizadores</span>
                     </a>
                 </li>
 
@@ -171,8 +171,8 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Virtual
-                            Reality</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
+                            Foto Estudio</span>
                     </a>
                 </li>
 
@@ -204,7 +204,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">RTL</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Eventos</span>
                     </a>
                 </li>
 
@@ -236,7 +236,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">RTL</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Roles y Permisos</span>
                     </a>
                 </li>
 
@@ -272,7 +272,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Profile</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Perfil</span>
                     </a>
                 </li>
 
@@ -301,13 +301,13 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Sign In</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Billing</span>
                     </a>
                 </li>
 
                 <li class="mt-0.5 w-full">
                     <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="../pages/sign-up.html">
+                        href="{{ route('Cliente.create') }}">
                         <div
                             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1"
@@ -336,9 +336,11 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Sign Up</span>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Crear Clientes</span>
                     </a>
                 </li>
+
+
             </ul>
         </div>
     </aside>
@@ -531,19 +533,19 @@
                                     <a class="block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
                                         nav-link href="javascript:;" role="tab" aria-selected="true">
 
-                                        <span class="ml-1">App</span>
+                                        <span class="ml-1">News</span>
                                     </a>
                                 </li>
                                 <li class="z-30 flex-auto text-center">
                                     <a class="z-30 block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
                                         nav-link href="javascript:;" role="tab" aria-selected="false">
-                                        <span class="ml-1">Messages</span>
+                                        <span class="ml-1">Album</span>
                                     </a>
                                 </li>
                                 <li class="z-30 flex-auto text-center">
                                     <a class="z-30 block w-full px-0 py-1 mb-0 transition-colors border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
                                         nav-link href="javascript:;" role="tab" aria-selected="false">
-                                        <span class="ml-1">Settings</span>
+                                        <span class="ml-1">Invitaciones</span>
                                     </a>
                                 </li>
                             </ul>

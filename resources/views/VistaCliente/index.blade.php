@@ -3,6 +3,7 @@
 @section('jcst')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
     <div class="my-2 bg-white dark:bg-gray-900 rounded-xl">
         <div class="container px-6 py-8 mx-auto">
             <p class="text-xl text-center text-gray-500 dark:text-gray-300">

@@ -1,9 +1,10 @@
-@extends('dashboard')
-@section('content')
+@extends('template.profile')
+
+@section('jcst')
     {{-- formulario para crear cliente --}}
 
     {{-- titulo centrado --}}
-    <div class="flex justify-center">
+    <div class="my-6 flex justify-center">
         <h1 class="text-3xl text-gray-900 dark:text-gray-100">Crear Cliente</h1>
     </div>
 
