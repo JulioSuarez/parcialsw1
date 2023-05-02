@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cliente;
 use App\Models\User;
+use App\Models\cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ClienteController extends Controller
 {
@@ -31,21 +32,42 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
 
-        dd($request);
+
+        if ($request->hasFile('foto_perfil')) {
+            $file = $request->file('foto_perfil');
+            $destino = 'img/fotosClientes/';
+            $foto_perfil = time() . '-' . $file->getClientOriginalName();
+            $subirImagen = $request->file('foto_perfil')->move($destino, $foto_perfil);
+        } else {
+            $foto = "default.png";
+        }
+        if ($request->hasFile('foto_portada')) {
+            $file = $request->file('foto_portada');
+            $destino = 'img/fotosClientes/';
+            $foto_portada = time() . '-' . $file->getClientOriginalName();
+            $subirImagen = $request->file('foto_portada')->move($destino, $foto_portada);
+        } else {
+            $foto = "default.png";
+        }
+
+
+        // dd($request);
         $u = new User();
         $u->name = $request->name;
         $u->email = $request->email;
         $u->fecha_nacimiento = $request->fecha_nacimiento;
         $u->genero = $request->genero;
-        $u->password = $request->password;
+        $u->password = Hash::make($request->password);
+
         $u->save();
         $c = new cliente();
-        $c->foto_perfil = $request->file('foto_perfil');
-        $c->foto_portada = $request->file('foto_portada');
-
-
+        $c->foto_perfil = $foto_perfil;
+        $c->foto_portada = $foto_portada;
         $c->telefono = $request->telefono;
+        $c->id_plan = 1;
         $c->user_id = $u->id;
+
+        // dd($c);
         $c->save();
 
         return redirect()->route('Cliente.index');

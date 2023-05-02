@@ -4,6 +4,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\FotoestudioController;
 use App\Http\Controllers\OrganizadorController;
+use App\Http\Controllers\PlanesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuscripcionController;
 use App\Http\Controllers\VentaController;
@@ -57,6 +58,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('ventas',VentaController::class)
     ->Parameters(['ventas' => 'v'])->names('ventas');
 
+    ////////////////////////////////////////////////////////////////////////////////
+    Route::resource('/planes',PlanesController::class )
+    ->Parameters(['planes' => 'p'])->names('planes');
     ////////////////////////////////////////////////////////////////////////////////
 });
 

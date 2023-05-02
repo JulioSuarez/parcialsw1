@@ -12,7 +12,9 @@ class PlanesController extends Controller
      */
     public function index()
     {
-        //
+        $planes = planes::all();
+        return view('VistaPlanes.index', compact('planes'));
+        // return view('VistaPlanes.index');
     }
 
     /**
@@ -20,7 +22,7 @@ class PlanesController extends Controller
      */
     public function create()
     {
-        //
+        return view('VistaPlanes.create');
     }
 
     /**
@@ -28,7 +30,15 @@ class PlanesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'tipo_plan' => 'required',
+        //     'precio' => 'required',
+        // ]);
+        $p = new planes();
+        $p->tipo_plan = $request->tipo_plan;
+        $p->precio = $request->precio;
+        $p->save();
+        return redirect()->route('planes.index');
     }
 
     /**
