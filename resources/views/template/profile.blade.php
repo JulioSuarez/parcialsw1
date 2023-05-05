@@ -347,10 +347,10 @@
     </aside>
 
     <div class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen bg-gray-50 transition-all duration-200">
-        {{-- <nav class="absolute z-20 flex flex-wrap items-center justify-between w-full px-6 py-2 text-white transition-all shadow-none duration-250 ease-soft-in lg:flex-nowrap lg:justify-start"
+        <nav class="absolute z-20 flex flex-wrap items-center justify-between w-full px-6 py-2 text-white transition-all shadow-none duration-250 ease-soft-in lg:flex-nowrap lg:justify-start"
             navbar-profile navbar-scroll="true">
             <div class="flex items-center justify-between w-full px-6 py-1 mx-auto flex-wrap-inherit">
-                <nav>
+                {{-- <nav>
                     <!-- breadcrumb -->
                     <ol class="flex flex-wrap pt-1 pl-2 pr-4 mr-12 bg-transparent rounded-lg sm:mr-16">
                         <li class="leading-normal text-sm">
@@ -360,11 +360,11 @@
                             aria-current="page">Profile</li>
                     </ol>
                     <h6 class="mb-2 ml-2 font-bold text-white capitalize">Profile</h6>
-                </nav>
+                </nav> --}}
 
                 <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
                     <div class="flex items-center md:ml-auto md:pr-4">
-                        <div class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
+                        {{-- <div class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
                             <span
                                 class="text-sm ease-soft leading-5.6 absolute z-50 -ml-px flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all">
                                 <i class="fas fa-search" aria-hidden="true"></i>
@@ -372,20 +372,20 @@
                             <input type="text"
                                 class="pl-8.75 text-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow"
                                 placeholder="Type here..." />
-                        </div>
+                        </div> --}}
                     </div>
                     <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
                         <!-- online builder btn  -->
                         <!-- <li class="flex items-center">
                 <a class="inline-block px-8 py-2 mb-0 mr-4 font-bold text-center text-white uppercase align-middle transition-all border border-solid rounded-lg shadow-none cursor-pointer leading-pro border-white/75 bg-white/10 ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs tracking-tight-soft hover:border-white hover:bg-transparent hover:text-white hover:opacity-75 hover:shadow-none active:bg-white active:text-black active:hover:bg-transparent active:hover:text-white" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
               </li> -->
-                        <li class="flex items-center">
+                        {{-- <li class="flex items-center">
                             <a href="../pages/sign-in.html"
                                 class="block px-0 py-2 font-semibold text-white transition-all ease-soft-in-out text-sm">
                                 <i class="fa fa-user sm:mr-1" aria-hidden="true"></i>
                                 <span class="hidden sm:inline">Sign In</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="flex items-center pl-4 xl:hidden">
                             <a href="javascript:;" class="block p-0 text-white transition-all ease-soft-in-out text-sm"
                                 sidenav-trigger>
@@ -501,71 +501,10 @@
                     </ul>
                 </div>
             </div>
-        </nav> --}}
+        </nav>
         {{-- <img src="{{ asset('img/fotosClientes/'.$c->foto_perfil) }}" alt=""
 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"> --}}
-        <div class="w-full px-6 mx-auto">
-            <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl">
-                <img src="{{ asset('img/fotosClientes/' . $usuario->foto_portada) }}" alt=""
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;">
-            </div>
 
-            <div
-                class="relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-16 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="flex-none w-auto max-w-full px-3">
-                        <div
-                            class="text-base ease-soft-in-out h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200">
-                            <img src="{{ asset('img/fotosClientes/' . $usuario->foto_perfil) }}" alt="profile_image"
-                                class="w-full shadow-soft-sm rounded-xl" />
-                        </div>
-                    </div>
-                    <div class="flex-none w-auto max-w-full px-3 my-auto">
-                        <div class="h-full">
-                            <h5 class="mb-1">@auth
-                                    {{ auth()->user()->name }}
-                                @else
-                                    {{ 'Nombre de Usuario' }}
-                                @endauth
-                            </h5>
-                            <p class="mb-0 font-semibold leading-normal text-sm">@auth
-                                    {{ auth()->user()->email }}
-                                @else
-                                    {{ 'Correo de Usuario' }}
-                                @endauth
-                            </p>
-                        </div>
-                    </div>
-                    <div
-                        class="w-full max-w-full px-3 mx-auto mt-4 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none lg:w-4/12">
-                        <div class="relative right-0">
-                            <ul class="relative flex flex-wrap p-1 list-none bg-transparent rounded-xl" nav-pills
-                                role="tablist">
-                                <li class="z-30 flex-auto text-center">
-                                    <a class="block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
-                                        nav-link href="javascript:;" role="tab" aria-selected="true">
-
-                                        <span class="ml-1">News</span>
-                                    </a>
-                                </li>
-                                <li class="z-30 flex-auto text-center">
-                                    <a class="z-30 block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
-                                        nav-link href="javascript:;" role="tab" aria-selected="false">
-                                        <span class="ml-1">Album</span>
-                                    </a>
-                                </li>
-                                <li class="z-30 flex-auto text-center">
-                                    <a class="z-30 block w-full px-0 py-1 mb-0 transition-colors border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
-                                        nav-link href="javascript:;" role="tab" aria-selected="false">
-                                        <span class="ml-1">Invitaciones</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         @yield('jcst')
         {{-- <aside
             class="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
@@ -578,14 +517,20 @@ style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fi
 
     </div>
 
+
+
+    
 </body>
+<!-- plugin for charts  -->
+<script src="../assets/js/plugins/chartjs.min.js" async></script>
 <!-- plugin for scrollbar  -->
 <script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
 <!-- github button -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- main script file  -->
 <script src="../assets/js/soft-ui-dashboard-tailwind.js?v=1.0.4" async></script>
-
+<!-- controlador de la barra de navegacion -->
+{{-- <script src="{{ asset('js/controlador.js') }}" async></script> --}}
 <script>
     function toggleSelection(event) {
         // Obtener el div que se hizo clic

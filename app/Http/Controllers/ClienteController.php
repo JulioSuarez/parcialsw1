@@ -29,7 +29,10 @@ class ClienteController extends Controller
     {
         $authController = new AuthenticatedSessionController();
         $usuario = $authController->dashboard();
-        return view('VistaCliente.create', compact('usuario'));
+
+        $clientes = cliente::join('users','users.id','=','clientes.user_id')->get();
+
+        return view('VistaCliente.create', compact('usuario','clientes'));
     }
 
     /**
@@ -64,13 +67,15 @@ class ClienteController extends Controller
         $u->fecha_nacimiento = $request->fecha_nacimiento;
         $u->genero = $request->genero;
         $u->password = Hash::make($request->password);
+        $u->profile_photo_path = $foto_perfil;
+        $u->portada_photo_path = $foto_portada;
         $u->save();
         $id_user = User::where('name', $u->name)->first();
         // dd($id_user->id);
         $c = new cliente();
         $c->foto_perfil = $foto_perfil;
-        $c->foto_portada = $foto_portada;
-        $c->telefono = $request->telefono;
+        // $c->foto_portada = $foto_portada;
+        // $c->telefono = $request->telefono;
         $c->id_plan = 1;
         $c->user_id = $id_user->id;
 

@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                         {{-- @dd($clientes) --}}
-                        @forelse ($usuario as $c)
+                        @forelse ($clientes as $c)
                             <tr class="text-center bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
                                 <td class="py-4 px-6 text-sm border-b border-grey-light">{{ $c->id }}</td>
                                 <td class="py-4 px-6 text-sm border-b border-grey-light">{{ $c->name }}</td>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->char('genero',1)->nullable();
             $table->string('password');
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('portada_photo_path', 2048)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

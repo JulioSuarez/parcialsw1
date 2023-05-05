@@ -18,22 +18,26 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-    <title>Soft UI Dashboard Tailwind</title>
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
+    <title>Software 1 - JCST</title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <!-- Nucleo Icons -->
-    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-    <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <!-- Nucleo Icons -->
+    {{-- <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Popper -->
     <!-- Main Styling -->
-    <link href="../assets/css/soft-ui-dashboard-tailwind.css?v=1.0.4" rel="stylesheet" />
+    <link href="./assets/css/soft-ui-dashboard-tailwind.css?v=1.0.4" rel="stylesheet" /> --}}
+
+
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700', 'https://kit.fontawesome.com/42d5adcbca.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4'])
 
 </head>
+@yield('content')
 
 <body class="m-0 font-sans antialiased font-normal text-base leading-default bg-gray-50 text-slate-500">
     <!-- sidenav  -->
@@ -42,22 +46,21 @@
         <div class="h-19.5">
             <i class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
                 sidenav-close></i>
-            <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="{{ route('dashboard') }}">
-                {{-- target="_blank" --}}
-                <img src="../assets/img/logo-ct.png"
+            <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="javascript:;" target="_blank">
+                <img src="{{ asset('assets/img/logo-ct.png') }}"
                     class="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8"
                     alt="main_logo" />
-                <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Home</span>
+                <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">E-commerce Foto</span>
             </a>
         </div>
 
         <hr class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
 
-        <div class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
+        <div class="items-center block w-auto max-h-screen overflow-auto h-fit grow basis-full">
             <ul class="flex flex-col pl-0 mb-0">
                 <li class="mt-0.5 w-full">
                     <a class="py-2.7 shadow-soft-xl text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors"
-                        href="../pages/dashboard.html">
+                        href="{{ route('dashboard') }}">
                         <div
                             class="bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1"
@@ -86,7 +89,7 @@
 
                 <li class="mt-0.5 w-full">
                     <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="../pages/tables.html">
+                        href="{{ route('pages/tables') }}">
                         <div
                             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1"
@@ -115,7 +118,36 @@
 
                 <li class="mt-0.5 w-full">
                     <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="../pages/billing.html">
+                        href="{{ route('Cliente.index') }}">
+                        <div
+                            class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
+                            <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title>credit-card</title>
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
+                                        fill-rule="nonzero">
+                                        <g transform="translate(1716.000000, 291.000000)">
+                                            <g transform="translate(453.000000, 454.000000)">
+                                                <path class="fill-slate-800 opacity-60"
+                                                    d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z">
+                                                </path>
+                                                <path class="fill-slate-800"
+                                                    d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z">
+                                                </path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Cliente</span>
+                    </a>
+                </li>
+
+                <li class="mt-0.5 w-full">
+                    <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                        href="{{ route('pages/billing') }}">
                         <div
                             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
@@ -142,9 +174,9 @@
                     </a>
                 </li>
 
-                <li class="mt-0.5 w-full">
+                {{-- <li class="mt-0.5 w-full">
                     <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="../pages/virtual-reality.html">
+                        href="{{ route('pages/virtual-reality') }}">
                         <div
                             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1"
@@ -173,11 +205,11 @@
                         <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Virtual
                             Reality</span>
                     </a>
-                </li>
+                </li> --}}
 
-                <li class="mt-0.5 w-full">
+                {{-- <li class="mt-0.5 w-full">
                     <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="../pages/rtl.html">
+                        href="{{ route('pages/rtl') }}">
                         <div
                             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="12px" viewBox="0 0 40 40" version="1.1"
@@ -205,7 +237,7 @@
                         </div>
                         <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">RTL</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="w-full mt-4">
                     <h6 class="pl-6 ml-2 font-bold leading-tight uppercase text-xs opacity-60">Account pages</h6>
@@ -213,7 +245,7 @@
 
                 <li class="mt-0.5 w-full">
                     <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="../pages/profile.html">
+                        href="{{ route('pages/profile') }}">
                         <div
                             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1"
@@ -245,7 +277,7 @@
 
                 <li class="mt-0.5 w-full">
                     <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="../pages/sign-in.html">
+                        href="{{ route('pages/sign-in') }}">
                         <div
                             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1"
@@ -274,7 +306,7 @@
 
                 <li class="mt-0.5 w-full">
                     <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="../pages/sign-up.html">
+                        href="{{ route('pages/sign-up') }}">
                         <div
                             class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1"
@@ -312,12 +344,12 @@
         {{-- <div class="mx-4">
             <!-- load phantom colors for card after: -->
             <p
-                class="invisible hidden text-gray-800 text-red-500 text-red-600 after:bg-gradient-to-tl after:from-gray-900 after:to-slate-800 after:bg-gradient-to-tl after:from-blue-600 after:to-cyan-400 after:bg-gradient-to-tl after:from-red-500 after:to-yellow-400 after:bg-gradient-to-tl after:from-green-600 after:to-lime-400 after:bg-gradient-to-tl after:from-red-600 after:to-rose-400 after:bg-gradient-to-tl after:from-slate-600 after:to-slate-300 text-lime-500 text-cyan-500 text-slate-400 text-fuchsia-500">
+                class="invisible hidden text-gray-800 text-red-500 text-red-600 after:bg-gradient-to-tl after:from-gray-900 after:to-slate-800 after:from-blue-600 after:to-cyan-400 after:from-red-500 after:to-yellow-400 after:from-green-600 after:to-lime-400 after:from-red-600 after:to-rose-400 after:from-slate-600 after:to-slate-300 text-lime-500 text-cyan-500 text-slate-400 text-fuchsia-500">
             </p>
             <div class="after:opacity-65 after:bg-gradient-to-tl after:from-slate-600 after:to-slate-300 relative flex min-w-0 flex-col items-center break-words rounded-2xl border-0 border-solid border-blue-900 bg-white bg-clip-border shadow-none after:absolute after:top-0 after:bottom-0 after:left-0 after:z-10 after:block after:h-full after:w-full after:rounded-2xl after:content-['']"
                 sidenav-card>
                 <div class="mb-7.5 absolute h-full w-full rounded-2xl bg-cover bg-center"
-                    style="background-image: url('../assets/img/curved-images/white-curved.jpeg')"></div>
+                    style="background-image: url('./assets/img/curved-images/white-curved.jpeg')"></div>
                 <div class="relative z-20 flex-auto w-full p-4 text-left text-white">
                     <div
                         class="flex items-center justify-center w-8 h-8 mb-4 text-center bg-white bg-center rounded-lg icon shadow-soft-2xl">
@@ -347,8 +379,8 @@
         <!-- Navbar -->
         <nav class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start"
             navbar-main navbar-scroll="true">
-            <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
-                <nav>
+            <div class="flex items-center justify-end w-full px-4 py-1 mx-auto flex-wrap-inherit">
+                {{-- <nav>
                     <!-- breadcrumb -->
                     <ol class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16">
                         <li class="leading-normal text-sm">
@@ -358,9 +390,9 @@
                             aria-current="page">Dashboard</li>
                     </ol>
                     <h6 class="mb-0 font-bold capitalize">Dashboard</h6>
-                </nav>
+                </nav> --}}
 
-                <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
+                {{-- <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
                     <div class="flex items-center md:ml-auto md:pr-4">
                         <div class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
                             <span
@@ -371,42 +403,42 @@
                                 class="pl-8.75 text-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow"
                                 placeholder="Type here..." />
                         </div>
-                    </div>
+                    </div> --}}
                     <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
                         <!-- online builder btn  -->
                         <!-- <li class="flex items-center">
-                         <a class="inline-block px-8 py-2 mb-0 mr-4 font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg shadow-none cursor-pointer leading-pro border-fuchsia-500 ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs text-fuchsia-500 hover:border-fuchsia-500 active:bg-fuchsia-500 active:hover:text-fuchsia-500 hover:text-fuchsia-500 tracking-tight-soft hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
-                         </li> -->
-                        {{-- <li class="flex items-center">
-                            <a href="../pages/sign-in.html"
+                <a class="inline-block px-8 py-2 mb-0 mr-4 font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg shadow-none cursor-pointer leading-pro border-fuchsia-500 ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs text-fuchsia-500 hover:border-fuchsia-500 active:bg-fuchsia-500 active:hover:text-fuchsia-500 hover:text-fuchsia-500 tracking-tight-soft hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
+              </li> -->
+                        <li class="flex items-center px-2">
+                            <a href="{{ route('profile.edit') }}"
                                 class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500">
                                 <i class="fa fa-user sm:mr-1"></i>
-                                <span class="hidden sm:inline">Sign In</span>
+                                <span class="hidden sm:inline">Perfil Info</span>
                             </a>
-                        </li> --}}
-                        <li class="flex items-center pl-4 xl:hidden">
+                        </li>
+                        <li class="flex items-center pl-4 xl:hidden px-2">
                             <a href="javascript:;"
                                 class="block p-0 transition-all ease-nav-brand text-sm text-slate-500" sidenav-trigger>
                                 <div class="w-4.5 overflow-hidden">
                                     <i
-                                        class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-slate-500 transition-all"></i>
+                                        class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-slate-500 transition-all">1</i>
                                     <i
-                                        class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-slate-500 transition-all"></i>
+                                        class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-slate-500 transition-all">2</i>
                                     <i
-                                        class="ease-soft relative block h-0.5 rounded-sm bg-slate-500 transition-all"></i>
+                                        class="ease-soft relative block h-0.5 rounded-sm bg-slate-500 transition-all">3</i>
                                 </div>
                             </a>
                         </li>
-                        <li class="flex items-center px-4">
+                        {{-- <li class="flex items-center px-4">
                             <a href="javascript:;" class="p-0 transition-all text-sm ease-nav-brand text-slate-500">
                                 <i fixed-plugin-button-nav class="cursor-pointer fa fa-cog"></i>
                                 <!-- fixed-plugin-button-nav  -->
                             </a>
-                        </li>
+                        </li> --}}
 
                         <!-- notifications -->
 
-                        <li class="relative flex items-center pr-2">
+                        <li class="relative flex items-center px-2">
                             <p class="hidden transform-dropdown-show"></p>
                             <a href="javascript:;"
                                 class="block p-0 transition-all text-sm ease-nav-brand text-slate-500" dropdown-trigger
@@ -422,7 +454,7 @@
                                         href="javascript:;">
                                         <div class="flex py-1">
                                             <div class="my-auto">
-                                                <img src="../assets/img/team-2.jpg"
+                                                <img src="./assets/img/team-2.jpg"
                                                     class="inline-flex items-center justify-center mr-4 text-white text-sm h-9 w-9 max-w-none rounded-xl" />
                                             </div>
                                             <div class="flex flex-col justify-center">
@@ -442,7 +474,7 @@
                                         href="javascript:;">
                                         <div class="flex py-1">
                                             <div class="my-auto">
-                                                <img src="../assets/img/small-logos/logo-spotify.svg"
+                                                <img src="./assets/img/small-logos/logo-spotify.svg"
                                                     class="inline-flex items-center justify-center mr-4 text-white text-sm bg-gradient-to-tl from-gray-900 to-slate-800 h-9 w-9 max-w-none rounded-xl" />
                                             </div>
                                             <div class="flex flex-col justify-center">
@@ -487,8 +519,7 @@
                                             </div>
                                             <div class="flex flex-col justify-center">
                                                 <h6 class="mb-1 font-normal leading-normal text-sm">Payment
-                                                    successfully
-                                                    completed</h6>
+                                                    successfully completed</h6>
                                                 <p class="mb-0 leading-tight text-xs text-slate-400">
                                                     <i class="mr-1 fa fa-clock"></i>
                                                     2 days
@@ -509,6 +540,29 @@
         <!-- cards -->
         <div class="w-full px-6 py-6 mx-auto">
             <!-- row 1 -->
+
+
+
+
+
+
+
+
+
+
+            @yield('jcst')
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="flex flex-wrap -mx-3">
                 <!-- card1 -->
                 <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
@@ -646,11 +700,11 @@
                                 </div>
                                 <div class="max-w-full px-3 mt-12 ml-auto text-center lg:mt-0 lg:w-5/12 lg:flex-none">
                                     <div class="h-full bg-gradient-to-tl from-purple-700 to-pink-500 rounded-xl">
-                                        <img src="../assets/img/shapes/waves-white.svg"
+                                        <img src="./assets/img/shapes/waves-white.svg"
                                             class="absolute top-0 hidden w-1/2 h-full lg:block" alt="waves" />
                                         <div class="relative flex items-center justify-center h-full">
                                             <img class="relative z-20 w-full pt-6"
-                                                src="../assets/img/illustrations/rocket-white.png" alt="rocket" />
+                                                src="./assets/img/illustrations/rocket-white.png" alt="rocket" />
                                         </div>
                                     </div>
                                 </div>
@@ -662,7 +716,7 @@
                     <div
                         class="border-black/12.5 shadow-soft-xl relative flex h-full min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border p-4">
                         <div class="relative h-full overflow-hidden bg-cover rounded-xl"
-                            style="background-image: url('../assets/img/ivancik.jpg')">
+                            style="background-image: url('./assets/img/ivancik.jpg')">
                             <span
                                 class="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800 opacity-80"></span>
                             <div class="relative z-10 flex flex-col flex-auto h-full p-4">
@@ -695,8 +749,7 @@
                             </div>
                             <h6 class="mt-6 mb-0 ml-2">Active Users</h6>
                             <p class="ml-2 leading-normal text-sm">(<span class="font-bold">+23%</span>) than last
-                                week
-                            </p>
+                                week</p>
                             <div class="w-full px-6 mx-auto max-w-screen-2xl rounded-xl">
                                 <div class="flex flex-wrap mt-0 -mx-3">
                                     <div class="flex-none w-1/4 max-w-full py-4 pl-0 pr-3 mt-0">
@@ -941,7 +994,7 @@
                                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                                                 <div class="flex px-2 py-1">
                                                     <div>
-                                                        <img src="../assets/img/small-logos/logo-xd.svg"
+                                                        <img src="./assets/img/small-logos/logo-xd.svg"
                                                             class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                             alt="xd" />
                                                     </div>
@@ -955,8 +1008,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-1.jpg"
-                                                            class="w-full rounded-full" alt="team1" />
+                                                        <img src="./assets/img/team-1.jpg" class="w-full rounded-full"
+                                                            alt="team1" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -968,8 +1021,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-2.jpg"
-                                                            class="w-full rounded-full" alt="team2" />
+                                                        <img src="./assets/img/team-2.jpg" class="w-full rounded-full"
+                                                            alt="team2" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -981,8 +1034,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-3.jpg"
-                                                            class="w-full rounded-full" alt="team3" />
+                                                        <img src="./assets/img/team-3.jpg" class="w-full rounded-full"
+                                                            alt="team3" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -994,8 +1047,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-4.jpg"
-                                                            class="w-full rounded-full" alt="team4" />
+                                                        <img src="./assets/img/team-4.jpg" class="w-full rounded-full"
+                                                            alt="team4" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1031,7 +1084,7 @@
                                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                                                 <div class="flex px-2 py-1">
                                                     <div>
-                                                        <img src="../assets/img/small-logos/logo-atlassian.svg"
+                                                        <img src="./assets/img/small-logos/logo-atlassian.svg"
                                                             class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                             alt="atlassian" />
                                                     </div>
@@ -1045,8 +1098,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-2.jpg"
-                                                            class="w-full rounded-full" alt="team5" />
+                                                        <img src="./assets/img/team-2.jpg" class="w-full rounded-full"
+                                                            alt="team5" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1058,8 +1111,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-4.jpg"
-                                                            class="w-full rounded-full" alt="team6" />
+                                                        <img src="./assets/img/team-4.jpg" class="w-full rounded-full"
+                                                            alt="team6" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1095,7 +1148,7 @@
                                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                                                 <div class="flex px-2 py-1">
                                                     <div>
-                                                        <img src="../assets/img/small-logos/logo-slack.svg"
+                                                        <img src="./assets/img/small-logos/logo-slack.svg"
                                                             class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                             alt="team7" />
                                                     </div>
@@ -1110,8 +1163,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-3.jpg"
-                                                            class="w-full rounded-full" alt="team8" />
+                                                        <img src="./assets/img/team-3.jpg" class="w-full rounded-full"
+                                                            alt="team8" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1123,8 +1176,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-1.jpg"
-                                                            class="w-full rounded-full" alt="team9" />
+                                                        <img src="./assets/img/team-1.jpg" class="w-full rounded-full"
+                                                            alt="team9" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1160,7 +1213,7 @@
                                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                                                 <div class="flex px-2 py-1">
                                                     <div>
-                                                        <img src="../assets/img/small-logos/logo-spotify.svg"
+                                                        <img src="./assets/img/small-logos/logo-spotify.svg"
                                                             class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                             alt="spotify" />
                                                     </div>
@@ -1175,8 +1228,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-4.jpg"
-                                                            class="w-full rounded-full" alt="user1" />
+                                                        <img src="./assets/img/team-4.jpg" class="w-full rounded-full"
+                                                            alt="user1" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1188,8 +1241,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-3.jpg"
-                                                            class="w-full rounded-full" alt="user2" />
+                                                        <img src="./assets/img/team-3.jpg" class="w-full rounded-full"
+                                                            alt="user2" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1201,8 +1254,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-4.jpg"
-                                                            class="w-full rounded-full" alt="user3" />
+                                                        <img src="./assets/img/team-4.jpg" class="w-full rounded-full"
+                                                            alt="user3" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1214,8 +1267,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-1.jpg"
-                                                            class="w-full rounded-full" alt="user4" />
+                                                        <img src="./assets/img/team-1.jpg" class="w-full rounded-full"
+                                                            alt="user4" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1251,14 +1304,13 @@
                                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                                                 <div class="flex px-2 py-1">
                                                     <div>
-                                                        <img src="../assets/img/small-logos/logo-jira.svg"
+                                                        <img src="./assets/img/small-logos/logo-jira.svg"
                                                             class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                             alt="jira" />
                                                     </div>
                                                     <div class="flex flex-col justify-center">
                                                         <h6 class="mb-0 leading-normal text-sm">Add the New Pricing
-                                                            Page
-                                                        </h6>
+                                                            Page</h6>
                                                     </div>
                                                 </div>
                                             </td>
@@ -1267,8 +1319,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-4.jpg"
-                                                            class="w-full rounded-full" alt="user5" />
+                                                        <img src="./assets/img/team-4.jpg" class="w-full rounded-full"
+                                                            alt="user5" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1304,14 +1356,13 @@
                                             <td class="p-2 align-middle bg-transparent border-0 whitespace-nowrap">
                                                 <div class="flex px-2 py-1">
                                                     <div>
-                                                        <img src="../assets/img/small-logos/logo-invision.svg"
+                                                        <img src="./assets/img/small-logos/logo-invision.svg"
                                                             class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                             alt="invision" />
                                                     </div>
                                                     <div class="flex flex-col justify-center">
                                                         <h6 class="mb-0 leading-normal text-sm">Redesign New Online
-                                                            Shop
-                                                        </h6>
+                                                            Shop</h6>
                                                     </div>
                                                 </div>
                                             </td>
@@ -1320,8 +1371,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-1.jpg"
-                                                            class="w-full rounded-full" alt="user6" />
+                                                        <img src="./assets/img/team-1.jpg" class="w-full rounded-full"
+                                                            alt="user6" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1333,8 +1384,8 @@
                                                     <a href="javascript:;"
                                                         class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                                                         data-target="tooltip_trigger" data-placement="bottom">
-                                                        <img src="../assets/img/team-4.jpg"
-                                                            class="w-full rounded-full" alt="user7" />
+                                                        <img src="./assets/img/team-4.jpg" class="w-full rounded-full"
+                                                            alt="user7" />
                                                     </a>
                                                     <div data-target="tooltip"
                                                         class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
@@ -1472,539 +1523,7 @@
                 </div>
             </div>
 
-            <div class="w-full p-6 mx-auto">
-                <div class="flex flex-wrap -mx-3">
-                    <div class="w-full max-w-full px-3 xl:w-4/12">
-                        <div
-                            class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-                            <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
-                                <h6 class="mb-0">Platform Settings2</h6>
-                            </div>
-                            <div class="flex-auto p-4">
-                                <h6 class="font-bold leading-tight uppercase text-xs text-slate-500">Account</h6>
-                                <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-                                    <li class="relative block px-0 py-2 bg-white border-0 rounded-t-lg text-inherit">
-                                        <div class="min-h-6 mb-0.5 block pl-0">
-                                            <input id="follow"
-                                                class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                                                type="checkbox" " checked />
-                          <label for=" follow" class="w-4/5 mb-0 ml-4 overflow-hidden font-normal cursor-pointer select-none text-sm text-ellipsis whitespace-nowrap text-slate-500"
-                                                for="flexSwitchCheckDefault">Email me when someone follows me</label>
-                                        </div>
-                                    </li>
-                                    <li class="relative block px-0 py-2 bg-white border-0 text-inherit">
-                                        <div class="min-h-6 mb-0.5 block pl-0">
-                                            <input id="answer"
-                                                class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                                                type="checkbox" />
-                                            <label for="answer"
-                                                class="w-4/5 mb-0 ml-4 overflow-hidden font-normal cursor-pointer select-none text-sm text-ellipsis whitespace-nowrap text-slate-500"
-                                                for="flexSwitchCheckDefault1">Email me when someone answers on my
-                                                post</label>
-                                        </div>
-                                    </li>
-                                    <li class="relative block px-0 py-2 bg-white border-0 rounded-b-lg text-inherit">
-                                        <div class="min-h-6 mb-0.5 block pl-0">
-                                            <input id="mention"
-                                                class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                                                type="checkbox" checked />
-                                            <label for="mention"
-                                                class="w-4/5 mb-0 ml-4 overflow-hidden font-normal cursor-pointer select-none text-sm text-ellipsis whitespace-nowrap text-slate-500"
-                                                for="flexSwitchCheckDefault2">Email me when someone mentions me</label>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <h6 class="mt-6 font-bold leading-tight uppercase text-xs text-slate-500">Application</h6>
-                                <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-                                    <li class="relative block px-0 py-2 bg-white border-0 rounded-t-lg text-inherit">
-                                        <div class="min-h-6 mb-0.5 block pl-0">
-                                            <input id="launches projects"
-                                                class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                                                type="checkbox" />
-                                            <label for="launches projects"
-                                                class="w-4/5 mb-0 ml-4 overflow-hidden font-normal cursor-pointer select-none text-sm text-ellipsis whitespace-nowrap text-slate-500"
-                                                for="flexSwitchCheckDefault3">New launches and projects</label>
-                                        </div>
-                                    </li>
-                                    <li class="relative block px-0 py-2 bg-white border-0 text-inherit">
-                                        <div class="min-h-6 mb-0.5 block pl-0">
-                                            <input id="product updates"
-                                                class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                                                type="checkbox" checked />
-                                            <label for="product updates"
-                                                class="w-4/5 mb-0 ml-4 overflow-hidden font-normal cursor-pointer select-none text-sm text-ellipsis whitespace-nowrap text-slate-500"
-                                                for="flexSwitchCheckDefault4">Monthly product updates</label>
-                                        </div>
-                                    </li>
-                                    <li class="relative block px-0 py-2 pb-0 bg-white border-0 rounded-b-lg text-inherit">
-                                        <div class="min-h-6 mb-0.5 block pl-0">
-                                            <input id="subscribe"
-                                                class="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                                                type="checkbox" />
-                                            <label for="subscribe"
-                                                class="w-4/5 mb-0 ml-4 overflow-hidden font-normal cursor-pointer select-none text-sm text-ellipsis whitespace-nowrap text-slate-500"
-                                                for="flexSwitchCheckDefault5">Subscribe to newsletter</label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
-                        <div
-                            class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-                            <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
-                                <div class="flex flex-wrap -mx-3">
-                                    <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
-                                        <h6 class="mb-0">Profile Information</h6>
-                                    </div>
-                                    <div class="w-full max-w-full px-3 text-right shrink-0 md:w-4/12 md:flex-none">
-                                        <a href="javascript:;" data-target="tooltip_trigger" data-placement="top">
-                                            <i class="leading-normal fas fa-user-edit text-sm text-slate-400"></i>
-                                        </a>
-                                        <div data-target="tooltip"
-                                            class="hidden px-2 py-1 text-center text-white bg-black rounded-lg text-sm"
-                                            role="tooltip">
-                                            Edit Profile
-                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                data-popper-arrow></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-auto p-4">
-                                <p class="leading-normal text-sm">Hi, I’m Alec Thompson, Decisions: If you can’t decide, the
-                                    answer is no. If two equally difficult paths, choose the one more painful in the short
-                                    term (pain avoidance is creating an illusion of equality).</p>
-                                <hr
-                                    class="h-px my-6 bg-transparent bg-gradient-to-r from-transparent via-white to-transparent" />
-                                <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-                                    <li
-                                        class="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit">
-                                        <strong class="text-slate-700">Full Name:</strong> &nbsp; Alec M. Thompson</li>
-                                    <li
-                                        class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                                        <strong class="text-slate-700">Mobile:</strong> &nbsp; (44) 123 1234 123</li>
-                                    <li
-                                        class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                                        <strong class="text-slate-700">Email:</strong> &nbsp; alecthompson@mail.com</li>
-                                    <li
-                                        class="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit">
-                                        <strong class="text-slate-700">Location:</strong> &nbsp; USA</li>
-                                    <li
-                                        class="relative block px-4 py-2 pb-0 pl-0 bg-white border-0 border-t-0 rounded-b-lg text-inherit">
-                                        <strong class="leading-normal text-sm text-slate-700">Social:</strong> &nbsp;
-                                        <a class="inline-block py-0 pl-1 pr-2 mb-0 font-bold text-center text-blue-800 align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in bg-none"
-                                            href="javascript:;">
-                                            <i class="fab fa-facebook fa-lg"></i>
-                                        </a>
-                                        <a class="inline-block py-0 pl-1 pr-2 mb-0 font-bold text-center align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in bg-none text-sky-600"
-                                            href="javascript:;">
-                                            <i class="fab fa-twitter fa-lg"></i>
-                                        </a>
-                                        <a class="inline-block py-0 pl-1 pr-2 mb-0 font-bold text-center align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in bg-none text-sky-900"
-                                            href="javascript:;">
-                                            <i class="fab fa-instagram fa-lg"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
-                        <div
-                            class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-                            <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
-                                <h6 class="mb-0">Conversations</h6>
-                            </div>
-                            <div class="flex-auto p-4">
-                                <ul class="flex flex-col pl-0 mb-0 rounded-lg">
-                                    <li
-                                        class="relative flex items-center px-0 py-2 mb-2 bg-white border-0 rounded-t-lg text-inherit">
-                                        <div
-                                            class="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
-                                            <img src="../assets/img/kal-visuals-square.jpg" alt="kal"
-                                                class="w-full shadow-soft-2xl rounded-xl" />
-                                        </div>
-                                        <div class="flex flex-col items-start justify-center">
-                                            <h6 class="mb-0 leading-normal text-sm">Sophie B.</h6>
-                                            <p class="mb-0 leading-tight text-xs">Hi! I need more information..</p>
-                                        </div>
-                                        <a class="inline-block py-3 pl-0 pr-4 mb-0 ml-auto font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100"
-                                            href="javascript:;">Reply</a>
-                                    </li>
-                                    <li
-                                        class="relative flex items-center px-0 py-2 mb-2 bg-white border-0 border-t-0 text-inherit">
-                                        <div
-                                            class="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
-                                            <img src="../assets/img/marie.jpg" alt="kal"
-                                                class="w-full shadow-soft-2xl rounded-xl" />
-                                        </div>
-                                        <div class="flex flex-col items-start justify-center">
-                                            <h6 class="mb-0 leading-normal text-sm">Anne Marie</h6>
-                                            <p class="mb-0 leading-tight text-xs">Awesome work, can you..</p>
-                                        </div>
-                                        <a class="inline-block py-3 pl-0 pr-4 mb-0 ml-auto font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100"
-                                            href="javascript:;">Reply</a>
-                                    </li>
-                                    <li
-                                        class="relative flex items-center px-0 py-2 mb-2 bg-white border-0 border-t-0 text-inherit">
-                                        <div
-                                            class="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
-                                            <img src="../assets/img/ivana-square.jpg" alt="kal"
-                                                class="w-full shadow-soft-2xl rounded-xl" />
-                                        </div>
-                                        <div class="flex flex-col items-start justify-center">
-                                            <h6 class="mb-0 leading-normal text-sm">Ivanna</h6>
-                                            <p class="mb-0 leading-tight text-xs">About files I can..</p>
-                                        </div>
-                                        <a class="inline-block py-3 pl-0 pr-4 mb-0 ml-auto font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100"
-                                            href="javascript:;">Reply</a>
-                                    </li>
-                                    <li
-                                        class="relative flex items-center px-0 py-2 mb-2 bg-white border-0 border-t-0 text-inherit">
-                                        <div
-                                            class="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
-                                            <img src="../assets/img/team-4.jpg" alt="kal"
-                                                class="w-full shadow-soft-2xl rounded-xl" />
-                                        </div>
-                                        <div class="flex flex-col items-start justify-center">
-                                            <h6 class="mb-0 leading-normal text-sm">Peterson</h6>
-                                            <p class="mb-0 leading-tight text-xs">Have a great afternoon..</p>
-                                        </div>
-                                        <a class="inline-block py-3 pl-0 pr-4 mb-0 ml-auto font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100"
-                                            href="javascript:;">Reply</a>
-                                    </li>
-                                    <li
-                                        class="relative flex items-center px-0 py-2 bg-white border-0 border-t-0 rounded-b-lg text-inherit">
-                                        <div
-                                            class="inline-flex items-center justify-center w-12 h-12 mr-4 text-white transition-all duration-200 text-base ease-soft-in-out rounded-xl">
-                                            <img src="../assets/img/team-3.jpg" alt="kal"
-                                                class="w-full shadow-soft-2xl rounded-xl" />
-                                        </div>
-                                        <div class="flex flex-col items-start justify-center">
-                                            <h6 class="mb-0 leading-normal text-sm">Nick Daniel</h6>
-                                            <p class="mb-0 leading-tight text-xs">Hi! I need more information..</p>
-                                        </div>
-                                        <a class="inline-block py-3 pl-0 pr-4 mb-0 ml-auto font-bold text-center uppercase align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in hover:scale-102 hover:active:scale-102 active:opacity-85 text-fuchsia-500 hover:text-fuchsia-800 hover:shadow-none active:scale-100"
-                                            href="javascript:;">Reply</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex-none w-full max-w-full px-3 mt-6">
-                        <div
-                            class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-                            <div class="p-4 pb-0 mb-0 bg-white rounded-t-2xl">
-                                <h6 class="mb-1">Projects</h6>
-                                <p class="leading-normal text-sm">Architects design houses</p>
-                            </div>
-                            <div class="flex-auto p-4">
-                                <div class="flex flex-wrap -mx-3">
-                                    <div class="w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12">
-                                        <div
-                                            class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
-                                            <div class="relative">
-                                                <a class="block shadow-xl rounded-2xl">
-                                                    <img src="../assets/img/home-decor-1.jpg" alt="img-blur-shadow"
-                                                        class="max-w-full shadow-soft-2xl rounded-2xl" />
-                                                </a>
-                                            </div>
-                                            <div class="flex-auto px-1 pt-6">
-                                                <p
-                                                    class="relative z-10 mb-2 leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 text-sm bg-clip-text">
-                                                    Project #2</p>
-                                                <a href="javascript:;">
-                                                    <h5>Modern</h5>
-                                                </a>
-                                                <p class="mb-6 leading-normal text-sm">As Uber works through a huge amount
-                                                    of internal management turmoil.</p>
-                                                <div class="flex items-center justify-between">
-                                                    <button type="button"
-                                                        class="inline-block px-8 py-2 mb-0 font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg shadow-none cursor-pointer leading-pro ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs tracking-tight-soft border-fuchsia-500 text-fuchsia-500 hover:border-fuchsia-500 hover:bg-transparent hover:text-fuchsia-500 hover:opacity-75 hover:shadow-none active:bg-fuchsia-500 active:text-white active:hover:bg-transparent active:hover:text-fuchsia-500">View
-                                                        Project</button>
-                                                    <div class="mt-2">
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-1.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Elena Morison
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-2.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Ryan Milly
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-3.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Nick Daniel
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-4.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Peterson
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12">
-                                        <div
-                                            class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
-                                            <div class="relative">
-                                                <a class="block shadow-xl rounded-2xl">
-                                                    <img src="../assets/img/home-decor-2.jpg" alt="img-blur-shadow"
-                                                        class="max-w-full shadow-soft-2xl rounded-xl" />
-                                                </a>
-                                            </div>
-                                            <div class="flex-auto px-1 pt-6">
-                                                <p
-                                                    class="relative z-10 mb-2 leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 text-sm bg-clip-text">
-                                                    Project #1</p>
-                                                <a href="javascript:;">
-                                                    <h5>Scandinavian</h5>
-                                                </a>
-                                                <p class="mb-6 leading-normal text-sm">Music is something that every person
-                                                    has his or her own specific opinion about.</p>
-                                                <div class="flex items-center justify-between">
-                                                    <button type="button"
-                                                        class="inline-block px-8 py-2 mb-0 font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg shadow-none cursor-pointer leading-pro ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs tracking-tight-soft border-fuchsia-500 text-fuchsia-500 hover:border-fuchsia-500 hover:bg-transparent hover:text-fuchsia-500 hover:opacity-75 hover:shadow-none active:bg-fuchsia-500 active:text-white active:hover:bg-transparent active:hover:text-fuchsia-500">View
-                                                        Project</button>
-                                                    <div class="mt-2">
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-3.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Nick Daniel
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-4.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Peterson
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-1.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Elena Morison
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-2.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Ryan Milly
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12">
-                                        <div
-                                            class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border">
-                                            <div class="relative">
-                                                <a class="block shadow-xl rounded-2xl">
-                                                    <img src="../assets/img/home-decor-3.jpg" alt="img-blur-shadow"
-                                                        class="max-w-full shadow-soft-2xl rounded-2xl" />
-                                                </a>
-                                            </div>
-                                            <div class="flex-auto px-1 pt-6">
-                                                <p
-                                                    class="relative z-10 mb-2 leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 text-sm bg-clip-text">
-                                                    Project #3</p>
-                                                <a href="javascript:;">
-                                                    <h5>Minimalist</h5>
-                                                </a>
-                                                <p class="mb-6 leading-normal text-sm">Different people have different
-                                                    taste, and various types of music.</p>
-                                                <div class="flex items-center justify-between">
-                                                    <button type="button"
-                                                        class="inline-block px-8 py-2 mb-0 font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg shadow-none cursor-pointer leading-pro ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs tracking-tight-soft border-fuchsia-500 text-fuchsia-500 hover:border-fuchsia-500 hover:bg-transparent hover:text-fuchsia-500 hover:opacity-75 hover:shadow-none active:bg-fuchsia-500 active:text-white active:hover:bg-transparent active:hover:text-fuchsia-500">View
-                                                        Project</button>
-                                                    <div class="mt-2">
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-4.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Peterson
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-3.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Nick Daniel
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-2.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Ryan Milly
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                        <a href="javascript:;"
-                                                            class="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid ease-soft-in-out text-xs rounded-circle hover:z-30"
-                                                            data-target="tooltip_trigger" data-placement="bottom">
-                                                            <img class="w-full rounded-circle" alt="Image placeholder"
-                                                                src="../assets/img/team-1.jpg" />
-                                                        </a>
-                                                        <div data-target="tooltip"
-                                                            class="hidden px-2 py-1 text-white bg-black rounded-lg text-sm"
-                                                            role="tooltip">
-                                                            Elena Morison
-                                                            <div class="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                                                                data-popper-arrow></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12">
-                                        <div
-                                            class="relative flex flex-col h-full min-w-0 break-words bg-transparent border border-solid shadow-none rounded-2xl border-slate-100 bg-clip-border">
-                                            <div class="flex flex-col justify-center flex-auto p-6 text-center">
-                                                <a href="javascript:;">
-                                                    <i class="mb-4 fa fa-plus text-slate-400"></i>
-                                                    <h5 class="text-slate-400">New project</h5>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- 111111
-                            @yield('jcst') --}}
-                        </div>
-                    </div>
-                </div>
-                {{-- <footer class="pt-4">
-                    <div class="w-full px-6 mx-auto">
-                        <div class="flex flex-wrap items-center -mx-3 lg:justify-between">
-                            <div class="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
-                                <div class="leading-normal text-center text-sm text-slate-500 lg:text-left">
-                                    ©
-                                    <script>
-                                        document.write(new Date().getFullYear() + ",");
-                                    </script>
-                                    made with <i class="fa fa-heart"></i> by
-                                    <a href="https://www.creative-tim.com" class="font-semibold text-slate-700"
-                                        target="_blank">Creative Tim</a>
-                                    for a better web.
-                                </div>
-                            </div>
-                            <div class="w-full max-w-full px-3 mt-0 shrink-0 lg:w-1/2 lg:flex-none">
-                                <ul class="flex flex-wrap justify-center pl-0 mb-0 list-none lg:justify-end">
-                                    <li class="nav-item">
-                                        <a href="https://www.creative-tim.com"
-                                            class="block px-4 pt-0 pb-1 font-normal transition-colors ease-soft-in-out text-sm text-slate-500"
-                                            target="_blank">Creative Tim</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="https://www.creative-tim.com/presentation"
-                                            class="block px-4 pt-0 pb-1 font-normal transition-colors ease-soft-in-out text-sm text-slate-500"
-                                            target="_blank">About Us</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="https://creative-tim.com/blog"
-                                            class="block px-4 pt-0 pb-1 font-normal transition-colors ease-soft-in-out text-sm text-slate-500"
-                                            target="_blank">Blog</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="https://www.creative-tim.com/license"
-                                            class="block px-4 pt-0 pb-1 pr-0 font-normal transition-colors ease-soft-in-out text-sm text-slate-500"
-                                            target="_blank">License</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </footer> --}}
-            </div>
-
-            <footer class="pt-4">
+            {{-- <footer class="pt-4">
                 <div class="w-full px-6 mx-auto">
                     <div class="flex flex-wrap items-center -mx-3 lg:justify-between">
                         <div class="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
@@ -2045,11 +1564,11 @@
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer> --}}
         </div>
         <!-- end cards -->
     </main>
-    <div fixed-plugin>
+    {{-- <div fixed-plugin>
         <a fixed-plugin-button
             class="bottom-7.5 right-7.5 text-xl z-990 shadow-soft-lg rounded-circle fixed cursor-pointer bg-white px-4 py-2 text-slate-700">
             <i class="py-2 pointer-events-none fa fa-cog"> </i>
@@ -2093,10 +1612,12 @@
                             data-color-from="green-600" data-color-to="lime-400" onclick="sidebarColor(this)"></span>
                         <span
                             class="py-2.2 text-xs px-3.6 rounded-circle h-5.75 mr-1.25 w-5.75 ease-soft-in-out bg-gradient-to-tl from-red-500 to-yellow-400 relative inline-block cursor-pointer whitespace-nowrap border border-solid border-white text-center align-baseline font-bold uppercase leading-none text-white transition-all duration-200 hover:border-slate-700"
-                            data-color-from="red-500" data-color-to="yellow-400" onclick="sidebarColor(this)"></span>
+                            data-color-from="red-500" data-color-to="yellow-400"
+                            onclick="sidebarColor(this)"></span>
                         <span
                             class="py-2.2 text-xs px-3.6 rounded-circle h-5.75 mr-1.25 w-5.75 ease-soft-in-out bg-gradient-to-tl from-red-600 to-rose-400 relative inline-block cursor-pointer whitespace-nowrap border border-solid border-white text-center align-baseline font-bold uppercase leading-none text-white transition-all duration-200 hover:border-slate-700"
-                            data-color-from="red-600" data-color-to="rose-400" onclick="sidebarColor(this)"></span>
+                            data-color-from="red-600" data-color-to="rose-400"
+                            onclick="sidebarColor(this)"></span>
                     </div>
                 </a>
                 <!-- Sidenav Type -->
@@ -2123,7 +1644,8 @@
                         class="rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left mt-1 ml-auto w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
                         type="checkbox" />
                 </div>
-                <hr class="h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent sm:my-6" />
+                <hr
+                    class="h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent sm:my-6" />
                 <a class="inline-block w-full px-6 py-3 mb-4 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer leading-pro text-xs ease-soft-in hover:shadow-soft-xs hover:scale-102 active:opacity-85 tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800"
                     href="https://www.creative-tim.com/product/soft-ui-dashboard-tailwind" target="_blank">Free
                     Download</a>
@@ -2131,7 +1653,8 @@
                     href="https://www.creative-tim.com/learning-lab/tailwind/html/quick-start/soft-ui-dashboard/"
                     target="_blank">View documentation</a>
                 <div class="w-full text-center">
-                    <a class="github-button" href="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind"
+                    <a class="github-button"
+                        href="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind"
                         data-icon="octicon-star" data-size="large" data-show-count="true"
                         aria-label="Star creativetimofficial/soft-ui-dashboard on GitHub">Star</a>
                     <h6 class="mt-4">Thank you for sharing!</h6>
@@ -2144,15 +1667,15 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </body>
 <!-- plugin for charts  -->
-<script src="../assets/js/plugins/chartjs.min.js" async></script>
+<script src="./assets/js/plugins/chartjs.min.js" async></script>
 <!-- plugin for scrollbar  -->
-<script src="../assets/js/plugins/perfect-scrollbar.min.js" async></script>
+<script src="./assets/js/plugins/perfect-scrollbar.min.js" async></script>
 <!-- github button -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- main script file  -->
-<script src="../assets/js/soft-ui-dashboard-tailwind.js?v=1.0.4" async></script>
+<script src="./assets/js/soft-ui-dashboard-tailwind.js?v=1.0.4" async></script>
 
 </html>
