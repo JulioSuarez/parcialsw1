@@ -12,7 +12,7 @@ class EventoController extends Controller
      */
     public function index()
     {
-        //
+        return view('VistaEventos.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class EventoController extends Controller
      */
     public function create()
     {
-        //
+        return view('VistaEventos.create');
     }
 
     /**
@@ -28,7 +28,8 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
+        return redirect()->route('evento.index');
     }
 
     /**

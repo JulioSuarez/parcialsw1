@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_evento');
             $table->foreign('id_evento')->references('id')->on('eventos');
 
-            $table->unsignedBigInteger('id_album_fotos');
+            $table->unsignedBigInteger('id_album_fotos')->nullable();
             $table->foreign('id_album_fotos')->references('id')->on('album_fotos');
 
             $table->timestamps();

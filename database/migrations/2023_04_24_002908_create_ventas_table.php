@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->decimal('precio_total');
+            $table->string('forma_pago');
 
             //id_cliente
             $table->unsignedBigInteger('id_cliente');

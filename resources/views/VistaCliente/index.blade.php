@@ -1,8 +1,7 @@
-{{-- @extends('template.profile') --}}
 @extends('index')
 
 @section('jcst')
-    <div class="w-full px-6 mx-auto">
+<div class="w-full px-6 mx-auto">
         <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl">
             <img src="{{ asset('img/fotosClientes/' . $usuario->foto_portada) }}" alt=""
                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;">
@@ -66,8 +65,7 @@
 
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
-
     <div class="my-2 bg-white dark:bg-gray-900 rounded-xl">
-        @include('VistaCliente.planes')
+        {{-- @include('VistaCliente.planes') --}}
     </div>
 @endsection

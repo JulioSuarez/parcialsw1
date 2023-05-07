@@ -1,4 +1,4 @@
-@extends('template.profile')
+@extends('index')
 
 @section('jcst')
     {{-- titulo centrado --}}

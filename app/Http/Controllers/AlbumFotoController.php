@@ -12,7 +12,7 @@ class AlbumFotoController extends Controller
      */
     public function index()
     {
-        //
+        return view('VistaAlbum.index');
     }
 
     /**

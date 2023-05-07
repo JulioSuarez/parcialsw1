@@ -12,7 +12,7 @@ class FotosController extends Controller
      */
     public function index()
     {
-        //
+        return view('VistaFoto.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class FotosController extends Controller
      */
     public function create()
     {
-        //
+        return view('VistaFoto.create');
     }
 
     /**
@@ -28,7 +28,8 @@ class FotosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
+        return redirect()->route('foto.index');
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Http\Controllers\FotoestudioController;
 use App\Http\Controllers\OrganizadorController;
 use App\Http\Controllers\SuscripcionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\FotosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('fotoestudio',FotoestudioController::class)
     ->Parameters(['fotoestudio' => 'f'])->names('fotoestudio');
 
+    ////////////////////////////////////////////////////////////////////////////////fotos
+    Route::resource('foto',FotosController::class)
+    ->Parameters(['foto' => 'f'])->names('foto');
+
     ////////////////////////////////////////////////////////////////////////////////ventas
     Route::resource('ventas',VentaController::class)
     ->Parameters(['ventas' => 'v'])->names('ventas');
@@ -66,6 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/planes',PlanesController::class )
     ->Parameters(['planes' => 'p'])->names('planes');
     ////////////////////////////////////////////////////////////////////////////////
+    Route::get('compararFotos',[FotoestudioController::class,'compararFotos'])->name('compararFotos');
 });
 
 require __DIR__.'/auth.php';

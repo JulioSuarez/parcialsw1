@@ -1,4 +1,7 @@
-        {{-- /escoger un plan --}}
+@extends('index')
+
+@section('jcst')
+{{-- /escoger un plan --}}
         <div class="container px-6 py-8 mx-auto">
             <p class="text-xl text-center text-gray-500 dark:text-gray-300">
                 A que te dedicas
@@ -97,3 +100,4 @@
 
         </div>
         {{-- /escoger un plan --}}
+@endsection
