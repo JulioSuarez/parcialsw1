@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('tipo_plan');
             $table->decimal('precio');
+            $table->unsignedBigInteger('id_cliente');
+            $table->foreign('id_cliente')->references('id')->on('users');
+
             $table->timestamps();
         });
     }

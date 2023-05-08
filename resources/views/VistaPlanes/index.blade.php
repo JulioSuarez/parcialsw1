@@ -1,6 +1,56 @@
 @extends('index')
 
 @section('jcst')
+    <div class="max-w-md mx-auto">
+        <form action="{{ route('planes.store') }}" method="POST" class="max-w-md mx-auto">
+            @csrf
+            <h2 class="text-xl font-bold mb-4">Elige tu plan:</h2>
+            <div class="mb-4">
+                <label for="fotografo_mensual" class="block text-gray-700 font-bold mb-2">Fotógrafo:</label>
+                <div>
+                    <label for="fotografo_mensual" class="inline-flex items-center">
+                        <input type="radio" name="plan" id="fotografo_mensual" value="1"
+                            class="form-radio">
+                        <span class="ml-2">Mensual $20</span>
+                    </label>
+                </div>
+                <div>
+                    <label for="fotografo_anual" class="inline-flex items-center">
+                        <input type="radio" name="plan" id="fotografo_anual" value="2"
+                            class="form-radio">
+                        <span class="ml-2">Anual $100</span>
+                    </label>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="organizador_mensual" class="block text-gray-700 font-bold mb-2">Organizador:</label>
+                <div>
+                    <label for="organizador_mensual" class="inline-flex items-center">
+                        <input type="radio" name="plan" id="organizador_mensual" value="3"
+                            class="form-radio">
+                        <span class="ml-2">Mensual $20</span>
+                    </label>
+                </div>
+                <div>
+                    <label for="organizador_anual" class="inline-flex items-center">
+                        <input type="radio" name="plan" id="organizador_anual" value="4"
+                            class="form-radio">
+                        <span class="ml-2">Anual $100</span>
+                    </label>
+                </div>
+            </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+                    Comprar
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
     {{-- boton crear planes --}}
     <div class="flex justify-start my-5 mx-6">
         <a href="{{ route('planes.create') }}"

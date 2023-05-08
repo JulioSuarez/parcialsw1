@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\orden_pago;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,21 @@ class OrdenPagoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $id = auth()->user()->id;
+        $user = User::where('id', $id)->first();
+        $user->syncRoles(6);
+        $user->save();
+
+        $op = new orden_pago();
+        $op->monto = $request->monto;
+        $op->fecha_limite = $request->fecha_limite;
+        $op->descripcion = $request->descripcion;
+        $op->estado = $request->estado;
+        $op->metodo = $request->metodo;
+        $op->save();
+
+        return redirect()->route('suscripcion.index');
     }
 
     /**

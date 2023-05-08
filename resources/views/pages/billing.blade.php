@@ -1,5 +1,6 @@
 @extends('index')
-@section('content')
+
+@section('jcst')
     <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
         <!-- Navbar -->
 
@@ -97,7 +98,7 @@
                                         <div class="flex-none w-1/2 max-w-full px-3 text-right">
                                             <a class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-transparent rounded-lg cursor-pointer leading-pro text-xs ease-soft-in shadow-soft-md bg-150 bg-gradient-to-tl from-gray-900 to-slate-800 hover:shadow-soft-xs active:opacity-85 hover:scale-102 tracking-tight-soft bg-x-25"
                                                 href="javascript:;"> <i class="fas fa-plus"> </i>&nbsp;&nbsp;Add New
-                                                Card</a>
+                                                Cardaaaaaaa</a>
                                         </div>
                                     </div>
                                 </div>
@@ -108,9 +109,7 @@
                                                 class="relative flex flex-row items-center flex-auto min-w-0 p-6 break-words bg-transparent border border-solid shadow-none rounded-xl border-slate-100 bg-clip-border">
                                                 <img class="mb-0 mr-4 w-1/10" src="../assets/img/logos/mastercard.png"
                                                     alt="logo" />
-                                                <h6 class="mb-0">
-                                                    ****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;7852
-                                                </h6>
+                                                <input type="text">
                                                 <i class="ml-auto cursor-pointer fas fa-pencil-alt text-slate-700"
                                                     data-target="tooltip_trigger" data-placement="top"></i>
                                                 <div data-target="tooltip"

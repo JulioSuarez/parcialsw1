@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\pago;
+use App\Models\User;
+use App\Models\planes;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
@@ -12,7 +14,7 @@ class PagoController extends Controller
      */
     public function index()
     {
-        //
+        return view('VistaPagos.index');
     }
 
     /**
@@ -28,7 +30,41 @@ class PagoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('comprobante')) {
+            $file = $request->file('comprobante');
+            $destino = 'img/fotosClientes/';
+            $comprobante = time() . '-' . $file->getClientOriginalName();
+            $subirImagen = $request->file('comprobante')->move($destino, $comprobante);
+        } else {
+            $comprobante = "default.png";
+        }
+
+        $id = auth()->user()->id;
+        $plan = planes::where('id_cliente','=',$id)->first();
+
+        $pago = new pago();
+        $pago->fecha = now();
+        $pago->monto = $plan->precio;
+        $pago->comprobante = $comprobante;
+        $pago->save();
+
+        if ($plan->tipo_plan < 3) {
+            $rol = 4;   //fotoestudio
+        }else{
+            $rol = 3;   //organizador
+        }
+
+        $id = auth()->user()->id;
+        $user = User::where('id', $id)->first();
+        $user->syncRoles($rol);
+        $user->save();
+
+
+        if ($rol == 3) {
+            return redirect()->route('organizadores.index');
+        }else{
+            return redirect()->route('fotoestudio.index');
+        }
     }
 
     /**

@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\orden_pago;
+use App\Models\pago;
 use App\Models\suscripcion;
 use Illuminate\Http\Request;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class SuscripcionController extends Controller
 {
@@ -26,9 +31,41 @@ class SuscripcionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-        //
+        // $op = new orden_pago();
+        // $op->monto = $r->monto_op;
+        // $op->descripcion = $r->descripcion;
+        // $op->estado = $r->estado;
+        // $op->fecha_limite = $r->fecha_limite;
+        // $op->metodo = $r->metodo;
+
+        // $p = new pago();
+        // $p->fecha = now();
+        // $p->monto = $r->monto_p;
+        // $p->comprobante = $comprobante;
+        // $p->
+        // $p->save();
+
+
+        // // dd($r);
+        // $roles = $r->input('roles', []);
+        // $id = auth()->user()->id;
+        // $user = User::where('id', $id)->first();
+        // $user->syncRoles($roles);
+        // $user->save();
+
+        // $s = new suscripcion();
+        // $s->fecha_inicio = $r->fecha_inicio;
+        // $s->fecha_fin = $r->fecha_fin;
+        // $s->estado = $r->estado;
+        // $s->plan = $r->plan;
+        // $s->id_usuario = $id;
+        // $s->save();
+
+        // $roles = $r->input('roles', []);
+        // $id = auth()->user()->id;
+        // $user->syncRoles($roles);
     }
 
     /**
@@ -50,9 +87,28 @@ class SuscripcionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, suscripcion $suscripcion)
+    public function update(Request $r, suscripcion $suscripcion)
     {
-        //
+                // dd($r);
+                $roles = $r->input('roles', []);
+                $id = auth()->user()->id;
+                $user = User::where('id', $id)->first();
+                $user->syncRoles($roles);
+                $user->save();
+
+
+
+
+
+                $s = $suscripcion;
+                $s->fecha_inicio = $r->fecha_inicio;
+                $s->fecha_fin = $r->fecha_fin;
+                $s->estado = $r->estado;
+                $s->plan = $r->plan;
+                $s->id_orden_pago = $r->id_orden_pago;
+                $s->id_usuario = $id;
+                $s->save();
+
     }
 
     /**

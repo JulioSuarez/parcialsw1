@@ -26,10 +26,10 @@ return new class extends Migration
             //foto
             $table->string('foto')->nullable();
             //id_organizador
-            $table->unsignedBigInteger('id_organizador');
+            $table->unsignedBigInteger('id_organizador')->nullable();
             $table->foreign('id_organizador')->references('id')->on('organizadors');
             //id_fotoestudio
-            $table->unsignedBigInteger('id_fotoestudio');
+            $table->unsignedBigInteger('id_fotoestudio')->nullable();
             $table->foreign('id_fotoestudio')->references('id')->on('fotoestudios');
 
             $table->timestamps();

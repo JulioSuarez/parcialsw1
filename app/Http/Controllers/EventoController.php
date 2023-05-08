@@ -28,7 +28,27 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $id = auth()->user()->id;
+        // dd($request);
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $destino = 'img/Eventos/';
+            $foto = time() . '-' . $file->getClientOriginalName();
+            $subirImagen = $request->file('foto')->move($destino, $foto);
+        } else {
+            $foto = "default.png";
+        }
+
+        $e = new Evento();
+        $e->evento_name = $request->evento_name;
+        $e->descripcion = $request->descripcion;
+        $e->fecha = $request->fecha;
+        $e->hora = $request->hora;
+        $e->lugar = $request->lugar;
+        $e->id_organizador = $id;
+        $e->foto = $foto;
+        $e->save();
         return redirect()->route('evento.index');
     }
 

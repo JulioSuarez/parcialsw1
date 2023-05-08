@@ -20,6 +20,7 @@ class FotosController extends Controller
      */
     public function create()
     {
+
         return view('VistaFoto.create');
     }
 
@@ -28,7 +29,30 @@ class FotosController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
+
+        // if ($request->hasFile('foto_perfil')) {
+        //     $file = $request->file('foto_perfil');
+        //     $destino = 'img/fotosClientes/';
+        //     $foto_perfil = time() . '-' . $file->getClientOriginalName();
+        //     $subirImagen = $request->file('foto_perfil')->move($destino, $foto_perfil);
+        // } else {
+        //     $foto = "default.png";
+        // }
+
+        $id = auth()->user()->id;
+        foreach ($request->file('imagenes') as $imagen) {
+            // Guardar la imagen en la carpeta public/storage/fotos
+            $ruta = $imagen->store('public/fotos');
+            // Crear un nuevo registro en la base de datos para la imagen
+            // dd($ruta);
+            $f = new fotos();
+            $f->foto_pach = $ruta;
+            $f->id_fotoestudio = $id;
+            $f->id_evento = $request->a;
+            $f->id_album_fotos = $request->a;
+            $f->save();
+        }
         return redirect()->route('foto.index');
     }
 

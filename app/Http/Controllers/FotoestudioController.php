@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Aws\Rekognition\RekognitionClient;
 use Aws\Exception\AwsException;
+use Illuminate\Support\Facades\Auth;
 
 class FotoestudioController extends Controller
 {
@@ -19,12 +20,12 @@ class FotoestudioController extends Controller
 
 
         //aqui tengo las fotos de perfil de todos mis clientes
-        $fotoAlmacenada = cliente::get();
-        $len = count($fotoAlmacenada);
-        dd($len);
-        for ($i = 0; $i < $len; $i++) {
+        // $fotoAlmacenada = cliente::get();
+        // $len = count($fotoAlmacenada);
+        // dd($len);
+        // for ($i = 0; $i < $len; $i++) {
             // hacer algo xD
-        }
+        // }
 
 
 
@@ -116,7 +117,7 @@ class FotoestudioController extends Controller
      */
     public function create()
     {
-        //
+        return view('VistaFoto.create');
     }
 
     /**
@@ -125,6 +126,32 @@ class FotoestudioController extends Controller
     public function store(Request $request)
     {
         dd($request);
+        $id = auth()->user()->id;
+        $event = fotoestudio::join('eventos','eventos.id_organizador','=',$id)->first();
+
+
+        // if ($request->hasFile('foto_perfil')) {
+        //     $file = $request->file('foto_perfil');
+        //     $destino = 'img/fotosClientes/';
+        //     $foto_perfil = time() . '-' . $file->getClientOriginalName();
+        //     $subirImagen = $request->file('foto_perfil')->move($destino, $foto_perfil);
+        // } else {
+        //     $foto = "default.png";
+        // }
+
+
+        foreach ($request->file('imagenes') as $imagen) {
+            // Guardar la imagen en la carpeta public/storage/fotos
+            $ruta = $imagen->store('public/fotos');
+            // Crear un nuevo registro en la base de datos para la imagen
+            // dd($ruta);
+            $f = new fotos();
+            $f->foto_pach = $ruta;
+            $f->id_fotoestudio = $id;
+            $f->id_evento = $request->a;
+            $f->id_album_fotos = $request->a;
+            $f->save();
+        }
         return redirect()->route('fotoestudio.index');
     }
 
@@ -133,7 +160,7 @@ class FotoestudioController extends Controller
      */
     public function show(fotoestudio $fotoestudio)
     {
-        //
+        dd($fotoestudio);
     }
 
     /**

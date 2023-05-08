@@ -22,7 +22,7 @@ return new class extends Migration
             //estado
             $table->string('estado');
             //metodo qr
-            $table->string('metodo_qr');
+            $table->string('metodo');
 
             $table->timestamps();
         });
