@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\album_foto;
+use App\Models\User;
+use App\Models\fotos;
+use App\Models\Evento;
 use App\Models\cliente;
 use App\Models\fotoestudio;
-use App\Models\fotos;
-use App\Models\User;
+use App\Models\album_evento;
 use Illuminate\Http\Request;
-use Aws\Rekognition\RekognitionClient;
 use Aws\Exception\AwsException;
 use Illuminate\Support\Facades\Auth;
+use Aws\Rekognition\RekognitionClient;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 class FotoestudioController extends Controller
 {
@@ -19,18 +21,25 @@ class FotoestudioController extends Controller
     {
 
 
-        //aqui tengo las fotos de perfil de todos mis clientes
-        // $fotoAlmacenada = cliente::get();
+        // aqui tengo las fotos de perfil de todos mis clientes
+        $fotosPerfiles = User::all();
+        $fotosAlbumEvento = album_evento::all();
+        //solo albun aprobado 0:pendiente 1:aprobado 2:terminado(que ya hizo el rekonigtion)
+        $coleccion = collect();
+        foreach ($fotosPerfiles as $f) {
+            $coleccion = $coleccion->merge($f->profile_photo_path);
+        }
+        dd($coleccion);
         // $len = count($fotoAlmacenada);
         // dd($len);
         // for ($i = 0; $i < $len; $i++) {
-            // hacer algo xD
+        //     hacer algo xD
         // }
 
 
 
 
-        $fotoSubida = album_foto::get();
+        $fotoSubida = album_evento::get();
         $len = count($fotoSubida);
         dd($len);
         for ($i = 0; $i < $len; $i++) {
@@ -38,12 +47,12 @@ class FotoestudioController extends Controller
 
 
             //aqui adentro are otro for que recorra la tabla clientes y que me muestre solo el atributo foto de perfil
-            $fotoAlmacenada = cliente::get();
+            $fotoAlmacenada = User::get();
             foreach ($fotoAlmacenada as $foto) {
                 $fotoAlmacenada = $foto->foto_perfil;
                 dd($fotoAlmacenada);
-                    //aqui tengo los album de fotos que subi de 1 solo evento
-                    //con esto reduzco la cantidad de tokens del servicio del rekognition y abarato costos (eficiencia)
+                //aqui tengo los album de fotos que subi de 1 solo evento
+                //con esto reduzco la cantidad de tokens del servicio del rekognition y abarato costos (eficiencia)
 
                 //dentro de este for pondre la funcion de comparar caras
 
@@ -62,7 +71,7 @@ class FotoestudioController extends Controller
         }
 
 
-        $fotoSubida = album_foto::get();
+        $fotoSubida = album_evento::get();
         foreach ($fotoSubida as $f) {
             $fotoSubida = $f->foto_path;
         }
@@ -104,12 +113,16 @@ class FotoestudioController extends Controller
 
     public function index()
     {
-        $fotoSubida = cliente::get();
-        // foreach ($fotoSubida as $foto) {
-        //     $fotoSubida = $foto->foto_perfil;
-        //     dd($fotoSubida);
-        // }
-        return view('VistaFotoestudio.index', compact('fotoSubida'));
+        $fotoSubida = User::get();
+        // $id = auth()->user()->id;
+        // $habilitado = Evento::where('id_fotoestudio','=',$id)->first();
+        // dd($habilitado);
+
+        // seccion para el perfil
+        $authController = new AuthenticatedSessionController();
+        $usuario = $authController->dashboard();
+
+        return view('VistaFotoestudio.index', compact('fotoSubida', 'usuario'));
     }
 
     /**
@@ -117,7 +130,11 @@ class FotoestudioController extends Controller
      */
     public function create()
     {
-        return view('VistaFoto.create');
+        // seccion para el perfil
+        $authController = new AuthenticatedSessionController();
+        $usuario = $authController->dashboard();
+
+        return view('VistaFoto.create',compact('usuario'));
     }
 
     /**
@@ -125,10 +142,10 @@ class FotoestudioController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $id = auth()->user()->id;
-        $event = fotoestudio::join('eventos','eventos.id_organizador','=',$id)->first();
-
+        $event = Evento::where('id_fotoestudio', '=', $id)->get();
+        dd($event);
+        // dd($request);
 
         // if ($request->hasFile('foto_perfil')) {
         //     $file = $request->file('foto_perfil');
@@ -149,7 +166,7 @@ class FotoestudioController extends Controller
             $f->foto_pach = $ruta;
             $f->id_fotoestudio = $id;
             $f->id_evento = $request->a;
-            $f->id_album_fotos = $request->a;
+            $f->id_album_evento = $request->a;
             $f->save();
         }
         return redirect()->route('fotoestudio.index');
@@ -185,5 +202,8 @@ class FotoestudioController extends Controller
     public function destroy(fotoestudio $fotoestudio)
     {
         //
+    }
+    public function reportes(){
+        return view('VistaReportes.fotoestudio');
     }
 }

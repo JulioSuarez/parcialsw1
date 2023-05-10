@@ -21,16 +21,20 @@ return new class extends Migration
             $table->date('fecha');
             //hora
             $table->time('hora');
+            //hora
+            $table->time('horafin');
             //lugar
             $table->string('lugar');
             //foto
             $table->string('foto')->nullable();
+            //estado
+            $table->char('estado',1)->default('0')->nullable();
             //id_organizador
             $table->unsignedBigInteger('id_organizador')->nullable();
-            $table->foreign('id_organizador')->references('id')->on('organizadors');
+            $table->foreign('id_organizador')->references('id')->on('users');
             //id_fotoestudio
             $table->unsignedBigInteger('id_fotoestudio')->nullable();
-            $table->foreign('id_fotoestudio')->references('id')->on('fotoestudios');
+            $table->foreign('id_fotoestudio')->references('id')->on('users');
 
             $table->timestamps();
         });

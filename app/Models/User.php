@@ -46,9 +46,34 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function cliente()
+    public function invitacion_evento()
     {
-        return $this->hasMany(Cliente::class);
+        return $this->hasMany(invitacion_evento::class);
+    }
+
+    public function Evento()
+    {
+        return $this->hasMany(Evento::class);
+    }
+
+    public function fotos()
+    {
+        return $this->hasMany(fotos::class);
+    }
+
+    public function album_evento()
+    {
+        return $this->hasMany(album_evento::class);
+    }
+
+    public function detalle_album_cliente()
+    {
+        return $this->hasMany(detalle_album_cliente::class);
+    }
+
+    public function detalle_album_evento()
+    {
+        return $this->hasMany(detalle_album_evento::class);
     }
 
     protected static function booted(): void

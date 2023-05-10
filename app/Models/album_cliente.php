@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class album_foto extends Model
+class album_cliente extends Model
 {
     use HasFactory;
 
-    protected $table = 'album_fotos';
+    protected $table = 'album_cliente';
 
     protected $fillable = [
         'nombre_album',
         'descripcion',
         'portada',
         'aprobado',
-        'id_fotoestudio',
+        'id_cliente',
     ];
 
     public function fotos()
@@ -24,14 +24,9 @@ class album_foto extends Model
         return $this->hasMany(foto::class);
     }
 
-    public function album()
+    public function cliente()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function detalle_album_evento()
-    {
-        return $this->hasMany(detalle_album_evento::class);
     }
 
     public function detalle_album_cliente()

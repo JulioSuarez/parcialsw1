@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\cliente;
+use App\Models\Evento;
 use App\Models\organizador;
 use App\Models\planes;
 use App\Models\User;
@@ -30,8 +31,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->roles();
-        // $this->cargarPlanes();
         $this->cargarUsuario();
+        $this->cargarEvento();
     }
 
     public function roles(){
@@ -83,27 +84,6 @@ class DatabaseSeeder extends Seeder
             ////////////
     }
 
-
-    // public function cargarPlanes(){
-    //     $plan = new planes();
-    //     $plan->id = 1;
-    //     $plan->tipo_plan = 'Cliente';
-    //     $plan->precio = 100;
-    //     $plan->save();
-
-    //     $plan = new planes();
-    //     $plan->id = 2;
-    //     $plan->tipo_plan = 'Organizador';
-    //     $plan->precio = 100;
-    //     $plan->save();
-
-    //     $plan = new planes();
-    //     $plan->id = 3;
-    //     $plan->tipo_plan = 'Foto Estudio';
-    //     $plan->precio = 100;
-    //     $plan->save();
-    // }
-
     public function cargarUsuario(){
         $user = new User();
         $user->id=1;
@@ -113,22 +93,58 @@ class DatabaseSeeder extends Seeder
         $user->genero = 'M';
         $user->password = bcrypt('password');
         $user->profile_photo_path = 'JCST.png';
-        $user->portada_photo_path = 'JCST.png';
+        $user->portada_photo_path = 'Julico.jpg';
         $user->assignRole('dev');
         $user->save();
-        // $cliente = new cliente();
-        // $cliente->foto_perfil ='JCST.png';
-        // $cliente->foto_portada ='Julico.jpg';
-        // $cliente->telefono =76034449;
-        // $cliente->id_plan =1;
-        // $cliente->user_id =$user->id;
-        // $cliente->save();
+        $user = new User();
+        $user->id=2;
+        $user->name = 'organizador';
+        $user->email = 'organizador@correo.com';
+        $user->fecha_nacimiento = '1991-02-16';
+        $user->genero = 'M';
+        $user->password = bcrypt('password');
+        $user->profile_photo_path = 'organizador1.jpg';
+        $user->portada_photo_path = 'organizador2.jpeg';
+        $user->assignRole('organizador');
+        $user->save();
+        $user = new User();
+        $user->id=3;
+        $user->name = 'foto estudio';
+        $user->email = 'fotoestudio@correo.com';
+        $user->fecha_nacimiento = '1991-02-16';
+        $user->genero = 'M';
+        $user->password = bcrypt('password');
+        $user->profile_photo_path = 'fotoestudio1.jpeg';
+        $user->portada_photo_path = 'fotoestudio2.jpg';
+        $user->estado = 1;
+        $user->assignRole('fotoestudio');
+        $user->save();
+        $user = new User();
+        $user->id=4;
+        $user->name = 'foto estudio 2';
+        $user->email = 'fotoestudio2@correo.com';
+        $user->fecha_nacimiento = '1991-02-16';
+        $user->genero = 'M';
+        $user->password = bcrypt('password');
+        $user->profile_photo_path = 'fotoestudio1.jpeg';
+        $user->portada_photo_path = 'fotoestudio2.jpg';
+        $user->estado = 0;
+        $user->assignRole('fotoestudio');
+        $user->save();
     }
 
-    public function cargarOrganizador(){
-        $organizador = new organizador();
-        $organizador->razon_social = 'Mary Eventos';
-        $organizador->nit = 123456789;
-        $organizador->save();
+    public function cargarEvento(){
+        $e = new Evento();
+        $e->evento_name = 'Bodas de Cristal Mary&Julio';
+        $e->descripcion = 'Acompaña a Mary & Julio en la celebracion de su aniversario de bodas de cristal';
+        $e->fecha = '2023-07-22';
+        $e->hora = '20:30';
+        $e->horafin = '23:59';
+        $e->lugar = 'Mary Eventos';
+        $e->foto = 'invitacion.png';
+        $e->estado = '0';   //0: Activo | 1: Terminado
+        $e->id_organizador = 2;
+        $e->id_fotoestudio = 3;
+        $e->save();
     }
 }

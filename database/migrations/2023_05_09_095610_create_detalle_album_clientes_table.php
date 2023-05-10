@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('detalle_album_clientes', function (Blueprint $table) {
             $table->id();
-            $table->decimal('precio_total');
-            $table->string('forma_pago');
 
-            //id_cliente
-            $table->unsignedBigInteger('id_cliente');
-            $table->foreign('id_cliente')->references('id')->on('users');
+            $table->unsignedBigInteger('id_foto');
+            $table->foreign('id_foto')->references('id')->on('fotos');
+
+            $table->unsignedBigInteger('id_album_cliente');
+            $table->foreign('id_album_cliente')->references('id')->on('album_clientes');
 
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('detalle_album_clientes');
     }
 };

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\album_evento;
 use App\Models\fotos;
+use App\Models\Evento;
 use Illuminate\Http\Request;
 
 class FotosController extends Controller
@@ -30,28 +32,46 @@ class FotosController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-
-        // if ($request->hasFile('foto_perfil')) {
-        //     $file = $request->file('foto_perfil');
-        //     $destino = 'img/fotosClientes/';
-        //     $foto_perfil = time() . '-' . $file->getClientOriginalName();
-        //     $subirImagen = $request->file('foto_perfil')->move($destino, $foto_perfil);
-        // } else {
-        //     $foto = "default.png";
-        // }
-
         $id = auth()->user()->id;
-        foreach ($request->file('imagenes') as $imagen) {
-            // Guardar la imagen en la carpeta public/storage/fotos
-            $ruta = $imagen->store('public/fotos');
-            // Crear un nuevo registro en la base de datos para la imagen
-            // dd($ruta);
-            $f = new fotos();
-            $f->foto_pach = $ruta;
-            $f->id_fotoestudio = $id;
-            $f->id_evento = $request->a;
-            $f->id_album_fotos = $request->a;
-            $f->save();
+        $event = Evento::where('id_fotoestudio', '=', $id)->latest()->first();
+        $d = $request->file('imagenes');
+        // dd($d[0]);
+        dd($event);
+        dd($request);
+
+        if ($event != null) {
+            $id = auth()->user()->id;
+            $album = new album_evento();
+            $album->nombre_album = $event->evento_name;
+            $album->descripcion = $event->descripcion;
+            $first_foto = $request->file('imagenes');
+            $album->foto_path = $first_foto[0];
+
+
+
+            $len = count($request->file('imagenes'));
+            dd($len);
+        if ($request->hasFile('imagenes')) {
+            $file = $request->file('imagenes');
+            $destino = 'img/fotosClientes/';
+            $foto = time() . '-' . $file->getClientOriginalName();
+            $subirImagen = $request->file('imagenes')->move($destino, $foto);
+        } else {
+            $foto = "default.png";
+        }
+
+
+            foreach ($request->file('imagenes')->move($destino, $file->getClientOriginalName()) as $imagen) {
+                // Guardar la imagen en la carpeta public/storage/fotos
+                $ruta = $imagen->store('public/fotos');
+                // Crear un nuevo registro en la base de datos para la imagen
+                $f = new fotos();
+                $f->foto_pach = $ruta;
+                $f->id_fotoestudio = $event->id_organizador;
+                $f->id_evento = $event->id;
+                $f->id_album_evento = $request->a;
+                $f->save();
+            }
         }
         return redirect()->route('foto.index');
     }

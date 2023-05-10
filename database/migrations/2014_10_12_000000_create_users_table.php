@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->char('genero',1)->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('razon_social')->nullable();
+            $table->string('nit')->nullable();
+            $table->string('puntuacion')->nullable();
+            $table->char('estado',1)->nullable();
             $table->string('password');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->string('portada_photo_path', 2048)->nullable();

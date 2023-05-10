@@ -2,18 +2,17 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PagoController;
+use App\Http\Controllers\FotosController;
 use App\Http\Controllers\VentaController;
-use App\Http\Controllers\EventoController;
-use App\Http\Controllers\PlanesController;
 use App\Http\Controllers\ClienteController;
+// use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrdenPagoController;
 use App\Http\Controllers\FotoestudioController;
 use App\Http\Controllers\OrganizadorController;
-use App\Http\Controllers\SuscripcionController;
+use Laravel\Cashier\Http\Controllers\WebhookController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\FotosController;
-use App\Http\Controllers\OrdenPagoController;
-use App\Http\Controllers\PagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +31,12 @@ Route::get('/', function () {
 
 // Route::get('/dashboard',[AuthenticatedSessionController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('index');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard/old', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard.old');
 
 
 Route::middleware('auth')->group(function () {
@@ -41,30 +44,28 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    ////////////////////////////////////////////////////////////////////////////////clientes
-    Route::resource('cliente', ClienteController::class) //->except(['show'])
+    ////////////////////////////////////////////////////////////////////////////////eventos
+    Route::resource('Cliente', clienteController::class)
         ->Parameters(['cliente' => 'c'])->names('Cliente');
 
-    ////////////////////////////////////////////////////////////////////////////////suscripcion
-    Route::resource('suscripcion', SuscripcionController::class)
-        ->Parameters(['suscripcion' => 's'])->names('suscripcion');
-
     ////////////////////////////////////////////////////////////////////////////////eventos
-    Route::resource('evento', EventoController::class)
-        ->Parameters(['evento' => 'e'])->names('evento');
+    // Route::resource('evento', EventoController::class)
+    //     ->Parameters(['evento' => 'e'])->names('evento');
 
     ////////////////////////////////////////////////////////////////////////////////organizadores
     Route::resource('organizadores', OrganizadorController::class)
         ->Parameters(['organizadores' => 'o'])->names('organizadores');
 
+    Route::get('organizadores.reportes', [OrganizadorController::class, 'reportes'])->middleware('auth')->name('organizadores.reportes');
     ////////////////////////////////////////////////////////////////////////////////fotoestudio
     Route::resource('fotoestudio', FotoestudioController::class)
         ->Parameters(['fotoestudio' => 'f'])->names('fotoestudio');
 
+    Route::get('fotoestudio.reportes', [FotoestudioController::class, 'reportes'])->middleware('auth')->name('fotoestudio.reportes');
     ////////////////////////////////////////////////////////////////////////////////fotos
     Route::resource('foto', FotosController::class)
-        ->Parameters(['foto' => 'f'])->names('foto');
-
+        ->Parameters(['foto' => 'f'])->names('foto')->except(['create']);
+    Route::get('subir.fotos', [FotosController::class, 'create'])->name('subir.fotos');
     ////////////////////////////////////////////////////////////////////////////////ventas
     Route::resource('ventas', VentaController::class)
         ->Parameters(['ventas' => 'v'])->names('ventas');
@@ -72,12 +73,19 @@ Route::middleware('auth')->group(function () {
     ////////////////////////////////////////////////////////////////////////////////ventas
     Route::resource('orden', OrdenPagoController::class)
         ->Parameters(['orden' => 'o'])->names('orden');
-
     ////////////////////////////////////////////////////////////////////////////////
-    Route::resource('/planes', PlanesController::class)
-        ->Parameters(['planes' => 'p'])->names('planes');
+    Route::get('/pagos', [PagoController::class, 'index'])->middleware('auth')->name('metodo.pagos');
+    ////////////////////////////////////////////////////////////////////////////////
+    Route::get('/suscripcion', [PagoController::class, 'suscripcion2'])->middleware('auth')->name('suscripcion');
+    ////////////////////////////////////////////////////////////////////////////////
+    Route::get('/felicidades', [PagoController::class, 'suscripcionPagada'])->middleware('auth')->name('felicidades');
+    ////////////////////////////////////////////////////////////////////////////////
+    Route::get('/suscripcion.fallida', [PagoController::class, 'suscripcionFallida'])->middleware('auth')->name('suscripcion.fallida');
     ////////////////////////////////////////////////////////////////////////////////
     Route::get('compararFotos', [FotoestudioController::class, 'compararFotos'])->name('compararFotos');
+    ////////////////////////////////////////////////////////////////////////////////
+    Route::get('crear.evento', [OrganizadorController::class, 'crearEvento'])->middleware('auth')->name('crear.evento');
+    ////////////////////////////////////////////////////////////////////////////////
 });
 
 require __DIR__ . '/auth.php';
@@ -110,13 +118,13 @@ Route::get('/pages/sign-in.html', function () {
 Route::get('/pages/sign-up.html', function () {
     return view('pages/sign-up');
 })->name('pages/sign-up');
-Route::get('/pages/tables.html', function () {
+Route::get('pages.tables', function () {
     return view('pages/tables');
-})->name('pages/tables');
+})->name('pages.tables');
 // Route::get('/pages/virtual-reality.html', function () {return view('pages/virtual-reality');})->name('pages/virtual-reality');
-
 ////////////////////////////////////////////////////////////////////////////////
-Route::get('/pagos', [PagoController::class, 'index'])->middleware('auth')->name('pagos.index');
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 Route::post(
     '/stripe/webhook',

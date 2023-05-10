@@ -21,8 +21,7 @@ class AuthenticatedSessionController extends Controller
     public function dashboard()
     {
         $id = auth()->user()->id;
-        $usuario = User::join('clientes','clientes.user_id','=','users.id')
-        ->where('user_id','=',$id)->first();
+        $usuario = User::where('id','=',$id)->first();
         // dd($usuario);
         return $usuario;
     }

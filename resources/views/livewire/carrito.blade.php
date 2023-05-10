@@ -63,14 +63,19 @@
                                         <div>
                                             <i class="p-2 text-white fas fa-wifi"></i>
                                             @if (auth()->user()->defaultPaymentMethod()->id == $p->id)
-                                            <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-1 py-1 rounded dark:bg-blue-900 dark:text-blue-300">Activa</span>
+                                                <span
+                                                    class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-1 py-1 rounded dark:bg-blue-900 dark:text-blue-300">Activa</span>
                                             @endif
                                         </div>
                                         <div>
-                                            <button wire:click="defaultPaymentMethod('{{$p->id}}')" wire:target="defaultPaymentMethod('{{$p->id}}')" wire:loading.attr="disabled">
+                                            <button wire:click="defaultPaymentMethod('{{ $p->id }}')"
+                                                wire:target="defaultPaymentMethod('{{ $p->id }}')"
+                                                wire:loading.attr="disabled">
                                                 <i class="p-2 text-white fas fa-star"></i>
                                             </button>
-                                            <button wire:click="deletePaymentMethod('{{$p->id}}')" wire:target="deletePaymentMethod('{{$p->id}}')" wire:loading.attr="disabled">
+                                            <button wire:click="deletePaymentMethod('{{ $p->id }}')"
+                                                wire:target="deletePaymentMethod('{{ $p->id }}')"
+                                                wire:loading.attr="disabled">
                                                 <i class="p-2 text-white fas fa-trash"></i>
                                             </button>
                                         </div>

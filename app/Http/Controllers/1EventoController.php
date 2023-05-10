@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Evento;
-use App\Models\organizador;
 use App\Models\album_evento;
-use Illuminate\Http\Request;
-use App\Models\album_cliente;
+use App\Models\fotoestudios;
 use App\Models\invitacion_evento;
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Intervention\Image\Facades\Image;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-class OrganizadorController extends Controller
+class EventoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,17 +46,20 @@ class OrganizadorController extends Controller
             $invitados = $invitados + 1;
         }
 
-
-        return view('VistaEventos.index', compact('eventos', 'coleccion', 'albunes', 'invitados'));
+        return view('VistaEventos.index', compact('eventos', 'coleccion', 'albunes','invitados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function crearEvento()
     {
         $fotoestudios = User::all();
         return view('VistaEventos.create', compact('fotoestudios'));
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -66,7 +68,8 @@ class OrganizadorController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $id = auth()->user()->id;
+
+
         // seccion foto del evento
         if ($request->hasFile('foto')) {
             $file = $request->file('foto');
@@ -102,6 +105,7 @@ class OrganizadorController extends Controller
 
 
         // seccion poner en ocupado al fotografo
+        $id = auth()->user()->id;
         $estado = User::where('id', '=', $id)->first();
         $estado->estado = 1;
         $estado->save();
@@ -133,7 +137,7 @@ class OrganizadorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(organizador $organizador)
+    public function show(Evento $evento)
     {
         //
     }
@@ -141,7 +145,7 @@ class OrganizadorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(organizador $organizador)
+    public function edit(Evento $evento)
     {
         //
     }
@@ -149,7 +153,7 @@ class OrganizadorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, organizador $organizador)
+    public function update(Request $request, Evento $evento)
     {
         //
     }
@@ -157,12 +161,8 @@ class OrganizadorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(organizador $organizador)
+    public function destroy(Evento $evento)
     {
         //
-    }
-
-    public function reportes(){
-        return view('VistaReportes.organizadores');
     }
 }

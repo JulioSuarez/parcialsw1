@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('entrada_qr');
 
             $table->unsignedBigInteger('id_cliente');
-            $table->foreign('id_cliente')->references('id')->on('clientes');
+            $table->foreign('id_cliente')->references('id')->on('users');
             $table->unsignedBigInteger('id_evento');
             $table->foreign('id_evento')->references('id')->on('eventos');
             $table->timestamps();

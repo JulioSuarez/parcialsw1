@@ -2,6 +2,7 @@
 
 @section('jcst')
     <div class="py-1">
-        {{-- @livewire('suscripciones') --}}
+        @livewire('suscripciones')
+        {{-- 123 --}}
     </div>
 @endsection

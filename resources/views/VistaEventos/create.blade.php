@@ -7,7 +7,7 @@
     </div>
 
 
-    <form action="{{ route('evento.store') }}" method="POST" enctype="multipart/form-data" class="max-w-md mx-auto">
+    <form action="{{ route('organizadores.store') }}" method="POST" enctype="multipart/form-data" class="max-w-md mx-auto">
         @csrf
         <div class="mb-4">
             <label for="evento_name" class="block text-gray-700 font-bold mb-2">Nombre del evento:</label>
@@ -30,9 +30,31 @@
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         </div>
         <div class="mb-4">
+            <label for="horafin" class="block text-gray-700 font-bold mb-2">Hora de Finalizacion:</label>
+            <input type="time" name="horafin" id="horafin"
+            value="23:59" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        <div class="mb-4">
             <label for="lugar" class="block text-gray-700 font-bold mb-2">Lugar:</label>
             <input type="text" name="lugar" id="lugar"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        {{-- elegir al foto estudio --}}
+        <div class="mb-4">
+            <label for="lugar" class="block text-gray-700 font-bold mb-2">Estudios Fotograficos Disponibles:</label>
+            <select name="fotoestudio"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option value="">Selecciona un Foto Estudio</option>
+                @foreach ($fotoestudios as $foto)
+                    @if ($foto->hasRole('fotoestudio'))
+                        @if ($foto->estado == 1)
+                            <option value="" disabled>{{ $foto->name }} (No disponible)</option>
+                        @else
+                            <option value="{{ $foto->id }}">{{ $foto->name }}</option>
+                        @endif
+                    @endif
+                @endforeach
+            </select>
         </div>
         <div class="mb-4">
             <label for="foto" class="block text-gray-700 font-bold mb-2">Foto:</label>
@@ -41,8 +63,7 @@
         </div>
         <div class="flex items-center justify-between">
             <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit">
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Registrar evento
             </button>
 

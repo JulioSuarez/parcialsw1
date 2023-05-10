@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\detalle_evento;
+use App\Models\album_cliente;
 use Illuminate\Http\Request;
 
-class DetalleEventoController extends Controller
+class AlbumClienteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class DetalleEventoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(detalle_evento $detalle_evento)
+    public function show(album_cliente $album_cliente)
     {
         //
     }
@@ -42,7 +42,7 @@ class DetalleEventoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(detalle_evento $detalle_evento)
+    public function edit(album_cliente $album_cliente)
     {
         //
     }
@@ -50,7 +50,7 @@ class DetalleEventoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, detalle_evento $detalle_evento)
+    public function update(Request $request, album_cliente $album_cliente)
     {
         //
     }
@@ -58,7 +58,7 @@ class DetalleEventoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(detalle_evento $detalle_evento)
+    public function destroy(album_cliente $album_cliente)
     {
         //
     }

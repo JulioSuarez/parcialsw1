@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -30,7 +29,7 @@ class ClienteController extends Controller
         $authController = new AuthenticatedSessionController();
         $usuario = $authController->dashboard();
 
-        $clientes = cliente::join('users','users.id','=','clientes.user_id')->get();
+        $clientes = User::get();
 
         return view('VistaCliente.create', compact('usuario','clientes'));
     }
@@ -72,14 +71,14 @@ class ClienteController extends Controller
         $u->save();
         $id_user = User::where('name', $u->name)->first();
         // dd($id_user->id);
-        $c = new cliente();
-        $c->foto_perfil = $foto_perfil;
+        // $c = new cliente();
+        // $c->foto_perfil = $foto_perfil;
         // $c->foto_portada = $foto_portada;
         // $c->telefono = $request->telefono;
-        $c->id_plan = 1;
-        $c->user_id = $id_user->id;
+        // $c->id_plan = 1;
+        // $c->user_id = $id_user->id;
 
-        $c->save();
+        // $c->save();
         // dd($c);
 
         return redirect()->route('Cliente.index');
@@ -88,34 +87,6 @@ class ClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(cliente $cliente)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(cliente $cliente)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, cliente $cliente)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(cliente $cliente)
-    {
-        //
-    }
 
     public function apiJS()
     {

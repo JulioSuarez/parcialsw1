@@ -16,6 +16,18 @@ class PagoController extends Controller
     {
         return view('VistaPagos.index');
     }
+    public function suscripcion2()
+    {
+        return view('VistaSuscripcion.suscripcion');
+    }
+    public function suscripcionPagada()
+    {
+        return view('VistaSuscripcion.felicidades');
+    }
+    public function suscripcionFallida()
+    {
+        return view('VistaSuscripcion.fallida');
+    }
 
     /**
      * Show the form for creating a new resource.

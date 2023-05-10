@@ -15,15 +15,16 @@ return new class extends Migration
             $table->id();
 
             $table->string('foto_path');
+            $table->string('estado')->default('0')->nullable();
 
             $table->unsignedBigInteger('id_fotoestudio');
-            $table->foreign('id_fotoestudio')->references('id')->on('fotoestudios');
+            $table->foreign('id_fotoestudio')->references('id')->on('users');
 
             $table->unsignedBigInteger('id_evento');
             $table->foreign('id_evento')->references('id')->on('eventos');
 
-            $table->unsignedBigInteger('id_album_fotos')->nullable();
-            $table->foreign('id_album_fotos')->references('id')->on('album_fotos');
+            $table->unsignedBigInteger('id_album_evento')->nullable();
+            $table->foreign('id_album_evento')->references('id')->on('album_eventos');
 
             $table->timestamps();
         });
