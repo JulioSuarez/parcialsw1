@@ -178,39 +178,20 @@ class FotoestudioController extends Controller
         // dd($request);
         // 1 subir las fotos del evento que elegimos y vincular con el album de ese evento
         // 2 subir las fotos originales y renderizadas
-        // dd($request->file('imagenes')[1]);
 
-        // $img = Image::make($request->file('imagenes')[1])
-        //             ->resize(300, null, function ($constraint) {
-        //                 $constraint->aspectRatio();
-        //             })->insert('public/img/watermark.png')->save('img/fotosClientes/');
         $contador = 0;
-        // $destino = 'img/fotosClientes/';
-        // $foto = time() . '-' . $request->file('imagenes')[0]->getClientOriginalName();
-        // $subirImagen = $request->file('imagenes')[0]->move($destino, $foto);
-        // $rutaImagen = $subirImagen->getrealPath();
-        // dd($subirImagen);
-        // dd($rutaImagen);
         $watermark = 'http://imgfz.com/i/o98QYGl.png';
         $watermarkOK = Image::make($watermark);
-        // dd($watermarkOK);
-        // $img = Image::make($rutaImagen)
-        //     ->resize(500, null, function ($constraint) {
-        //         $constraint->aspectRatio();
-        //     })
-        //     ->insert($watermarkOK,'center')->blur(1)
-        //     ->save($rutaImagen);
 
-        // dd($img);
         if ($request->hasFile('imagenes')) {
             foreach ($request->file('imagenes') as $imagen) {
-
+                // dd($imagen);
                 //almaceno las imagenes en mi almacen local para mis pruebas
                 $destino = 'img/fotosClientes/';
                 $foto = time() . '-' . $imagen->getClientOriginalName();
                 $subirImagen = $imagen->move($destino, $foto);
                 $rutaImagen = $subirImagen->getPathname();
-                // dd($rutaImagen);
+                // dd($subirImagen);
 
                 // renderizar las fotos y marcar de agua
                 $img = Image::make($rutaImagen)

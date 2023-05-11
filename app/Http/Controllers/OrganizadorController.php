@@ -40,9 +40,14 @@ class OrganizadorController extends Controller
         // dd($coleccion);
         $eventos = Evento::join('users', 'users.id', 'eventos.id_fotoestudio')
             ->join('album_eventos', 'album_eventos.id_evento', '=', 'eventos.id')
-            ->where('album_eventos.estado', '=', '1')
+            ->where('album_eventos.estado', '=', '0')
             ->select('eventos.*', 'users.name as fotoestudio', 'users.profile_photo_path as fotostudio_perfil', 'album_eventos.id as id_album_evento')->get();
         // dd($eventos);
+        $evento2s = Evento::join('users', 'users.id', 'eventos.id_fotoestudio')
+        ->join('album_eventos', 'album_eventos.id_evento', '=', 'eventos.id')
+        ->where('album_eventos.estado', '=', '1')
+        ->select('eventos.*', 'users.name as fotoestudio', 'users.profile_photo_path as fotostudio_perfil', 'album_eventos.id as id_album_evento')->get();
+    // dd($eventos);
 
 
         // seccion para saver la cantidad de envitados que tiene mi evento
@@ -53,7 +58,7 @@ class OrganizadorController extends Controller
         }
 
 
-        return view('VistaEventos.index', compact('eventos', 'coleccion', 'albunes', 'invitados'));
+        return view('VistaEventos.index', compact('eventos','evento2s', 'coleccion', 'albunes', 'invitados'));
     }
 
     /**
@@ -176,7 +181,7 @@ class OrganizadorController extends Controller
     {
         // dd($r);
         // $id = auth()->user()->id;
-        $fotos = fotos::where('id_album','=',$r->id)->get();
+        $fotos = fotos::where('id_album_evento','=',$r->id)->get();
         // $a = Evento::join('album_eventos', 'album_eventos.id_evento', '=', 'eventos.id')
         //     ->where('album_eventos.id', '=', $r->id)
         //     ->where('eventos.id_fotoestudio', $id)

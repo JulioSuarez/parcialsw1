@@ -7,41 +7,28 @@
             <table class="table-auto w-full">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2">#</th>
-                        <th class="px-4 py-2">Producto</th>
-                        <th class="px-4 py-2">Cantidad Vendida</th>
-                        <th class="px-4 py-2">Precio Unitario</th>
-                        <th class="px-4 py-2">Total</th>
+                        <th class="px-4 py-2">Foto</th>
+                        <th class="px-4 py-2">Aprobar</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     @forelse ($fotos as $f)
+                    {{-- @dd($f) --}}
                         <tr>
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                <div class="flex px-2 py-1">
+                                <div class="flex justify-center px-2 py-1">
                                     <div>
-                                        <img src="{{ asset('img/Eventos/' . $f->foto_original) }}"
+                                        <img src="{{ asset('img/fotoClientes/' . $f->foto_original) }}"
                                             class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
-                                            alt="user3" />
-                                    </div>
-                                    <div class="flex flex-col justify-center">
-                                        <h6 class="mb-0 leading-normal text-sm">
-                                            {{ $evento->evento_name }}
-                                        </h6>
-                                        <p class="mb-0 leading-tight text-xs text-slate-400">
-                                            {{ $evento->descripcion }}</p>
+                                            alt="foto" />
                                     </div>
                                 </div>
                             </td>
-                            <td class="border px-4 py-2">Producto 1</td>
-                            <td class="border px-4 py-2">50</td>
-                            <td class="border px-4 py-2">$10.00</td>
-                            <td class="border px-4 py-2">$500.00</td>
                         </tr>
                     @empty
                     @endforelse
-                    <tr>
+                    {{-- <tr>
                         <td class="border px-4 py-2">1</td>
                         <td class="border px-4 py-2">Producto 1</td>
                         <td class="border px-4 py-2">50</td>
@@ -61,14 +48,14 @@
                         <td class="border px-4 py-2">30</td>
                         <td class="border px-4 py-2">$20.00</td>
                         <td class="border px-4 py-2">$600.00</td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
-                <tfoot>
+                {{-- <tfoot>
                     <tr>
                         <td class="border px-4 py-2" colspan="4">Total de ventas:</td>
                         <td class="border px-4 py-2">$1400.00</td>
                     </tr>
-                </tfoot>
+                </tfoot> --}}
             </table>
         </div>
     </div>

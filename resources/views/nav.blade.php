@@ -1,13 +1,26 @@
 <div class="items-center block w-auto max-h-fit overflow-auto h-fit grow basis-full">
 
     <ul class="flex flex-col pl-0 mb-0">
-        <li class="mt-0.5 w-full">
-            <a class="py-2.7 shadow-soft-xl text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors"
-                href="{{ route('dashboard') }}">
-                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
-                    Home</span>
-            </a>
-        </li>
+
+        @can('xauer@example.org')
+            <li class="mt-0.5 w-full">
+                <a class="py-2.7 shadow-soft-xl text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 font-semibold text-slate-700 transition-colors"
+                    href="{{ route('dashboard') }}">
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
+                        Home</span>
+                </a>
+            </li>
+        @endcan
+
+        @can('cliente.index')
+            <li class="mt-0.5 w-full">
+                <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                    href="{{ route('novedades') }}">
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
+                        Novedades</span>
+                </a>
+            </li>
+        @endcan
 
         <li class="mt-0.5 w-full">
             <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
@@ -53,20 +66,20 @@
         @endcan
 
         @can('fotoestudio.index')
-        <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                href="{{ route('fotoestudio.reportes') }}">
-                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Reportes</span>
-            </a>
-        </li>
+            <li class="mt-0.5 w-full">
+                <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                    href="{{ route('fotoestudio.reportes') }}">
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Reportes</span>
+                </a>
+            </li>
         @endcan
         @can('organizador.index')
-        <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                href="{{ route('organizadores.reportes') }}">
-                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Reportes</span>
-            </a>
-        </li>
+            <li class="mt-0.5 w-full">
+                <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                    href="{{ route('organizadores.reportes') }}">
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Reportes</span>
+                </a>
+            </li>
         @endcan
 
 
@@ -145,7 +158,8 @@
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>credit-card</title>
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                    <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
+                                        fill-rule="nonzero">
                                         <g transform="translate(1716.000000, 291.000000)">
                                             <g transform="translate(453.000000, 454.000000)">
                                                 <path class="fill-slate-800 opacity-60"

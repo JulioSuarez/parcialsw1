@@ -39,7 +39,8 @@
                                         @foreach ($albunes as $ae)
                                             {{-- @dd($a) --}}
                                             @if ($ae->id == $a)
-                                                @foreach ($eventos as $evento)
+                                                @foreach ($evento2s as $evento)
+
                                                 {{-- @dd($evento->id) --}}
                                                     <tr>
                                                         <td
@@ -98,8 +99,8 @@
                                                                     @csrf
                                                                     <input type="text" name="id" class="hidden"
                                                                         value="{{ $evento->id }}">
-                                                                    <input type="submit" value="Subir fotos" class=""
-                                                                        onclick="return confirm('Desea subir fotos del evento: {{$evento->evento_name}}')">
+                                                                    <input type="submit" value="Aprobar Fotos" class=""
+                                                                        onclick="return confirm('Desea aprobar las fotos del evento: {{$evento->evento_name}}')">
                                                                 </form>
                                                             </button>
                                                         </div>

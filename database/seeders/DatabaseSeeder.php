@@ -73,6 +73,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'cliente.suscripcion'])->syncRoles([$dev, $cliente]);
         ////////////DASHBOARD
         Permission::create(['name' => 'dashboard.index'])->syncRoles([$dev, $fotoestudio, $organizador, $cliente]);
+        Permission::create(['name' => 'dashboard2'])->syncRoles([$dev, $fotoestudio, $organizador]);
         Permission::create(['name' => 'dashboard.ventas'])->syncRoles([$dev]);
         Permission::create(['name' => 'dashboard.pagos'])->syncRoles([$dev]);
         Permission::create(['name' => 'dashboard.cobros'])->syncRoles([$dev]);

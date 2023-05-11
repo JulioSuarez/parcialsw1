@@ -25,9 +25,13 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
+Route::get('/novedades', function () {
+    return view('VistaCliente.facebook');
+})->middleware(['auth', 'verified'])->name('novedades');
+
 Route::get('/', function () {
-    return view('index');
-});
+    return view('welcome');
+})->middleware(['auth', 'verified']);
 
 // Route::get('/dashboard',[AuthenticatedSessionController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', function () {
