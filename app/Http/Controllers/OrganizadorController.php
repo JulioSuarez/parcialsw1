@@ -28,17 +28,21 @@ class OrganizadorController extends Controller
         foreach ($event as $e) {
             // dd($e);
             $album = album_evento::where('id_evento', '=', $e->id)
-                ->where('estado', '=', 0)->first();
+                ->where('estado', '=', 1)->first();
             // dd($album);
             if (!is_null($album)) {
-                $coleccion->merge($album->id);
+                $coleccion = $coleccion->merge($album->id);
             }
         }
+        // dd($coleccion);
         $albunes = album_evento::get();
         // dd($coleccion);
         $eventos = Evento::join('users', 'users.id', 'eventos.id_fotoestudio')
-            ->select('eventos.*', 'users.name as fotoestudio', 'users.profile_photo_path as fotostudio_perfil')->get();
+            ->join('album_eventos', 'album_eventos.id_evento', '=', 'eventos.id')
+            ->where('album_eventos.estado', '=', '1')
+            ->select('eventos.*', 'users.name as fotoestudio', 'users.profile_photo_path as fotostudio_perfil','album_eventos.id as id_album_evento')->get();
         // dd($eventos);
+
 
         // seccion para saver la cantidad de envitados que tiene mi evento
         $invitados = 0;
@@ -102,7 +106,7 @@ class OrganizadorController extends Controller
 
 
         // seccion poner en ocupado al fotografo
-        $estado = User::where('id', '=', $id)->first();
+        $estado = User::where('id', '=', $request->fotoestudio)->first();
         $estado->estado = 1;
         $estado->save();
 
@@ -114,20 +118,20 @@ class OrganizadorController extends Controller
 
         // seccion de invitacion
         // genero el qr de la invitacion
-        $qr = QrCode::format('png')->size(500)->generate('Estas Invitado a ' . $request->evento_name, '../public/qrcodes/' . $foto);
+        // $qr = QrCode::format('png')->size(500)->generate('Estas Invitado a ' . $request->evento_name, '../public/qrcodes/' . $foto);
         // paso la invitacion a todos los usuarios con rol cliente
-        $u = User::get();
-        foreach ($u as $c) {
-            if ($c->getRole() == 2) {
-                $i = new invitacion_evento();
-                $i->entrada_qr = $foto;
-                $i->id_cliente = $c->id;
-                $i->id_evento = $e->id;
-                $i->save();
-            }
-        }
+        // $u = User::get();
+        // foreach ($u as $c) {
+        //     if ($c->getRole() == 2) {
+        //         $i = new invitacion_evento();
+        //         $i->entrada_qr = $foto;
+        //         $i->id_cliente = $c->id;
+        //         $i->id_evento = $e->id;
+        //         $i->save();
+        //     }
+        // }
 
-        return redirect()->route('evento.index');
+        return redirect()->route('organizadores.index');
     }
 
     /**
@@ -162,7 +166,20 @@ class OrganizadorController extends Controller
         //
     }
 
-    public function reportes(){
+    public function reportes()
+    {
         return view('VistaReportes.organizadores');
+    }
+
+    public function aprobadoTodo(Request $request)
+    {
+        dd($request);
+        return view('VistaEventos.aprobar');
+    }
+
+    public function aprobadoTodoStore(Request $request)
+    {
+        dd($request);
+        return redirect()->route('organizadores.edit');
     }
 }

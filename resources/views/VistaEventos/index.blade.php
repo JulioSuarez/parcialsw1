@@ -11,6 +11,7 @@
         <h1 class="text-3xl text-gray-900 dark:text-gray-100">Eventos</h1>
     </div>
     @if ($coleccion->isEmpty())
+        coleccion vacia
     @else
         <div class="flex flex-wrap -mx-3">
             <div class="flex-none w-full max-w-full px-3">
@@ -34,65 +35,87 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($colleccion as $a)
-                                        @if ($albunes->id == $a)
-                                        @endif
-                                        <tr>
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <div class="flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('img/Eventos/' . $evento->foto) }}"
-                                                            class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
-                                                            alt="user3" />
-                                                    </div>
-                                                    <div class="flex flex-col justify-center">
-                                                        <h6 class="mb-0 leading-normal text-sm">{{ $evento->evento_name }}
-                                                        </h6>
-                                                        <p class="mb-0 leading-tight text-xs text-slate-400">
-                                                            {{ $evento->descripcion }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                    @foreach ($coleccion as $a)
+                                        @foreach ($albunes as $ae)
+                                            {{-- @dd($a) --}}
+                                            @if ($ae->id == $a)
+                                                @foreach ($eventos as $evento)
+                                                    <tr>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                            <div class="flex px-2 py-1">
+                                                                <div>
+                                                                    <img src="{{ asset('img/Eventos/' . $evento->foto) }}"
+                                                                        class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
+                                                                        alt="user3" />
+                                                                </div>
+                                                                <div class="flex flex-col justify-center">
+                                                                    <h6 class="mb-0 leading-normal text-sm">
+                                                                        {{ $evento->evento_name }}
+                                                                    </h6>
+                                                                    <p class="mb-0 leading-tight text-xs text-slate-400">
+                                                                        {{ $evento->descripcion }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
 
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <div class="flex px-2 py-1">
-                                                    <div class="flex flex-col justify-center">
-                                                        <h6 class="mb-0 leading-normal text-sm">{{ $evento->lugar }}</h6>
-                                                        <p class="mb-0 leading-tight text-xs text-slate-400">
-                                                            {{ $evento->fecha }} a horas {{ $evento->hora }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <div class="flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('img/fotosClientes/' . $evento->fotostudio_perfil) }}"
-                                                            class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
-                                                            alt="user3" />
-                                                    </div>
-                                                    <div class="flex flex-col justify-center">
-                                                        <h6 class="mb-0 leading-normal text-sm">{{ $evento->fotoestudio }}
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <a href="#"
-                                                    class="font-semibold leading-tight text-xs text-slate-400">
-                                                    <svg fill="none" stroke="currentColor" stroke-width="1.0"
-                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                                        aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10">
-                                                        </path>
-                                                    </svg>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                            <div class="flex px-2 py-1">
+                                                                <div class="flex flex-col justify-center">
+                                                                    <h6 class="mb-0 leading-normal text-sm">
+                                                                        {{ $evento->lugar }}
+                                                                    </h6>
+                                                                    <p class="mb-0 leading-tight text-xs text-slate-400">
+                                                                        {{ $evento->fecha }} a horas {{ $evento->hora }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td
+                                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                            <div class="flex px-2 py-1">
+                                                                <div>
+                                                                    <img src="{{ asset('img/fotosClientes/' . $evento->fotostudio_perfil) }}"
+                                                                        class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
+                                                                        alt="user3" />
+                                                                </div>
+                                                                <div class="flex flex-col justify-center">
+                                                                    <h6 class="mb-0 leading-normal text-sm">
+                                                                        {{ $evento->fotoestudio }}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td
+                                                        class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                        @if ($evento->estado == 0)
+                                                            <div class="flex justify-center">
+                                                                <button
+                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+                                                                    <a href="{{ route('organizadores.aprobado',$evento->id) }}">Subir fotos</a>
+                                                                    {{-- <form action="{{ route('organizadores.aprobado') }}" method="POST" enctype="multipart/form-data" class="max-w-md mx-auto">
+                                                                        @csrf
+                                                                        <input type="text" name="id" class="hidden"
+                                                                            value="{{ $evento->id }}">
+                                                                            <input type="hidden" name="evento_name" value="{{$evento->evento_name}}">
+                                                                        <input type="submit" value="Aprobar todas" class=""
+                                                                            onclick="return confirm('Desea aprobar todas las fotos del evento: {{$evento->evento_name}}')">
+                                                                    </form> --}}
+                                                                </button>
+                                                            </div>
+                                                        @else
+                                                            <div class="flex justify-center">
+                                                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" disabled>
+                                                                    <a href="#">No disponible</a>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+
+                                                    </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                             </table>
