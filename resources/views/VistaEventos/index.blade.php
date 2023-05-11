@@ -40,6 +40,7 @@
                                             {{-- @dd($a) --}}
                                             @if ($ae->id == $a)
                                                 @foreach ($eventos as $evento)
+                                                {{-- @dd($evento->id) --}}
                                                     <tr>
                                                         <td
                                                             class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
@@ -88,28 +89,20 @@
                                                         </td>
                                                         <td
                                                         class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                        @if ($evento->estado == 0)
-                                                            <div class="flex justify-center">
-                                                                <button
-                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-                                                                    <a href="{{ route('organizadores.aprobado',$evento->id) }}">Subir fotos</a>
-                                                                    {{-- <form action="{{ route('organizadores.aprobado') }}" method="POST" enctype="multipart/form-data" class="max-w-md mx-auto">
-                                                                        @csrf
-                                                                        <input type="text" name="id" class="hidden"
-                                                                            value="{{ $evento->id }}">
-                                                                            <input type="hidden" name="evento_name" value="{{$evento->evento_name}}">
-                                                                        <input type="submit" value="Aprobar todas" class=""
-                                                                            onclick="return confirm('Desea aprobar todas las fotos del evento: {{$evento->evento_name}}')">
-                                                                    </form> --}}
-                                                                </button>
-                                                            </div>
-                                                        @else
-                                                            <div class="flex justify-center">
-                                                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" disabled>
-                                                                    <a href="#">No disponible</a>
-                                                                </button>
-                                                            </div>
-                                                        @endif
+                                                        <div class="flex justify-center">
+                                                            <button
+                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+                                                                {{-- <a href="{{ route('fotoestudio.edit',$evento->id) }}">Subir fotos</a> --}}
+                                                                <form action="{{ Route('organizadores.aprobado', $evento->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <input type="text" name="id" class="hidden"
+                                                                        value="{{ $evento->id }}">
+                                                                    <input type="submit" value="Subir fotos" class=""
+                                                                        onclick="return confirm('Desea subir fotos del evento: {{$evento->evento_name}}')">
+                                                                </form>
+                                                            </button>
+                                                        </div>
 
                                                     </td>
                                                     </tr>

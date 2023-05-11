@@ -12,6 +12,7 @@ use App\Models\invitacion_evento;
 use Intervention\Image\Facades\Image;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Models\fotos;
 
 class OrganizadorController extends Controller
 {
@@ -40,7 +41,7 @@ class OrganizadorController extends Controller
         $eventos = Evento::join('users', 'users.id', 'eventos.id_fotoestudio')
             ->join('album_eventos', 'album_eventos.id_evento', '=', 'eventos.id')
             ->where('album_eventos.estado', '=', '1')
-            ->select('eventos.*', 'users.name as fotoestudio', 'users.profile_photo_path as fotostudio_perfil','album_eventos.id as id_album_evento')->get();
+            ->select('eventos.*', 'users.name as fotoestudio', 'users.profile_photo_path as fotostudio_perfil', 'album_eventos.id as id_album_evento')->get();
         // dd($eventos);
 
 
@@ -171,10 +172,18 @@ class OrganizadorController extends Controller
         return view('VistaReportes.organizadores');
     }
 
-    public function aprobadoTodo(Request $request)
+    public function aprobadoTodo(Request $r)
     {
-        dd($request);
-        return view('VistaEventos.aprobar');
+        // dd($r);
+        // $id = auth()->user()->id;
+        $fotos = fotos::where('id_album','=',$r->id)->get();
+        // $a = Evento::join('album_eventos', 'album_eventos.id_evento', '=', 'eventos.id')
+        //     ->where('album_eventos.id', '=', $r->id)
+        //     ->where('eventos.id_fotoestudio', $id)
+        //     ->select('eventos.*', 'album_eventos.id as id_album_evento')->first();
+        // dd($eventos);
+
+        return view('VistaEventos.aprobar',compact('fotos'));
     }
 
     public function aprobadoTodoStore(Request $request)

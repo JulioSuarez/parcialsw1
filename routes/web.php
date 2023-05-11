@@ -26,7 +26,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 // Route::get('/dashboard',[AuthenticatedSessionController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
         ->Parameters(['organizadores' => 'o'])->names('organizadores');
 
     Route::get('organizadores.reportes', [OrganizadorController::class, 'reportes'])->middleware('auth')->name('organizadores.reportes');
-    Route::get('organizadores.aprobado', [OrganizadorController::class, 'aprobadoTodo'])->middleware('auth')->name('organizadores.aprobado');
+    Route::post('organizadores.aprobado', [OrganizadorController::class, 'aprobadoTodo'])->middleware('auth')->name('organizadores.aprobado');
     Route::post('organizadores.aprobado.store', [OrganizadorController::class, 'aprobadoTodoStore'])->middleware('auth')->name('organizadores.aprobado.store');
     ////////////////////////////////////////////////////////////////////////////////fotoestudio
     Route::resource('fotoestudio', FotoestudioController::class)

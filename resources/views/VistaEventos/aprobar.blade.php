@@ -2,7 +2,7 @@
 
 @section('jcst')
     <div class="max-w-screen-md mx-auto py-8 px-4">
-        <h1 class="text-2xl font-bold mb-4">Reporte de Ventas</h1>
+        <h1 class="text-2xl font-bold mb-4">aprobar fotos</h1>
         <div class="overflow-x-auto">
             <table class="table-auto w-full">
                 <thead>
@@ -15,6 +15,32 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    @forelse ($fotos as $f)
+                        <tr>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                <div class="flex px-2 py-1">
+                                    <div>
+                                        <img src="{{ asset('img/Eventos/' . $f->foto_original) }}"
+                                            class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
+                                            alt="user3" />
+                                    </div>
+                                    <div class="flex flex-col justify-center">
+                                        <h6 class="mb-0 leading-normal text-sm">
+                                            {{ $evento->evento_name }}
+                                        </h6>
+                                        <p class="mb-0 leading-tight text-xs text-slate-400">
+                                            {{ $evento->descripcion }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="border px-4 py-2">Producto 1</td>
+                            <td class="border px-4 py-2">50</td>
+                            <td class="border px-4 py-2">$10.00</td>
+                            <td class="border px-4 py-2">$500.00</td>
+                        </tr>
+                    @empty
+                    @endforelse
                     <tr>
                         <td class="border px-4 py-2">1</td>
                         <td class="border px-4 py-2">Producto 1</td>
