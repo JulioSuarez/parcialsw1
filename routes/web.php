@@ -33,6 +33,10 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware(['auth', 'verified']);
 
+Route::get('/login', function () {
+    return view('welcome');
+})->middleware(['auth', 'verified']);
+
 // Route::get('/dashboard',[AuthenticatedSessionController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', function () {
     return view('index');
