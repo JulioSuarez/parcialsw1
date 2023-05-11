@@ -30,8 +30,8 @@ Route::get('/novedades', function () {
 })->middleware(['auth', 'verified'])->name('novedades');
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('dashboard');
+})->middleware(['auth', 'verified']);
 
 Route::get('/login', function () {
     return view('auth.login');
