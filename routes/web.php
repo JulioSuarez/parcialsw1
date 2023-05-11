@@ -29,11 +29,11 @@ Route::get('/novedades', function () {
     return view('VistaCliente.facebook');
 })->middleware(['auth', 'verified'])->name('novedades');
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified']);
+// Route::get('/', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified']);
 
-Route::get('/login', function () {
+Route::get('/', function () {
     return view('auth.login');
 });
 
