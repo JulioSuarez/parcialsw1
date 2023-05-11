@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\fotos;
 use App\Models\Evento;
-use App\Models\cliente;
 use App\Models\fotoestudio;
 use App\Models\album_evento;
 use Illuminate\Http\Request;
 use Aws\Exception\AwsException;
+use App\Models\invitacion_evento;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 use Aws\Rekognition\RekognitionClient;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -114,61 +115,137 @@ class FotoestudioController extends Controller
     public function index()
     {
         $fotoSubida = User::get();
-        // $id = auth()->user()->id;
-        // $habilitado = Evento::where('id_fotoestudio','=',$id)->first();
+
+        $id = auth()->user()->id;
+        $event = Evento::where('id_fotoestudio', '=', $id)->get();
+        $coleccion = collect([]);
+        // dd($coleccion);
+        foreach ($event as $e) {
+            // dd($e);
+            $album = album_evento::where('id_evento', '=', $e->id)
+                ->where('estado', '=', 0)->first();
+            // dd($album->id);
+            if (!is_null($album)) {
+                $coleccion = $coleccion->merge($album->id);
+            }
+            // dd($coleccion);
+        }
+        $albunes = album_evento::get();
+        // $eventos = Evento::get();
+        $eventos = Evento::join('users', 'users.id', 'eventos.id_fotoestudio')
+            ->join('album_eventos', 'album_eventos.id_evento', '=', 'eventos.id')
+            ->where('eventos.estado', '=', '0')
+            ->select('eventos.*', 'users.name as fotoestudio', 'users.profile_photo_path as fotostudio_perfil', 'album_eventos.id as id_album_evento')->get();
+        // dd($eventos);
+
+        // seccion para saver la cantidad de envitados que tiene mi evento
+        $invitados = 0;
+        foreach ($eventos as $e) {
+            $i = invitacion_evento::where('id_evento', '=', $e->id)->first();
+            $invitados = $invitados + 1;
+        }
+
+        // $habilitado = Evento::where('id_fotoestudio', '=', $id)
+        //     ->where('eventos.fecha', '>', now())
+        //     ->where('eventos.estado', '=', '0')->get();
         // dd($habilitado);
 
-        // seccion para el perfil
-        $authController = new AuthenticatedSessionController();
-        $usuario = $authController->dashboard();
 
-        return view('VistaFotoestudio.index', compact('fotoSubida', 'usuario'));
+        return view('VistaFotoestudio.index', compact('fotoSubida', 'coleccion', 'event', 'eventos', 'invitados'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $r)
     {
-        // seccion para el perfil
-        $authController = new AuthenticatedSessionController();
-        $usuario = $authController->dashboard();
+        // dd($r);
+        $id = auth()->user()->id;
+        $a = Evento::join('album_eventos', 'album_eventos.id_evento', '=', 'eventos.id')
+            ->where('album_eventos.id', '=', $r->id)
+            ->where('eventos.id_fotoestudio', $id)
+            ->select('eventos.*', 'album_eventos.id as id_album_evento')->first();
+        // dd($eventos);
 
-        return view('VistaFoto.create',compact('usuario'));
+        return view('VistaFotoestudio.create', compact('a'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Fotografo Store subir fotos del evento
      */
     public function store(Request $request)
     {
-        $id = auth()->user()->id;
-        $event = Evento::where('id_fotoestudio', '=', $id)->get();
-        dd($event);
         // dd($request);
+        // 1 subir las fotos del evento que elegimos y vincular con el album de ese evento
+        // 2 subir las fotos originales y renderizadas
+        // dd($request->file('imagenes')[1]);
 
-        // if ($request->hasFile('foto_perfil')) {
-        //     $file = $request->file('foto_perfil');
-        //     $destino = 'img/fotosClientes/';
-        //     $foto_perfil = time() . '-' . $file->getClientOriginalName();
-        //     $subirImagen = $request->file('foto_perfil')->move($destino, $foto_perfil);
-        // } else {
-        //     $foto = "default.png";
-        // }
+        // $img = Image::make($request->file('imagenes')[1])
+        //             ->resize(300, null, function ($constraint) {
+        //                 $constraint->aspectRatio();
+        //             })->insert('public/img/watermark.png')->save('img/fotosClientes/');
+        $contador = 0;
+        // $destino = 'img/fotosClientes/';
+        // $foto = time() . '-' . $request->file('imagenes')[0]->getClientOriginalName();
+        // $subirImagen = $request->file('imagenes')[0]->move($destino, $foto);
+        // $rutaImagen = $subirImagen->getrealPath();
+        // dd($subirImagen);
+        // dd($rutaImagen);
+        $watermark = 'http://imgfz.com/i/o98QYGl.png';
+        $watermarkOK = Image::make($watermark);
+        // dd($watermarkOK);
+        // $img = Image::make($rutaImagen)
+        //     ->resize(500, null, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //     })
+        //     ->insert($watermarkOK,'center')->blur(1)
+        //     ->save($rutaImagen);
 
+        // dd($img);
+        if ($request->hasFile('imagenes')) {
+            foreach ($request->file('imagenes') as $imagen) {
 
-        foreach ($request->file('imagenes') as $imagen) {
-            // Guardar la imagen en la carpeta public/storage/fotos
-            $ruta = $imagen->store('public/fotos');
-            // Crear un nuevo registro en la base de datos para la imagen
-            // dd($ruta);
-            $f = new fotos();
-            $f->foto_pach = $ruta;
-            $f->id_fotoestudio = $id;
-            $f->id_evento = $request->a;
-            $f->id_album_evento = $request->a;
-            $f->save();
+                //almaceno las imagenes en mi almacen local para mis pruebas
+                $destino = 'img/fotosClientes/';
+                $foto = time() . '-' . $imagen->getClientOriginalName();
+                $subirImagen = $imagen->move($destino, $foto);
+                $rutaImagen = $subirImagen->getPathname();
+                // dd($rutaImagen);
+
+                // renderizar las fotos y marcar de agua
+                $img = Image::make($rutaImagen)
+                ->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->insert($watermarkOK,'center')->blur(1)
+                ->save($rutaImagen);
+
+                $contador = $contador + 1;
+
+                // Crear un nuevo registro en la base de datos local
+                $f = new fotos();
+                $f->foto_original = $foto;
+                $f->foto_renderizada = $destino . $foto;
+                $f->estado = 0;
+                $f->id_fotoestudio = $request->evento_id_fotoestudio;
+                $f->id_evento = $request->evento_id;
+                $f->id_album_evento = $request->evento_id_album_evento;
+                $f->save();
+            }
+        } else {
+            return redirect()->route('fotoestudio.index');
         }
+
+        // actualizar el estado del album a 1: fotos cargadas
+        $album_evento = album_evento::where('id', '=', $request->evento_id_album_evento)->first();
+        $album_evento->estado = 1;
+        $album_evento->save();
+
+        //liberar al fotografo poner su estado en 0: disponible
+        $fotografo = User::where('id', $request->evento_id_fotoestudio)->first();
+        $fotografo->estado = 0;
+        $fotografo->save();
+
         return redirect()->route('fotoestudio.index');
     }
 
@@ -185,7 +262,7 @@ class FotoestudioController extends Controller
      */
     public function edit(fotoestudio $fotoestudio)
     {
-        //
+        dd($fotoestudio);
     }
 
     /**
@@ -203,7 +280,8 @@ class FotoestudioController extends Controller
     {
         //
     }
-    public function reportes(){
+    public function reportes()
+    {
         return view('VistaReportes.fotoestudio');
     }
 }

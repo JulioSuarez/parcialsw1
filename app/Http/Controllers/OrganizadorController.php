@@ -94,7 +94,7 @@ class OrganizadorController extends Controller
         // seccion album del evento
         $a = new album_evento();
         $a->nombre_album = $request->evento_name;
-        $a->descripcio = $request->descripcion;
+        $a->descripcion = $request->descripcion;
         $a->portada = $foto;
         $a->estado = '0'; //pendiente (no tiene fotos cargadas)
         $a->id_evento = $e->id;
@@ -107,10 +107,10 @@ class OrganizadorController extends Controller
         $estado->save();
 
         // seccion de renderizar imagen de portada del evento
-        $img = Image::make($request->file('foto'))
-            ->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->insert('public/img/watermark.png')->save($destino . $foto);
+        // $img = Image::make($request->file('foto'))
+        //     ->resize(300, null, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //     })->insert('public/img/watermark.png')->save($destino . $foto);
 
         // seccion de invitacion
         // genero el qr de la invitacion

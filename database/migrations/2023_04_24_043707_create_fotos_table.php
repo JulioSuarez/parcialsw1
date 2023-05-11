@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('fotos', function (Blueprint $table) {
             $table->id();
 
-            $table->string('foto_path');
+            $table->string('foto_original');
+            $table->string('foto_renderizada');
             $table->string('estado')->default('0')->nullable();
 
             $table->unsignedBigInteger('id_fotoestudio');

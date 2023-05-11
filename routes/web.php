@@ -62,10 +62,11 @@ Route::middleware('auth')->group(function () {
         ->Parameters(['fotoestudio' => 'f'])->names('fotoestudio');
 
     Route::get('fotoestudio.reportes', [FotoestudioController::class, 'reportes'])->middleware('auth')->name('fotoestudio.reportes');
+    Route::post('subir.fotos', [FotoestudioController::class, 'create'])->name('subir.fotos');
+    Route::post('subir.fotos.store', [FotoestudioController::class, 'store'])->name('subir.fotos.store');
     ////////////////////////////////////////////////////////////////////////////////fotos
     Route::resource('foto', FotosController::class)
         ->Parameters(['foto' => 'f'])->names('foto')->except(['create']);
-    Route::get('subir.fotos', [FotosController::class, 'create'])->name('subir.fotos');
     ////////////////////////////////////////////////////////////////////////////////ventas
     Route::resource('ventas', VentaController::class)
         ->Parameters(['ventas' => 'v'])->names('ventas');

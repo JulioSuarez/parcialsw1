@@ -20,9 +20,9 @@ class FotosController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(fotos $fotos)
     {
-
+        dd($fotos);
         return view('VistaFoto.create');
     }
 

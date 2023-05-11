@@ -2,11 +2,11 @@
 
 @section('jcst')
     {{-- boton subir fotos --}}
-    <h2 class="text-center">
+    {{-- <h2 class="text-center">
         crear album de fotos de un evento
-    </h2>
+    </h2> --}}
 
-    @php
+    {{-- @php
         // crear esta opcion en una lista de eventos en el index del fotoestudio (eventos donde trabajo el fotografo)
         use App\Models\Evento;
         $id = auth()->user()->id;
@@ -27,7 +27,7 @@
                 <a href="#">NO Subir fotos</a>
             </button>
         </div>
-    @endif
+    @endif --}}
 
 
 
@@ -78,31 +78,33 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($colleccion as $e)
+                                    @foreach ($coleccion as $e)
                                         {{-- tengo una coleccion de id de todos los eventos que tengo asignado como fotografo --}}
-                                        @if ($evento->id == $e)
-                                            {{-- true: me muestra la lista de los eventos asignados --}}
-                                        @endif
-                                        <tr>
-                                            {{-- datos del evento --}}
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <div class="flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('img/Eventos/' . $evento->foto) }}"
-                                                            class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
-                                                            alt="user3" />
-                                                    </div>
-                                                    <div class="flex flex-col justify-center">
-                                                        <h6 class="mb-0 leading-normal text-sm">{{ $evento->evento_name }}
-                                                        </h6>
-                                                        <p class="mb-0 leading-tight text-xs text-slate-400">
-                                                            {{ $evento->descripcion }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            {{-- verifico si soy yo el asignado --}}
-                                            <td
+                                        @foreach ($eventos as $evento)
+                                            @if ($evento->id == $e)
+                                                {{-- @dd($e) --}}
+                                                {{-- true: me muestra la lista de los eventos asignados --}}
+                                                <tr>
+                                                    {{-- datos del evento --}}
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                        <div class="flex px-2 py-1">
+                                                            <div>
+                                                                <img src="{{ asset('img/Eventos/' . $evento->foto) }}"
+                                                                    class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
+                                                                    alt="user3" />
+                                                            </div>
+                                                            <div class="flex flex-col justify-center">
+                                                                <h6 class="mb-0 leading-normal text-sm">
+                                                                    {{ $evento->evento_name }}
+                                                                </h6>
+                                                                <p class="mb-0 leading-tight text-xs text-slate-400">
+                                                                    {{ $evento->descripcion }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    {{-- verifico si soy yo el asignado --}}
+                                                    {{-- <td
                                                 class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                                 <div class="flex px-2 py-1">
                                                     <div>
@@ -115,22 +117,38 @@
                                                         </h6>
                                                     </div>
                                                 </div>
-                                            </td>
-                                            {{-- boton para subir las fotos de este evento, enviar el ID de este evento --}}
-                                            <td
-                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <a href="#"
-                                                    class="font-semibold leading-tight text-xs text-slate-400">
-                                                    <svg fill="none" stroke="currentColor" stroke-width="1.0"
-                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                                        aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10">
-                                                        </path>
-                                                    </svg>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                            </td> --}}
+
+                                                    {{-- boton para subir las fotos de este evento, enviar el ID de este evento --}}
+                                                    <td
+                                                        class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                        @if ($evento->estado == 0)
+                                                            <div class="flex justify-center">
+                                                                <button
+                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+                                                                    {{-- <a href="{{ route('fotoestudio.edit',$evento->id) }}">Subir fotos</a> --}}
+                                                                    <form action="{{ Route('subir.fotos', $evento->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="text" name="id" class="hidden"
+                                                                            value="{{ $evento->id }}">
+                                                                        <input type="submit" value="Subir fotos" class=""
+                                                                            onclick="return confirm('Desea subir fotos del evento: {{$evento->evento_name}}')">
+                                                                    </form>
+                                                                </button>
+                                                            </div>
+                                                        @else
+                                                            <div class="flex justify-center">
+                                                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" disabled>
+                                                                    <a href="#">No disponible Subir fotos</a>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                             </table>
@@ -165,7 +183,7 @@
 
 
 
-
+{{--
     <h2 class="text-center">
         Comparar las fotos que subi con las fotos de los perfiles de los clientes
     </h2>
@@ -182,7 +200,7 @@
             <div class="flex items-center justify-between">
 
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-                    {{-- <a href="{{ route('compararFotos') }}">Activar IA</a> --}}
+
                     <span>Activar IA</span>
                 </button>
             </div>
@@ -191,5 +209,5 @@
     </div>
     <h2 class="text-center">
         ofertar las fotos
-    </h2>
+    </h2> --}}
 @endsection

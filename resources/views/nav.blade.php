@@ -52,12 +52,22 @@
             </li>
         @endcan
 
+        @can('fotoestudio.index')
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('fotoestudio.reportes') }}">
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Reportes</span>
+            </a>
+        </li>
+        @endcan
+        @can('organizador.index')
         <li class="mt-0.5 w-full">
             <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
                 href="{{ route('organizadores.reportes') }}">
                 <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Reportes</span>
             </a>
         </li>
+        @endcan
 
 
         {{-- seccion de componentes solo puede ser visualizado por los devs xD --}}
