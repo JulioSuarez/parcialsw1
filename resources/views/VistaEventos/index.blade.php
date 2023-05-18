@@ -2,6 +2,13 @@
 
 @section('jcst')
 
+    @if ( session('success'))
+        <div class="bg-green-500 text-white text-center animate-bounce" x-data="{ show: true }" x-show="show"
+            x-init="setTimeout(() => show = false, 5000)">
+            {{ session('success') }}
+        </div>
+    @endif
+
 
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         <a href="{{ route('crear.evento') }}">Crear Eventos</a>
@@ -40,8 +47,7 @@
                                             {{-- @dd($a) --}}
                                             @if ($ae->id == $a)
                                                 @foreach ($evento2s as $evento)
-
-                                                {{-- @dd($evento->id) --}}
+                                                    {{-- @dd($evento->id) --}}
                                                     <tr>
                                                         <td
                                                             class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
@@ -77,7 +83,7 @@
                                                             class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                                             <div class="flex px-2 py-1">
                                                                 <div>
-                                                                    <img src="{{ asset('img/fotosClientes/' . $evento->fotostudio_perfil) }}"
+                                                                    <img src="{{ $evento->fotostudio_perfil }}"
                                                                         class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                                         alt="user3" />
                                                                 </div>
@@ -89,23 +95,25 @@
                                                             </div>
                                                         </td>
                                                         <td
-                                                        class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                        <div class="flex justify-center">
-                                                            <button
-                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-                                                                {{-- <a href="{{ route('fotoestudio.edit',$evento->id) }}">Subir fotos</a> --}}
-                                                                <form action="{{ Route('organizadores.aprobado', $evento->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    <input type="text" name="id" class="hidden"
-                                                                        value="{{ $evento->id }}">
-                                                                    <input type="submit" value="Aprobar Fotos" class=""
-                                                                        onclick="return confirm('Desea aprobar las fotos del evento: {{$evento->evento_name}}')">
-                                                                </form>
-                                                            </button>
-                                                        </div>
+                                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                            <div class="flex justify-center">
+                                                                <button
+                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+                                                                    {{-- <a href="{{ route('fotoestudio.edit',$evento->id) }}">Subir fotos</a> --}}
+                                                                    <form
+                                                                        action="{{ Route('organizadores.aprobado', $evento->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <input type="text" name="id" class="hidden"
+                                                                            value="{{ $evento->id }}">
+                                                                        <input type="submit" value="Aprobar Fotos"
+                                                                            class=""
+                                                                            onclick="return confirm('Desea aprobar las fotos del evento: {{ $evento->evento_name }}')">
+                                                                    </form>
+                                                                </button>
+                                                            </div>
 
-                                                    </td>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -183,7 +191,7 @@
                                             class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                             <div class="flex px-2 py-1">
                                                 <div>
-                                                    <img src="{{ asset('img/fotosClientes/' . $evento->fotostudio_perfil) }}"
+                                                    <img src="{{ $evento->fotostudio_perfil }}"
                                                         class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                         alt="user3" />
                                                 </div>

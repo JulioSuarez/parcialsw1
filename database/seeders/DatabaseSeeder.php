@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\album_evento;
 use Carbon\Carbon;
 use Stripe\Stripe;
 use App\Models\User;
+use Aws\S3\S3Client;
 use Stripe\Customer;
 use App\Models\Evento;
 use App\Models\planes;
@@ -15,9 +15,11 @@ use App\Models\planes;
 //libreria de roles by Julico
 use App\Models\cliente;
 use App\Models\organizador;
+use App\Models\album_evento;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 
 
@@ -87,18 +89,62 @@ class DatabaseSeeder extends Seeder
 
     public function cargarUsuarioPruebas()
     {
-
-        // Configura la llave secreta de Stripe
         Stripe::setApiKey('sk_test_51MF8jhEeOK3PttV3mH0ZQV6cLESOq9pILt95PZZmMhrcopvNPtWXraVPHgAlgh2Dj87Cc9sOXKbZYOsJT7GQVA1p00eMA1LNGp');
+
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'AKIAYJVJS4X563AM7AFW',
+                'secret' => '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',
+            ],
+        ]);
+
+
+        $images = [
+            public_path('img/fotosClientes/JCST.png'),
+            // public_path('img/fotosClientes/Julico.jpg'),
+            public_path('img/fotosClientes/organizador1.jpg'),
+            // public_path('img/fotosClientes/organizador2.jpeg'),
+            public_path('img/fotosClientes/fotoestudio1.jpeg'),
+            // public_path('img/fotosClientes/fotoestudio2.jpg'),
+            public_path('img/fotosClientes/fotoestudio3.jpg'),
+            // public_path('img/fotosClientes/fotoestudio4.jpg'),
+        ];
+
+
+        $portadas = [
+            // public_path('img/fotosClientes/JCST.png'),
+            public_path('img/fotosClientes/Julico.jpg'),
+            // public_path('img/fotosClientes/organizador1.jpg'),
+            public_path('img/fotosClientes/organizador2.jpeg'),
+            // public_path('img/fotosClientes/fotoestudio1.jpg'),
+            public_path('img/fotosClientes/fotoestudio2.jpg'),
+            // public_path('img/fotosClientes/fotoestudio3.jpeg'),
+            public_path('img/fotosClientes/fotoestudio4.jpg'),
+            // public_path('img/fotosClientes/default.png'),
+            // public_path('img/fotosClientes/default0.png'),
+            // public_path('img/fotosClientes/default1.png'),
+            // public_path('img/fotosClientes/default2.png'),
+            // public_path('img/fotosClientes/default3.png'),
+            // public_path('img/fotosClientes/default4.png'),
+            // public_path('img/fotosClientes/default5.png'),
+            // public_path('img/fotosClientes/default6.png'),
+            // public_path('img/fotosClientes/default7.png'),
+            // public_path('img/fotosClientes/default8.png'),
+            // public_path('img/fotosClientes/default9.png'),
+        ];
+
+
         $users = [
             [
                 'name' => 'Julio',
                 'email' => 'julio@correo.com',
                 'fecha_nacimiento' => '1991-02-16',
                 'genero' => 'M',
-                'password' => 'password',
-                'profile_photo_path' => 'JCST.png',
-                'portada_photo_path' => 'Julico.jpg',
+                // 'password' => 'password',
+                // 'profile_photo_path' => $imagen_url,
+                // 'portada_photo_path' => 'Julico.jpg',
                 'estado' => 0,
                 'role' => 'dev',
             ],
@@ -107,9 +153,9 @@ class DatabaseSeeder extends Seeder
                 'email' => 'organizador@correo.com',
                 'fecha_nacimiento' => '1991-02-16',
                 'genero' => 'M',
-                'password' => 'password',
-                'profile_photo_path' => 'organizador1.jpg',
-                'portada_photo_path' => 'organizador2.jpeg',
+                // 'password' => 'password',
+                // 'profile_photo_path' => 'organizador1.jpg',
+                // 'portada_photo_path' => 'organizador2.jpeg',
                 'estado' => 0,
                 'role' => 'organizador',
             ],
@@ -118,9 +164,9 @@ class DatabaseSeeder extends Seeder
                 'email' => 'fotoestudio@correo.com',
                 'fecha_nacimiento' => '1991-02-16',
                 'genero' => 'M',
-                'password' => 'password',
-                'profile_photo_path' => 'fotoestudio1.jpeg',
-                'portada_photo_path' => 'fotoestudio2.jpg',
+                // 'password' => 'password',
+                // 'profile_photo_path' => 'fotoestudio1.jpeg',
+                // 'portada_photo_path' => 'fotoestudio2.jpg',
                 'estado' => 1,
                 'role' => 'fotoestudio',
             ],
@@ -129,40 +175,108 @@ class DatabaseSeeder extends Seeder
                 'email' => 'fotoestudio2@correo.com',
                 'fecha_nacimiento' => '1991-02-16',
                 'genero' => 'M',
-                'password' => 'password',
-                'profile_photo_path' => 'fotoestudio1.jpeg',
-                'portada_photo_path' => 'fotoestudio2.jpg',
+                // 'password' => 'password',
+                // 'profile_photo_path' => 'fotoestudio3.jpeg',
+                // 'portada_photo_path' => 'fotoestudio4.jpg',
                 'estado' => 0,
                 'role' => 'fotoestudio',
             ],
         ];
 
-        foreach ($users as $userData) {
-            // Crea el usuario en la base de datos de Laravel
-            $user = new User();
-            $user->name = $userData['name'];
-            $user->email = $userData['email'];
-            $user->fecha_nacimiento = $userData['fecha_nacimiento'];
-            $user->genero = $userData['genero'];
-            $user->password = bcrypt($userData['password']);
-            $user->profile_photo_path = $userData['profile_photo_path'];
-            $user->portada_photo_path = $userData['portada_photo_path'];
-            $user->assignRole($userData['role']);
-            if (isset($userData['estado'])) {
-                $user->estado = $userData['estado'];
-            }
-            $user->save();
 
-            // Crea un nuevo cliente en Stripe
-            $customer = Customer::create([
-                'email' => $user->email,
-                'name' => $user->name,
+
+
+
+        for ($i = 0; $i < 4; $i++) {
+            $portada = $portadas[$i];
+            $portada_name = uniqid() . '.png';
+
+            $result_portada = $s3->putObject([
+                'Bucket' => 'julico-bucket03',
+                'Key' => 'ruta/' . $portada_name,
+                'Body' => fopen($portada, 'r'),
+                'ACL' => 'public-read',
             ]);
 
-            // Asigna el ID del cliente de Stripe al usuario
-            $user->stripe_id = $customer->id;
-            $user->save();
+            $image = $images[$i];
+            $imageName = uniqid() . '.png';
+
+            $result = $s3->putObject([
+                'Bucket' => 'julico-bucket03',
+                'Key' => 'ruta/' . $imageName,
+                'Body' => fopen($image, 'r'),
+                /*
+                'Key' => 'ruta/'.$profilePhotoName,
+                'Body' => fopen($profilePhotoPath, 'r'),
+                */
+                'ACL' => 'public-read',
+            ]);
+
+            // Genera una URL pública para acceder a la imagen
+            $imageUrl = $result['ObjectURL'];
+            $portada_s3 = $result_portada['ObjectURL'];
+
+
+
+            // foreach ($users as $userData) {
+                // Crea el usuario en la base de datos de Laravel
+                $user = new User();
+                $user->name = $users[$i]['name'];
+                $user->email = $users[$i]['email'];
+                $user->fecha_nacimiento = $users[$i]['fecha_nacimiento'];
+                $user->genero = $users[$i]['genero'];
+                $user->password = bcrypt('password');
+                $user->profile_photo_path = $imageUrl;
+                $user->portada_photo_path = $portada_s3;
+                $user->assignRole($users[$i]['role']);
+                if (isset($users[$i]['estado'])) {
+                    $user->estado = $users[$i]['estado'];
+                }
+                $user->save();
+
+                // Crea un nuevo cliente en Stripe
+                $customer = Customer::create([
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ]);
+
+                // Asigna el ID del cliente de Stripe al usuario
+                $user->stripe_id = $customer->id;
+                $user->save();
+            // }
         }
+
+
+
+
+
+        // $organizador1 = public_path('img/fotosClientes/organizador1.jpg');
+        // $organizador2 = public_path('img/fotosClientes/organizador2.jpeg');
+        // $fotoestudio1 = public_path('img/fotosClientes/fotoestudio1.jpg');
+        // $fotoestudio2 = public_path('img/fotosClientes/fotoestudio2.jpg');
+        // $fotoestudio4 = public_path('img/fotosClientes/fotoestudio4.jpg');
+        // $fotoestudio3 = public_path('img/fotosClientes/fotoestudio3.jpeg');
+        // $profilePhotoPath = public_path('img/fotosClientes/JCST.png');
+        // $profilePhotoName = 'JCST_' . uniqid() . '.png';
+
+        // $result = $s3->putObject([
+        //     'Bucket' => 'julico-bucket03',
+        //     'Key' => 'ruta/'.$profilePhotoName,
+        //     'Body' => fopen($profilePhotoPath, 'r'),
+        //     // 'Body' => fopen($request->file('foto')->getPathname(), 'r'),
+        //     'ACL' => 'public-read',
+        // ]);
+        // // Genera una URL pública para acceder a la imagen
+        // $imagen_url = $result['ObjectURL'];
+
+
+        // $profilePhotoPath = 'img/fotosClientes/JCST.png';
+        // $profilePhotoName = 'JCST_' . uniqid() . '.png';
+        // Storage::disk('s3')->put($profilePhotoName, file_get_contents($profilePhotoPath));
+
+        // Configura la llave secreta de Stripe
+
+
     }
 
     public function cargarEvento()
@@ -191,10 +305,60 @@ class DatabaseSeeder extends Seeder
     public function cargarClientes()
     {
 
+
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'AKIAYJVJS4X563AM7AFW',
+                'secret' => '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',
+            ],
+        ]);
+
+
+        $perfil = [
+            public_path('img/fotosClientes/default0.png'),
+            public_path('img/fotosClientes/default1.png'),
+            public_path('img/fotosClientes/default2.png'),
+            public_path('img/fotosClientes/default3.png'),
+            public_path('img/fotosClientes/default4.png'),
+            public_path('img/fotosClientes/default5.png'),
+            public_path('img/fotosClientes/default6.png'),
+            public_path('img/fotosClientes/default7.png'),
+            public_path('img/fotosClientes/default8.png'),
+            public_path('img/fotosClientes/default9.png'),
+        ];
+
         // Configura la llave secreta de Stripe
         Stripe::setApiKey('sk_test_51MF8jhEeOK3PttV3mH0ZQV6cLESOq9pILt95PZZmMhrcopvNPtWXraVPHgAlgh2Dj87Cc9sOXKbZYOsJT7GQVA1p00eMA1LNGp');
 
+
         for ($i = 0; $i < 10; $i++) {
+
+            $portadas = public_path('img/fotosClientes/default.png');
+            $portada_name = uniqid() . '.png';
+
+            $portada_s3 = $s3->putObject([
+                'Bucket' => 'julico-bucket03',
+                'Key' => 'ruta/' . $portada_name,
+                'Body' => fopen($portadas, 'r'),
+                'ACL' => 'public-read',
+            ]);
+
+            $perfiles = $perfil[$i];
+            $imageName = uniqid() . '.png';
+
+            $perfil_s3 = $s3->putObject([
+                'Bucket' => 'julico-bucket03',
+                'Key' => 'ruta/' . $imageName,
+                'Body' => fopen($perfiles, 'r'),
+                'ACL' => 'public-read',
+            ]);
+
+            // Genera una URL pública para acceder a la imagen
+            $perfilUP = $perfil_s3['ObjectURL'];
+            $portadaUP = $portada_s3['ObjectURL'];
+
             //para generar fechas de nacimiento
             $fecha_nacimiento = Carbon::now()->subYears(rand(18, 65))->subDays(rand(0, 365))->format('Y-m-d');
             // para obtener generos aleatorios
@@ -209,8 +373,8 @@ class DatabaseSeeder extends Seeder
             $user->genero = $genero;
             $user->estado = '0';
             $user->password = bcrypt('password');
-            $user->profile_photo_path = 'default.png';
-            $user->portada_photo_path = 'default.png';
+            $user->profile_photo_path = $perfilUP;
+            $user->portada_photo_path = $portadaUP;
             $user->assignRole('cliente');
             $user->save();
 

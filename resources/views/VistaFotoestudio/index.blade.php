@@ -46,10 +46,20 @@
 
 
 
+    @if ($errors->has('error'))
+        <div class="error text-red-500 text-center animate-bounce" x-data="{ show: true }" x-show="show"
+            x-init="setTimeout(() => show = false, 5000)">
+            {{ $errors->first('error') }}
+        </div>
+    @endif
 
 
-
-
+    @if ( session('success'))
+        <div class="bg-green-500 text-white text-center animate-bounce" x-data="{ show: true }" x-show="show"
+            x-init="setTimeout(() => show = false, 5000)">
+            {{ session('success') }}
+        </div>
+    @endif
 
 
 
@@ -132,14 +142,17 @@
                                                                         @csrf
                                                                         <input type="text" name="id" class="hidden"
                                                                             value="{{ $evento->id }}">
-                                                                        <input type="submit" value="Subir fotos" class=""
-                                                                            onclick="return confirm('Desea subir fotos del evento: {{$evento->evento_name}}')">
+                                                                        <input type="submit" value="Subir fotos"
+                                                                            class=""
+                                                                            onclick="return confirm('Desea subir fotos del evento: {{ $evento->evento_name }}')">
                                                                     </form>
                                                                 </button>
                                                             </div>
                                                         @else
                                                             <div class="flex justify-center">
-                                                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" disabled>
+                                                                <button
+                                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md"
+                                                                    disabled>
                                                                     <a href="#">No disponible Subir fotos</a>
                                                                 </button>
                                                             </div>
@@ -183,7 +196,7 @@
 
 
 
-{{--
+    {{--
     <h2 class="text-center">
         Comparar las fotos que subi con las fotos de los perfiles de los clientes
     </h2>

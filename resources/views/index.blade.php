@@ -220,7 +220,7 @@
         @endphp
         <div class="w-full px-6 mx-auto">
             <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl">
-                <img src="{{ asset('img/fotosClientes/' . $usuario->portada_photo_path) }}" alt=""
+                <img src="{{ $usuario->portada_photo_path }}" alt=""
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;">
             </div>
 
@@ -230,7 +230,7 @@
                     <div class="flex-none w-auto max-w-full px-3">
                         <div
                             class="text-base ease-soft-in-out h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200">
-                            <img src="{{ asset('img/fotosClientes/' . $usuario->profile_photo_path) }}"
+                            <img src="{{ $usuario->profile_photo_path }}"
                                 alt="profile_image" class="w-full shadow-soft-sm rounded-xl" />
                         </div>
                     </div>

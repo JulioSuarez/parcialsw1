@@ -13,10 +13,20 @@ use App\Models\invitacion_evento;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Aws\Rekognition\RekognitionClient;
+use Kreait\Firebase\Contract\Database;
+
+use Aws\S3\S3Client;
+
+use Kreait\Laravel\Firebase\Facades\Firebase;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 class FotoestudioController extends Controller
 {
+    public function __construct(Database $database)
+    {
+        $this->database = $database;
+        $this->tablename = "servicios";
+    }
 
     public function compararFotos(Request $request)
     {
@@ -175,59 +185,121 @@ class FotoestudioController extends Controller
      */
     public function store(Request $request)
     {
+
         // dd($request);
-        // 1 subir las fotos del evento que elegimos y vincular con el album de ese evento
-        // 2 subir las fotos originales y renderizadas
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'AKIAYJVJS4X563AM7AFW',
+                'secret' => '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',
+            ],
+        ]);
 
-        $contador = 0;
-        $watermark = 'http://imgfz.com/i/o98QYGl.png';
-        $watermarkOK = Image::make($watermark);
 
-        if ($request->hasFile('imagenes')) {
-            foreach ($request->file('imagenes') as $imagen) {
-                // dd($imagen);
-                //almaceno las imagenes en mi almacen local para mis pruebas
-                $destino = 'img/fotosClientes/';
-                $foto = time() . '-' . $imagen->getClientOriginalName();
-                $subirImagen = $imagen->move($destino, $foto);
-                $rutaImagen = $subirImagen->getPathname();
-                // dd($subirImagen);
 
-                // renderizar las fotos y marcar de agua
-                $img = Image::make($rutaImagen)
-                ->resize(500, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                })
-                ->insert($watermarkOK,'center')->blur(1)
-                ->save($rutaImagen);
 
-                $contador = $contador + 1;
 
-                // Crear un nuevo registro en la base de datos local
-                $f = new fotos();
-                $f->foto_original = $foto;
-                $f->foto_renderizada = $destino . $foto;
-                $f->estado = 0;
-                $f->id_fotoestudio = $request->evento_id_fotoestudio;
-                $f->id_evento = $request->evento_id;
-                $f->id_album_evento = $request->evento_id_album_evento;
-                $f->save();
+
+
+
+        $database = Firebase::database();
+        // dd($database);
+        $postData  = [
+            'id_fotoestudio' => $request->evento_id_fotoestudi,
+            'id_evento' => $request->evento_id,
+            'id_album_evento' => $request->evento_id_album_evento,
+
+        ];
+        $postRef = $this->database->getReference($this->tablename)->push($postData);
+        if ($postRef) {
+
+            // dd($request);
+            // 1 subir las fotos del evento que elegimos y vincular con el album de ese evento
+            // 2 subir las fotos originales y renderizadas
+
+            $contador = 0;
+            $watermark = 'http://imgfz.com/i/o98QYGl.png';
+            $watermarkOK = Image::make($watermark);
+
+            if ($request->hasFile('imagenes')) {
+                foreach ($request->file('imagenes') as $imagen) {
+                    // dd($imagen);
+
+                    //almaceno las imagenes en mi almacen local para mis pruebas
+                    $destino = 'img/eventosFotos/';
+                    $foto = time() . '-' . $imagen->getClientOriginalName();
+                    $subirImagen = $imagen->move($destino, $foto);
+                    $rutaImagen = $subirImagen->getPathname();
+                    // dd($rutaImagen);
+
+
+                    // Crear una copia del archivo en la segunda ubicación
+                    $nuevaUbicacion = 'img/eventosFotosOriginales/';
+                    $nuevoNombre = time() . '-' . $imagen->getClientOriginalName();
+                    copy($rutaImagen, $nuevaUbicacion . $nuevoNombre);
+                    $ruta_copia = $nuevaUbicacion . $nuevoNombre;
+                    // dd($ruta_copia);
+
+                    // dd($subirImagen);
+
+                    // renderizar las fotos y agrega marcar de agua
+                    $img = Image::make($rutaImagen)
+                        ->resize(500, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })
+                        ->insert($watermarkOK, 'center')->blur(1)
+                        ->save($rutaImagen);
+
+                    $contador = $contador + 1;
+
+                    // guardar la imagen original en mi buket
+                    $PhotoPath = public_path($ruta_copia);
+                    $PhotoName = uniqid() . '.png';
+
+                    $result = $s3->putObject([
+                        'Bucket' => 'julico-bucket03',
+                        'Key' => 'ruta/' . $PhotoName,
+                        'Body' => fopen($PhotoPath, 'r'),
+                        // 'Body' => fopen($request->file('foto')->getPathname(), 'r'),
+                        'ACL' => 'public-read',
+                    ]);
+                    // Genera una URL pública para acceder a la imagen
+                    $foto_s3 = $result['ObjectURL'];
+
+
+
+
+
+
+                    // Crear un nuevo registro en la base de datos local
+                    $f = new fotos();
+                    $f->foto_original = $foto_s3;
+                    $f->foto_renderizada = $destino . $foto;
+                    $f->estado = 0;
+                    $f->id_fotoestudio = $request->evento_id_fotoestudio;
+                    $f->id_evento = $request->evento_id;
+                    $f->id_album_evento = $request->evento_id_album_evento;
+                    $f->save();
+                }
+            } else {
+                return redirect()->route('fotoestudio.index');
             }
+
+            // actualizar el estado del album a 1: fotos cargadas
+            $album_evento = album_evento::where('id', '=', $request->evento_id_album_evento)->first();
+            $album_evento->estado = 1;
+            $album_evento->save();
+
+            //liberar al fotografo poner su estado en 0: disponible
+            $fotografo = User::where('id', $request->evento_id_fotoestudio)->first();
+            $fotografo->estado = 0;
+            $fotografo->save();
+
+            return redirect()->route('fotoestudio.index')->with('success', 'Fotos subidas correctamente');
         } else {
-            return redirect()->route('fotoestudio.index');
+            return redirect()->route('fotoestudio.index')->with('error', 'Error intentelo nuevamente');
         }
-
-        // actualizar el estado del album a 1: fotos cargadas
-        $album_evento = album_evento::where('id', '=', $request->evento_id_album_evento)->first();
-        $album_evento->estado = 1;
-        $album_evento->save();
-
-        //liberar al fotografo poner su estado en 0: disponible
-        $fotografo = User::where('id', $request->evento_id_fotoestudio)->first();
-        $fotografo->estado = 0;
-        $fotografo->save();
-
-        return redirect()->route('fotoestudio.index');
     }
 
     /**
