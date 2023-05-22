@@ -2,7 +2,8 @@
 
 @section('jcst')
 
-    @if ( session('success'))
+
+    @if (session('success'))
         <div class="bg-green-500 text-white text-center animate-bounce" x-data="{ show: true }" x-show="show"
             x-init="setTimeout(() => show = false, 5000)">
             {{ session('success') }}

@@ -14,7 +14,8 @@ class FotosController extends Controller
      */
     public function index()
     {
-        return view('VistaFoto.index');
+        $fotos = fotos::get();
+        return view('VistaCliente.facebook',compact('fotos'));
     }
 
     /**

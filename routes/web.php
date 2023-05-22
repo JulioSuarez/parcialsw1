@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrdenPagoController;
 use App\Http\Controllers\FotoestudioController;
 use App\Http\Controllers\OrganizadorController;
+use App\Http\Controllers\CartController;
 use Laravel\Cashier\Http\Controllers\WebhookController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -25,9 +26,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
-Route::get('/novedades', function () {
-    return view('VistaCliente.facebook');
-})->middleware(['auth', 'verified'])->name('novedades');
+Route::get('/novedades', [ClienteController::class, 'index'])->middleware('auth')->name('novedades');
 
 // Route::get('/', function () {
 //     return view('dashboard');
@@ -142,3 +141,8 @@ Route::post(
     '/stripe/webhook',
     [WebhookController::class, 'handleWebhook']
 );
+
+Route::get('cart',[CartController::class,'showCart'])->name('cart.show');
+Route::post('cart.add',[CartController::class,'addToCart'])->name('cart.add');
+Route::post('cart.remove',[CartController::class,'removeFromCart'])->name('cart.remove');
+Route::post('cart.update',[CartController::class,'updateCart'])->name('cart.update');

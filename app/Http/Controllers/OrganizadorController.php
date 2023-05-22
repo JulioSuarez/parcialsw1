@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\fotos;
 use App\Models\Evento;
+use App\Models\similitud;
 use App\Models\organizador;
 use App\Models\album_evento;
 use Illuminate\Http\Request;
@@ -14,12 +15,11 @@ use Intervention\Image\Facades\Image;
 use Aws\Rekognition\RekognitionClient;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+// require 'vendor/autoload.php';
 
 class OrganizadorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $id = auth()->user()->id;
@@ -50,7 +50,6 @@ class OrganizadorController extends Controller
             ->select('eventos.*', 'users.name as fotoestudio', 'users.profile_photo_path as fotostudio_perfil', 'album_eventos.id as id_album_evento')->get();
         // dd($eventos);
 
-
         // seccion para saver la cantidad de envitados que tiene mi evento
         $invitados = 0;
         foreach ($eventos as $e) {
@@ -58,22 +57,16 @@ class OrganizadorController extends Controller
             $invitados = $invitados + 1;
         }
 
-
         return view('VistaEventos.index', compact('eventos', 'evento2s', 'coleccion', 'albunes', 'invitados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function crearEvento()
     {
         $fotoestudios = User::all();
         return view('VistaEventos.create', compact('fotoestudios'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    //creo el evento
     public function store(Request $request)
     {
         // dd($request);
@@ -193,57 +186,106 @@ class OrganizadorController extends Controller
     }
 
 
+    function obtenerNombreImagen($url)
+    {
+        $parts = parse_url($url);
+        $path = explode('/', $parts['path']);
+        $nombreImagen = 'ruta/' . end($path);
+        // dd($nombreImagen);
+        return $nombreImagen;
+    }
+
     public function compararFotos($fotoSubidas)
     {
+        set_time_limit(120); // Establecer el límite de tiempo de ejecución en 120 segundos (2 minutos)
 
-
+        // dd($fotoSubidas);
         $fotosAlmacenadas = [];
         $fotos_perfil = User::all();
         foreach ($fotos_perfil as $f) {
-            $fotosAlmacenadas[] = 'img/fotosClientes/' . $f->profile_photo_path;
+            $fotosAlmacenadas[] = $f->profile_photo_path;
         }
 
 
         $rekognition = new RekognitionClient([
             'version' => 'latest',
-            'region' => 'us-east-2',
+            'region' => 'us-east-1',
             'credentials' => [
                 'key' => 'AKIAYJVJS4X563AM7AFW',
                 'secret' => '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',
             ],
         ]);
 
-        // no muestra imagenes porque rekognition no puede acceder a la imagen local, tiene que estar en un bucket de s3 o en una url en linea
+        // no muestra imagenes porque rekognition no puede acceder a la imagen local,
+        //tiene que estar en un bucket de s3 o en una url en linea
 
         foreach ($fotoSubidas as $fotoSubida) {
             foreach ($fotosAlmacenadas as $perfil) {
-                $resultado = $rekognition->compareFaces([
+
+                $resultado = $rekognition->CompareFaces([
                     'SimilarityThreshold' => 70,
                     'SourceImage' => [
-                        'Bytes' => file_get_contents($fotoSubida),
+                        'S3Object' => [
+                            'Bucket' => 'julico-bucket03',
+                            'Name' => $this->obtenerNombreImagen($perfil),
+                        ],
                     ],
                     'TargetImage' => [
-                        'Bytes' => file_get_contents($perfil),
+                        'S3Object' => [
+                            'Bucket' => 'julico-bucket03',
+                            'Name' => $this->obtenerNombreImagen($fotoSubida),
+                        ],
                     ],
                 ]);
 
-                dd($resultado);
-                if (isset($resultado['FaceMatches'][0]['Similarity'])) {
-                    $similitud = $resultado['FaceMatches'][0]['Similarity'];
-                    if ($similitud >= 70) {
-                        $fotoCoincidencia = $fotoSubida;
-                        $perfilCoincidencia = $perfil;
-                        dd("tercera etapa",$fotoCoincidencia,$perfilCoincidencia);
-                    } else {
-                        dd("tercera etapa por excepcion");
-                        // Las fotos no son similares
-                    }
-                } else {
-                    // No se encontraron coincidencias de caras
-                    dd("No se encontraron coincidencias de caras");
+                if ($resultado['FaceMatches']) {
+                    $usuario = User::where('profile_photo_path', '=', $perfil)->first();
+                    $foto = fotos::where('foto_original', '=', $fotoSubida)->first();
+
+                    $detalle = new similitud();
+                    $detalle->id_usuario = $usuario->id;
+                    $detalle->id_foto = $foto->id;
+                    $detalle->estado = 0;
+                    $detalle->save();
                 }
             }
         }
+
+
+        // if (!empty($faceMatches)) {
+        //     foreach ($faceMatches as $match) {
+        //         $similarity = $match['Similarity'];
+        //         echo "Rostros similares encontrados. Similitud: " . $similarity . "%";
+        //     }
+        // } else {
+        //     echo "No se encontraron rostros similares en las imágenes.";
+        // }
+
+
+
+        // foreach ($/fotoSubidas as $fotoSubida) {
+        //     foreach ($fotosAlmacenadas as $perfil) {
+        //         $resultado = $rekognition->compareFaces([
+        //             'SimilarityThreshold' => 70,
+        //             'SourceImage' => [
+        //                 'S3Object' => [
+        //                     'Bucket' => 'julico-bucket03',
+        //                     'Name' => 'ruta/64685dab36e29.png',
+        //                 ],
+        //             ],
+        //             'TargetImage' => [
+        //                 'S3Object' => [
+        //                     'Bucket' => 'julico-bucket03',
+        //                     'Name' => 'ruta/64685dab36e29.png',
+        //                 ],
+        //             ],
+        //         ]);
+
+        //         $faceMatches = $resultado['FaceMatches'];
+        //         $coleccion = $coleccion->merge($faceMatches);
+        //     }
+        // }
+        return view('VistaEventos.index');
     }
 
 
@@ -267,7 +309,7 @@ class OrganizadorController extends Controller
                 $foto->estado = 1;  //  Pendiente = 0 | Aprobado = 1 | Rechazado = 2
                 $foto->save();
 
-                $fotos_aprobadas[] = 'img/fotosClientes/' . $foto->foto_original;
+                $fotos_aprobadas[] =  $foto->foto_original;
             } elseif (strpos($value, 'rechazada') !== false) {
                 // $fotos_rechazadas[] = $id;
 

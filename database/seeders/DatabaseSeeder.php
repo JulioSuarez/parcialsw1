@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'fotoestudio.destroy'])->syncRoles([$dev, $fotoestudio]);
         Permission::create(['name' => 'fotoestudio.foto'])->syncRoles([$dev, $fotoestudio]);
         ////////////organizador
-        Permission::create(['name' => 'organizador.index'])->syncRoles([$organizador]);
+        Permission::create(['name' => 'organizador.index'])->syncRoles([$dev,$organizador]);
         Permission::create(['name' => 'organizador.create'])->syncRoles([$dev, $organizador]);
         Permission::create(['name' => 'organizador.edit'])->syncRoles([$dev, $organizador]);
         Permission::create(['name' => 'organizador.destroy'])->syncRoles([$dev, $organizador]);

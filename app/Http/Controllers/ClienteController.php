@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\fotos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Models\Evento;
+use App\Models\similitud;
 
 class ClienteController extends Controller
 {
@@ -15,10 +18,20 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $authController = new AuthenticatedSessionController();
-        $usuario = $authController->dashboard();
 
-        return view('VistaCliente.index',compact('usuario'));
+        $id = auth()->user()->id;
+
+        $fotos = similitud::join('fotos','fotos.id','=','similituds.id_foto')
+        ->where('id_usuario', '=', $id)
+        ->where('similituds.estado', '=', '0')
+        ->join('eventos','eventos.id','=','fotos.id_evento')
+        ->select('fotos.id as id','fotos.foto_renderizada',
+        'fotos.id_evento as id_evento','eventos.evento_name',
+        'similituds.id as id_similitud','similituds.estado')->get();
+
+        // dd($fotos);
+
+        return view('VistaCliente.facebook',compact('fotos'));
     }
 
     /**

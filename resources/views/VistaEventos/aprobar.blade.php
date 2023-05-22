@@ -15,11 +15,12 @@
                     </thead>
                     <tbody>
                         @forelse ($fotos as $f)
+                        {{-- @dd($f) --}}
                             <tr>
                                 <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <div class="flex items-center justify-center px-2 py-1">
                                         <div>
-                                            <img src="{{ asset('img/fotosClientes/' . $f->foto_original) }}"
+                                            <img src="{{ asset( $f->foto_renderizada) }}"
                                                 class="inline-flex items-center justify-center text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                                 alt="foto">
                                         </div>
