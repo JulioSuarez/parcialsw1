@@ -70,9 +70,9 @@
     // @vite(['resources/css/app.css', 'resources/js/app.js', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700', 'https://kit.fontawesome.com/42d5adcbca.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.min.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4'])
     {{-- RECURSOS PARA PRODUCCION --}}
 
-    <link href="{{asset('build/assets/app-8a8e309e.css')}}" rel="stylesheet" />
-    <link href="{{asset('build/assets/app-20106add.js')}}" rel="stylesheet" />
-    <link href="{{asset('build/manifest.json')}}" rel="stylesheet" />
+    // <link href="{{asset('build/assets/app-8a8e309e.css')}}" rel="stylesheet" />
+    // <link href="{{asset('build/assets/app-20106add.js')}}" rel="stylesheet" />
+    <link href="{{asset('build/manifest.json')}}"/>
 
     @livewireStyles()
 
