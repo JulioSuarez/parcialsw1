@@ -19,11 +19,53 @@
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
     <title>Software 1 - JCST</title>
+    {{-- para mis diagramas --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.css">
+    {{-- segundo diagramador mxgraph --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/mxgraph/javascript/src/css/common.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/mxgraph/javascript/src/css/graph.css') }}">
+    <!-- diagramador MXGRAPH -->
+    <script type="text/javascript" src="{{ asset('vendor/mxgraph/javascript/mxClient.js') }}"></script>
+
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     {{-- <script src="https://unpkg.com/@popperjs/core@2"></script> --}}
+
+    {{-- servidor socket --}}
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "socket.io-client": "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import {io} from 'socket.io-client';
+
+        const socket = io("http://localhost:3000", {
+            transports: ["websocket"]
+        });
+
+        const user_id = <?php echo auth()->user()->id; ?>;
+
+        // console.log("Hola usuario Nro:" + user_id);
+        //EMITS
+
+        socket.emit('saludo', user_id);
+
+        socket.on('saludo_respuesta', (respuesta) => {
+            console.log(respuesta);
+        });
+
+    </script>
+
+
     {{-- RECURSOS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700', 'https://kit.fontawesome.com/42d5adcbca.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.min.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4'])
     @livewireStyles()
@@ -177,7 +219,8 @@
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <title>credit-card</title>
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g stroke="none" stroke-width="1" fill="none"
+                                                    fill-rule="evenodd">
                                                     <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
                                                         fill-rule="nonzero">
                                                         <g transform="translate(1716.000000, 291.000000)">
@@ -230,8 +273,8 @@
                     <div class="flex-none w-auto max-w-full px-3">
                         <div
                             class="text-base ease-soft-in-out h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200">
-                            <img src="{{ $usuario->profile_photo_path }}"
-                                alt="profile_image" class="w-full shadow-soft-sm rounded-xl" />
+                            <img src="{{ $usuario->profile_photo_path }}" alt="profile_image"
+                                class="w-full shadow-soft-sm rounded-xl" />
                         </div>
                     </div>
                     <div class="flex-none w-auto max-w-full px-3 my-auto">
@@ -282,25 +325,29 @@
                                 </li> --}}
                                 <li class="z-30 flex-auto text-center">
                                     <a class="block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700 {{ request()->routeIs('novedades') ? 'text-black font-bold' : '' }}"
-                                        href="{{ route('novedades') }}" role="tab" aria-selected="{{ request()->routeIs('novedades') ? 'true' : 'false' }}">
+                                        href="{{ route('novedades') }}" role="tab"
+                                        aria-selected="{{ request()->routeIs('novedades') ? 'true' : 'false' }}">
                                         <span class="ml-1">News</span>
                                     </a>
                                 </li>
                                 <li class="z-30 flex-auto text-center">
                                     <a class="z-30 block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700 {{ request()->routeIs('#') ? 'bg-gray-400 text-slate-700' : '' }}"
-                                        href="#" role="tab" aria-selected="{{ request()->routeIs('#') ? 'true' : 'false' }}">
+                                        href="#" role="tab"
+                                        aria-selected="{{ request()->routeIs('#') ? 'true' : 'false' }}">
                                         <span class="ml-1">Album</span>
                                     </a>
                                 </li>
                                 <li class="z-30 flex-auto text-center">
                                     <a class="z-30 block w-full px-0 py-1 mb-0 transition-colors border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700 {{ request()->routeIs('#') ? 'bg-gray-400 text-slate-700' : '' }}"
-                                        href="#" role="tab" aria-selected="{{ request()->routeIs('#') ? 'true' : 'false' }}">
+                                        href="#" role="tab"
+                                        aria-selected="{{ request()->routeIs('#') ? 'true' : 'false' }}">
                                         <span class="ml-1">Invitaciones</span>
                                     </a>
                                 </li>
                                 <li class="z-30 flex-auto text-center">
                                     <a class="z-30 block w-full px-0 py-1 mb-0 transition-colors border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700 {{ request()->routeIs('cart.show') ? 'text-black font-bold' : '' }}"
-                                        href="{{ route('cart.show') }}" role="tab" aria-selected="{{ request()->routeIs('cart.show') ? 'true' : 'false' }}">
+                                        href="{{ route('cart.show') }}" role="tab"
+                                        aria-selected="{{ request()->routeIs('cart.show') ? 'true' : 'false' }}">
                                         <span class="ml-1">Carrito</span>
                                     </a>
                                 </li>
@@ -357,6 +404,16 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- main script file  -->
     <script src="./assets/js/soft-ui-dashboard-tailwind.js?v=1.0.4" async></script>
+    <!-- para mis diagramas -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true
+        });
+        var editor = mermaid.initEditor('#mermaid-editor', {
+            value: `classDiagram\nClass01 <|-- AveryLongClass : Cool\n<<Interface>> Class01\nClass09 --> C2 : Where am I?\nClass09 --* C3\nClass09 --|> Class07\nClass07 : equals()\nClass07 : Object[] elementData\nClass01 : size()\nClass01 : int chimp\nClass01 : int gorilla\nclass Class10 {\n<<service>>\nint id\nsize()\n}`
+        });
+    </script>
     @stack('modals')
     @livewireScripts
     @stack('js')

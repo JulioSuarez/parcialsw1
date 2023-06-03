@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/usuario', [ClienteController::class,'apiJS'])->name('usuario');
+Route::get('usuario/{id}', [ClienteController::class,'apiJS']);

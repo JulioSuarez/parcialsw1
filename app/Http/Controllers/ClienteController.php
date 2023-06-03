@@ -101,13 +101,12 @@ class ClienteController extends Controller
      * Display the specified resource.
      */
 
-    public function apiJS()
+    public function apiJS($id)
     {
-        $id = auth()->user()->id;
-        $usuario = User::join('clientes', 'clientes.user_id', '=', 'users.id')
-            ->where('user_id', '=', $id)->first();
-        return response()->json([
-            'usuario' => $usuario
-        ]);
+        // $id = auth()->user()->id;
+        $usuario = User::where('id', '=', $id)->first();
+        // $usuario = User::all();
+
+        return json_encode($usuario->name, JSON_NUMERIC_CHECK);
     }
 }

@@ -52,7 +52,7 @@
                     </div>
                 </div>
             @empty
-
+                {{--
                 <div class="mx-12">
                     <div class="flex justify-center">
 
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             @endforelse
         </div>
     </div>

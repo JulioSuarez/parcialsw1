@@ -7,6 +7,12 @@ use Livewire\Component;
 use App\Http\Controllers\PagoController;
 
 
+
+//  este no esta funcionando ni en uso
+
+
+
+
 class Suscripciones extends Component
 {
     public function metodoPagoPredeterminado()

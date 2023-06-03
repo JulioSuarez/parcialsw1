@@ -6,6 +6,7 @@ use App\Http\Controllers\PagoController;
 use App\Http\Controllers\FotosController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\DiagramaController;
 // use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OrdenPagoController;
@@ -146,3 +147,6 @@ Route::get('cart',[CartController::class,'showCart'])->name('cart.show');
 Route::post('cart.add',[CartController::class,'addToCart'])->name('cart.add');
 Route::post('cart.remove',[CartController::class,'removeFromCart'])->name('cart.remove');
 Route::post('cart.update',[CartController::class,'updateCart'])->name('cart.update');
+
+route::get('diagramas',[DiagramaController::class,'index'])->name('diagramas');
+route::get('diagramas.edit',[DiagramaController::class,'edit'])->name('diagramas.edit');
