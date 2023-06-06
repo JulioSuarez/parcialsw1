@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'heroicons/outline.css';
+
 
 /* @import url('jcst-form.css'); */
 /* @import url('jcst-font.css'); */
@@ -23,3 +25,4 @@
         transform: rotate(360deg);
     }
 }
+

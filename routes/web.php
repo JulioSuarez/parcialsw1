@@ -13,6 +13,8 @@ use App\Http\Controllers\OrdenPagoController;
 use App\Http\Controllers\FotoestudioController;
 use App\Http\Controllers\OrganizadorController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\SintaxiController;
+use App\Http\Controllers\RelationController;
 use Laravel\Cashier\Http\Controllers\WebhookController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -150,3 +152,13 @@ Route::post('cart.update',[CartController::class,'updateCart'])->name('cart.upda
 
 route::get('diagramas',[DiagramaController::class,'index'])->name('diagramas');
 route::get('diagramas.edit',[DiagramaController::class,'edit'])->name('diagramas.edit');
+route::post('diagramas.store',[DiagramaController::class,'store'])->name('diagramas.store');
+
+Route::resource('sintaxis', SintaxiController::class)
+    ->Parameters(['sintaxis' => 's'])->names('sintaxis');
+
+Route::resource('relaciones', RelationController::class)
+    ->Parameters(['relaciones' => 'r'])->names('relaciones');
+
+    Route::get('atributos',[SintaxiController::class,'atributos'])->name('atributos');
+    Route::post('atributoStore',[SintaxiController::class,'atributoStore'])->name('atributoStore');

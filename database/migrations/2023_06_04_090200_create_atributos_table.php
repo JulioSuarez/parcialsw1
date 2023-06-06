@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diagramas', function (Blueprint $table) {
+        Schema::create('atributos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('relaciones')->nullable();
+            $table->string('name');
+            $table->bigInteger('clase_id')->unsigned();
+            $table->foreign('clase_id')->references('id')->on('clases');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diagramas');
+        Schema::dropIfExists('atributos');
     }
 };

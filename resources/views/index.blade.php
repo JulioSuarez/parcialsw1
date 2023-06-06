@@ -1,37 +1,46 @@
-<!--
-=========================================================
-* Template que utilizo para mi software es:
-    Soft UI Dashboard Tailwind - v1.0.4
-=========================================================
-* DOCUMENTACION:
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-tailwind
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-=========================================================
--->
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="./assets/img/favicon.png" />
     <title>Software 1 - JCST</title>
     {{-- para mis diagramas --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.css"> --}}
     {{-- segundo diagramador mxgraph --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/mxgraph/javascript/src/css/common.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/mxgraph/javascript/src/css/graph.css') }}">
-    <!-- diagramador MXGRAPH -->
-    <script type="text/javascript" src="{{ asset('vendor/mxgraph/javascript/mxClient.js') }}"></script>
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/mxgraph/javascript/src/css/common.css') }}"> --}}
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/mxgraph/javascript/src/css/graph.css') }}"> --}}
+    {{-- diagramador MXGRAPH --}}
+    {{-- <script type="text/javascript" src="{{ asset('vendor/mxgraph/javascript/mxClient.js') }}"></script> --}}
 
-    <!--     Fonts and icons     -->
+    {{-- Fonts and icons --}}
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
+    {{-- Font Awesome Icons --}}
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     {{-- <script src="https://unpkg.com/@popperjs/core@2"></script> --}}
+
+
+
+    {{-- by julico --}}
+    @yield('encabezado')
+
+
+
+    {{-- RECURSOS xD --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.min.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4'])
+    {{-- RECURSOS PARA PRODUCCION --}}
+    {{--
+     <link href="{{ asset('build/assets/app-8a8e309e.css') }}" rel="stylesheet" />
+     <link href="{{ asset('build/assets/app-20106add.js') }}" rel="stylesheet" />
+     <link href="{{ asset('build/manifest.json') }}" />
+     --}}
+
+    @livewireStyles()
+
+
 
     {{-- servidor socket --}}
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
@@ -54,8 +63,8 @@
 
         const user_id = <?php echo auth()->user()->id; ?>;
 
-        // console.log("Hola usuario Nro:" + user_id);
-        //EMITS
+        console.log('Hola usuario Nro:' + user_id);
+        // EMITS
 
         socket.emit('saludo', user_id);
 
@@ -65,16 +74,6 @@
 
     </script>
 
-
-    {{-- RECURSOS xD --}}
-    // @vite(['resources/css/app.css', 'resources/js/app.js', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700', 'https://kit.fontawesome.com/42d5adcbca.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.min.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4'])
-    {{-- RECURSOS PARA PRODUCCION --}}
-
-    // <link href="{{asset('build/assets/app-8a8e309e.css')}}" rel="stylesheet" />
-    // <link href="{{asset('build/assets/app-20106add.js')}}" rel="stylesheet" />
-    <link href="{{asset('build/manifest.json')}}"/>
-
-    @livewireStyles()
 
 </head>
 
@@ -225,8 +224,7 @@
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <title>credit-card</title>
-                                                <g stroke="none" stroke-width="1" fill="none"
-                                                    fill-rule="evenodd">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                     <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
                                                         fill-rule="nonzero">
                                                         <g transform="translate(1716.000000, 291.000000)">
@@ -268,10 +266,14 @@
             $usuario = $authController->dashboard();
         @endphp
         <div class="w-full px-6 mx-auto">
-            <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl">
-                <img src="{{ $usuario->portada_photo_path }}" alt=""
+            <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover h-6 rounded-2xl">
+                {{--
+                    <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl">
+            <img src="{{ $usuario->portada_photo_path }}" alt="foto de portada"
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;">
+                    --}}
             </div>
+
 
             <div
                 class="relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-16 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
@@ -304,31 +306,7 @@
                         <div class="relative right-0">
                             <ul class="relative flex flex-wrap p-1 list-none bg-transparent rounded-xl" nav-pills
                                 role="tablist">
-                                {{-- <li class="z-30 flex-auto text-center">
-                                    <a class="block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
-                                        nav-link href="{{ route('novedades') }}" role="tab" aria-selected="{{ request()->routeIs('novedades') ? 'true' : 'false' }}">
 
-                                        <span class="ml-1">News</span>
-                                    </a>
-                                </li>
-                                <li class="z-30 flex-auto text-center">
-                                    <a class="z-30 block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
-                                        nav-link href="#" role="tab" aria-selected="{{ request()->routeIs('cart.show') ? 'true' : 'false' }}">
-                                        <span class="ml-1">Album</span>
-                                    </a>
-                                </li>
-                                <li class="z-30 flex-auto text-center">
-                                    <a class="z-30 block w-full px-0 py-1 mb-0 transition-colors border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700"
-                                        nav-link href="#" role="tab" aria-selected="{{ request()->routeIs('cart.show') ? 'true' : 'false' }}">
-                                        <span class="ml-1">Invitaciones</span>
-                                    </a>
-                                </li> --}}
-                                {{-- <li class="z-30 flex-auto text-center">
-                                    <a class="z-30 block w-full px-0 py-1 mb-0 transition-colors border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700 "
-                                        nav-link href="{{ route('cart.show') }}" role="tab" aria-selected="{{ request()->routeIs('cart.show') ? 'true' : 'false' }}">
-                                        <span class="ml-1">Carrito</span>
-                                    </a>
-                                </li> --}}
                                 <li class="z-30 flex-auto text-center">
                                     <a class="block w-full px-0 py-1 mb-0 transition-all border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700 {{ request()->routeIs('novedades') ? 'text-black font-bold' : '' }}"
                                         href="{{ route('novedades') }}" role="tab"
@@ -385,8 +363,6 @@
 
 
 
-
-
             {{-- <footer class="pt-4">
                 <div class="w-full px-6 mx-auto">
                     <div class="flex flex-wrap items-center -mx-3 lg:justify-between">
@@ -406,20 +382,12 @@
     <script src="./assets/js/plugins/chartjs.min.js" async></script>
     <!-- plugin for scrollbar  -->
     <script src="./assets/js/plugins/perfect-scrollbar.min.js" async></script>
+    {{-- Scripts by julico xD --}}
+    @yield('scripts')
     <!-- github button -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- main script file  -->
     <script src="./assets/js/soft-ui-dashboard-tailwind.js?v=1.0.4" async></script>
-    <!-- para mis diagramas -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.14.0/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({
-            startOnLoad: true
-        });
-        var editor = mermaid.initEditor('#mermaid-editor', {
-            value: `classDiagram\nClass01 <|-- AveryLongClass : Cool\n<<Interface>> Class01\nClass09 --> C2 : Where am I?\nClass09 --* C3\nClass09 --|> Class07\nClass07 : equals()\nClass07 : Object[] elementData\nClass01 : size()\nClass01 : int chimp\nClass01 : int gorilla\nclass Class10 {\n<<service>>\nint id\nsize()\n}`
-        });
-    </script>
     @stack('modals')
     @livewireScripts
     @stack('js')

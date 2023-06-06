@@ -23,7 +23,7 @@ class DiagramaController extends Controller
         ];
         $usuarios = User::all();
 
-        return view('VistaDiagramas.index', compact('usuarios'));
+        return view('VistaDiagramas.dojs', compact('usuarios'));
     }
 
     /**
@@ -39,7 +39,19 @@ class DiagramaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $diagrama = new diagrama();
+        $diagrama->nombre = $request->nombre;
+        $diagrama->save();
+
+        if($diagrama){
+            return response()->json([
+                'success' => true,
+                'message' => 'Diagrama creado correctamente',
+                'nombre' => $diagrama->nombre,
+                'id' => $diagrama->id,
+            ]);
+        }
+        return response()->json('Error al crear el diagrama');
     }
 
     /**

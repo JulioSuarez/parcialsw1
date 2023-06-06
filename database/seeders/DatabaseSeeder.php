@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->roles();
         $this->cargarUsuarioPruebas();
         $this->cargarEvento();
-        $this->cargarClientes();
+        // $this->cargarClientes();
     }
 
     public function roles()
@@ -243,40 +243,7 @@ class DatabaseSeeder extends Seeder
                 // Asigna el ID del cliente de Stripe al usuario
                 $user->stripe_id = $customer->id;
                 $user->save();
-            // }
         }
-
-
-
-
-
-        // $organizador1 = public_path('img/fotosClientes/organizador1.jpg');
-        // $organizador2 = public_path('img/fotosClientes/organizador2.jpeg');
-        // $fotoestudio1 = public_path('img/fotosClientes/fotoestudio1.jpg');
-        // $fotoestudio2 = public_path('img/fotosClientes/fotoestudio2.jpg');
-        // $fotoestudio4 = public_path('img/fotosClientes/fotoestudio4.jpg');
-        // $fotoestudio3 = public_path('img/fotosClientes/fotoestudio3.jpeg');
-        // $profilePhotoPath = public_path('img/fotosClientes/JCST.png');
-        // $profilePhotoName = 'JCST_' . uniqid() . '.png';
-
-        // $result = $s3->putObject([
-        //     'Bucket' => 'julico-bucket03',
-        //     'Key' => 'ruta/'.$profilePhotoName,
-        //     'Body' => fopen($profilePhotoPath, 'r'),
-        //     // 'Body' => fopen($request->file('foto')->getPathname(), 'r'),
-        //     'ACL' => 'public-read',
-        // ]);
-        // // Genera una URL pública para acceder a la imagen
-        // $imagen_url = $result['ObjectURL'];
-
-
-        // $profilePhotoPath = 'img/fotosClientes/JCST.png';
-        // $profilePhotoName = 'JCST_' . uniqid() . '.png';
-        // Storage::disk('s3')->put($profilePhotoName, file_get_contents($profilePhotoPath));
-
-        // Configura la llave secreta de Stripe
-
-
     }
 
     public function cargarEvento()

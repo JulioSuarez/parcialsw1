@@ -12,26 +12,49 @@
             </li>
         @endcan
 
-        {{-- @can('cliente.index')
-            <li class="mt-0.5 w-full">
-                <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                    href="{{ route('novedades') }}">
-                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
-                        Novedades</span>
-                </a>
-            </li>
-        @endcan --}}
+        @can('admin')
+        <li class="w-full mt-4">
+            <h6 class="pl-6 ml-2 font-bold leading-tight uppercase text-xs opacity-100">2do Parcial</h6>
+        </li>
+
+
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('sintaxis.index') }}">
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Tipo de Datos</span>
+            </a>
+        </li>
+
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('relaciones.index') }}">
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Relaciones</span>
+            </a>
+        </li>
+
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('atributos') }}">
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Atributos</span>
+            </a>
+        </li>
+
+        <li class="mt-0.5 w-full">
+            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
+                href="{{ route('diagramas') }}">
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Diagramas</span>
+            </a>
+        </li>
+
+        <li class="w-full mt-4">
+            <h6 class="pl-6 ml-2 font-bold leading-tight uppercase text-xs opacity-100">1er Parcial</h6>
+        </li>
+        @endcan
 
         <li class="mt-0.5 w-full">
             <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
                 href="{{ route('profile.edit') }}">
                 <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Editar Perfil</span>
-            </a>
-        </li>
-        <li class="mt-0.5 w-full">
-            <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors"
-                href="{{ route('diagramas') }}">
-                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Diagramas</span>
             </a>
         </li>
 
