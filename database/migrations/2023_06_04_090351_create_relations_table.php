@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('relations', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('clase_a')->unsigned();
-            $table->foreign('clase_a')->references('id')->on('clases');
-            $table->bigInteger('clase_b')->unsigned();
-            $table->foreign('clase_b')->references('id')->on('clases');
-            $table->bigInteger('tipo_relacion')->unsigned();
-            $table->foreign('tipo_relacion')->references('id')->on('relation_tipos');
+            $table->string('name');
+            $table->unsignedBigInteger('clase_origen')->nullable();
+            $table->foreign('clase_origen')->references('id')->on('clases')->onDelete('cascade');
+
+            $table->unsignedBigInteger('clase_destino')->nullable();
+            $table->foreign('clase_destino')->references('id')->on('clases')->onDelete('cascade');
+
+            $table->unsignedBigInteger('tipo_relacion')->nullable();
+            $table->foreign('tipo_relacion')->references('id')->on('relation_tipos')->onDelete('cascade');
             $table->timestamps();
         });
     }

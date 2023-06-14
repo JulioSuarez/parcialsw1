@@ -76,6 +76,16 @@ class User extends Authenticatable
         return $this->hasMany(detalle_album_evento::class);
     }
 
+    public function diagrama()
+    {
+        return $this->hasMany(diagrama::class);
+    }
+
+    public function invitado()
+    {
+        return $this->hasMany(invitado::class);
+    }
+
     protected static function booted(): void
     {
         static::updated(queueable(function (User $customer) {

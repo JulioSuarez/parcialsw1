@@ -105,6 +105,7 @@ function init() {
                         isMultiline: false, editable: true
                     },
                     new go.Binding("text", "name").makeTwoWay()),
+                // Console.log("name"),
                 // properties
                 $(go.TextBlock, "Properties",
                     { row: 1, font: "italic 10pt sans-serif" },
@@ -138,6 +139,7 @@ function init() {
             )
         );
 
+
     function convertIsTreeLink(r) {
         return r === "generalization";
     }
@@ -158,6 +160,8 @@ function init() {
     }
 
     var nombre = "NewClassXD";
+    var id = "id";
+    var tipo_dato = "Primary key";
 
     // agregar una nueva clase al diagrama
     function addNewClassDiagram() {
@@ -166,15 +170,14 @@ function init() {
             key: myDiagram.model.nodeDataArray.length + 1,
             name: nombre,
             properties: [
-                { name: "Nombre", type: "String", visibility: "public" },
-                { name: "Descripcion", type: "Currency", visibility: "public", default: "0" }
+                { name: id, type: tipo_dato, visibility: "public" },
             ],
             methods: []
         };
-
         // console.log(nombre);
-        guardar(nombre);
+        guardarClase(newClassDiagram);
 
+        console.log("nombre de la clase: ", newClassDiagram.key);
         // Agrega el nuevo objeto nodedata al arreglo nodeDataArray del modelo del diagrama
         myDiagram.model.addNodeData(newClassDiagram);
     }
@@ -193,24 +196,52 @@ function init() {
 
 
 
+    // // Asumiendo que tienes una referencia a tu diagrama llamada 'myDiagram'
+    // // Obtén una referencia al nodo que contiene el nombre de la clase
+    // var classNode = myDiagram.findNodeForKey("KEY_DEL_NODO_DE_LA_CLASE");
 
-    function guardar(data) {
-        // console.log("Guardar: ", data);
+    // // Agrega un evento de escucha para capturar los cambios en el nombre de la clase
+    // myDiagram.addDiagramListener("TextEdited", function (event) {
+    //     var editedPart = event.subject;
+    //     // Verifica si el cambio se realizó en el texto del nombre y si es el nodo de la clase
+    //     if (editedPart instanceof go.Node && editedPart.data && editedPart.data.name && editedPart === classNode) {
+    //         console.log("Nombre de la clase editado:", editedPart.data.name);
+    //     }
+    // });
 
+
+
+
+
+
+
+
+    function guardarClase(data) {
         let token = document.querySelector('meta[name="csrf-token"]')
             .getAttribute("content");
+        const id_diagrama = document.getElementById("id_diagrama").value;
 
         let formulario = new FormData();
-        formulario.append("nombre", data);
+        // agrego el id del diagrama
+        formulario.append("id_diagrama", id_diagrama);
+        console.log("Guardar: ", id_diagrama);
 
-        fetch('diagramas.store', {
+        // agrego los datos de la clase
+        // agrego el nombre de la clase al formulario
+        formulario.append("nombre", data.name);
+        console.log("Guardar: ", data.name);
+        // no estoy agregando el nombre del primer atributo porque es obvio que es ID primary key
+        // solo agrego el tipo de atributo
+        formulario.append("tipo", data.properties[0].type);
+        console.log("Guardar: ", data.properties[0].type);
+
+        // console.log(formulario);
+        fetch('/claseStore', {
             headers: {
                 "X-CSRF-TOKEN": token,
             },
             method: 'POST',
             body: formulario
-
-
 
         }).then((data) => data.json())
             .then((data) => {
@@ -260,6 +291,17 @@ function init() {
         }
     );
 
+
+
+
+
+
+
+
+
+
+
+
     myDiagram.nodeTemplate.selectionAdornmentTemplate =
         $(go.Adornment, "Spot",
             $(go.Panel, "Auto",
@@ -280,18 +322,15 @@ function init() {
                         // Espera a que el usuario complete el formulario y haga clic en "Guardar"
                         var saveButton = document.getElementById('saveButton');
                         saveButton.onclick = function () {
-                            const sintaxisSelect = document.getElementById('sintaxis');
-                            const nombreClase = document.getElementById('name').value;
-                            const data_type_postgresql = document.getElementById('data_type_postgresql');
-                            const data_type_sqlserver = document.getElementById('data_type_sqlserver');
+                            // const sintaxisSelect = document.getElementById('sintaxis');
+                            const nombreAtributo = document.getElementById('name').value;
+                            const select_data_type = document.getElementById('data_type');
+
 
                             // Comprueba la sintaxis seleccionada y agrega los datos correspondientes a la lista
-                            if (sintaxisSelect.value === 'postgresql') {
-                                list.push({ name: nombreClase, type: data_type_postgresql.value, visibility: "public" });
-                            } else if (sintaxisSelect.value === 'sqlserver') {
-                                list.push({ name: nombreClase, type: data_type_sqlserver.value, visibility: "public" });
+                            if (nombreAtributo) {
+                                list.push({ name: nombreAtributo, type: select_data_type.value, visibility: "public" });
                             }
-
 
                             // var newRelName = prompt("Enter relationship name:");
                             // if (newRelName) {
@@ -301,9 +340,38 @@ function init() {
 
                             // Actualiza Panel.itemArray y visualiza
                             itempanel.itemArray = list;
+
+                            function guardar(data) {
+                                // console.log("Guardar: ", data.properties[0]);
+                                // console.log("Guardar: ", data.name);
+
+                                let token = document.querySelector('meta[name="csrf-token"]')
+                                    .getAttribute("content");
+                                const id_diagrama = document.getElementById("id_diagrama").value;
+
+                                let formulario = new FormData();
+                                formulario.append("name", nombreAtributo);
+                                formulario.append("formato", select_data_type);
+                                formulario.append("id_clase", id_diagrama);
+
+                                // la ruta debe ser de tipo navegador con un slash al inicio
+                                fetch('/clase', {
+                                    headers: {
+                                        "X-CSRF-TOKEN": token,
+                                    },
+                                    method: 'POST',
+                                    body: formulario
+
+
+
+                                }).then((data) => data.json())
+                                    .then((data) => {
+                                        console.log(data);
+                                    });
+                            }
+
                             // Cierra el modal
                             document.getElementById('myModal').close();
-
                         };
                     }
                 },
@@ -329,8 +397,8 @@ function init() {
                             const tipo_relacion = document.getElementById('tipo_relacion');
 
                             // Comprueba la sintaxis seleccionada y agrega los datos correspondientes a la lista
-                            if (clase.value === '1' ) {
-                                relacion.push({ from: 1, to: 11});
+                            if (clase.value === '1') {
+                                relacion.push({ from: 1, to: 11 });
                             }
 
                             if (tipo_relacion.value === 'agreacion') {
@@ -341,7 +409,7 @@ function init() {
                             console.log(tipo_de_relacion);
                             list.merge(relacion, tipo_de_relacion);
                             console.log(list);
-                            
+
                             // Actualiza Panel.itemArray y visualiza
                             itempanel.itemArray = list;
 
@@ -382,71 +450,60 @@ function init() {
         );
 
     // setup a few example class nodes and relationships
-    var nodedata = [
-        {
-            key: 1,
-            name: "BankAccount",
-            properties: [
-                { name: "owner", type: "String", visibility: "public" },
-                { name: "balance", type: "Currency", visibility: "public", default: "0" }
-            ],
-            methods: [
-                { name: "deposit", parameters: [{ name: "amount", type: "Currency" }], visibility: "public" },
-                { name: "withdraw", parameters: [{ name: "amount", type: "Currency" }], visibility: "public" }
-            ]
-        },
-        {
-            key: 11,
-            name: "Person",
-            properties: [
-                { name: "name", type: "String", visibility: "public" },
-                { name: "birth", type: "Date", visibility: "protected" }
-            ],
-            methods: [
-                { name: "getCurrentAge", type: "int", visibility: "public" }
-            ]
-        },
-        {
-            key: 12,
-            name: "Student",
-            properties: [
-                { name: "classes", type: "List", visibility: "public" }
-            ],
-            methods: [
-                { name: "attend", parameters: [{ name: "class", type: "Course" }], visibility: "private" },
-                { name: "sleep", visibility: "private" }
-            ]
-        },
-        {
-            key: 13,
-            name: "Professor",
-            properties: [
-                { name: "classes", type: "List", visibility: "public" }
-            ],
-            methods: [
-                { name: "teach", parameters: [{ name: "class", type: "Course" }], visibility: "private" }
-            ]
-        },
-        {
-            key: 14,
-            name: "Course",
-            properties: [
-                { name: "name", type: "String", visibility: "public" },
-                { name: "description", type: "String", visibility: "public" },
-                { name: "professor", type: "Professor", visibility: "public" },
-                { name: "location", type: "String", visibility: "public" },
-                { name: "times", type: "List", visibility: "public" },
-                { name: "prerequisites", type: "List", visibility: "public" },
-                { name: "students", type: "List", visibility: "public" }
-            ]
+
+
+
+
+
+
+    var nodedata = [];
+    var linkdata = [];
+    // console.log(atributos_id[0].value);
+    // console.log(clases_id[0].value);
+    // console.log(clases_name[0].value);
+
+    var clases_id = document.querySelectorAll('input[name="clase_id[]"]');
+    var clases_name = document.querySelectorAll('input[name="clase_name[]"]');
+    var atributos_id = document.querySelectorAll('input[name="atributo_id[]"]');
+    var atributos_name = document.querySelectorAll('input[name="atributo_name[]"]');
+
+    for (var i = 0; i < clases_id.length; i++) {
+        var claseValue = clases_id[i].value;
+        var claseName = clases_name[i].value;
+
+        for (var j = 0; j < atributos_id.length - 1; j++) {
+            var atributoValue = atributos_id[j].value;
+            var atributoName = atributos_name[j].value;
+
+            console.log(claseValue,'ID clase');
+            console.log(claseName,'claseName');
+
+            console.log(atributoValue,'ID atributo');
+            console.log(atributoName,'atributoName');
+
+            nodedata.push({
+                key: claseValue,
+                name: claseName,
+                properties: [
+                    { name: atributoName, type: "String", visibility: "public" },
+                ],
+            });
+
         }
-    ];
-    var linkdata = [
-        { from: 12, to: 11, relationship: "generalization" },
-        { from: 13, to: 11, relationship: "generalization" },
-        { from: 14, to: 13, relationship: "aggregation" },
-        // { from: 1, to: 14, relationship: "assotiation" }
-    ];
+    }
+    linkdata.push({
+        from: 1,
+        to: claseValue,
+        relationship: "generalization"
+    })
+    console.log(nodedata);
+
+    // var linkdata = [
+    //     { from: 12, to: 11, relationship: "generalization" },
+    //     { from: 13, to: 11, relationship: "generalization" },
+    //     { from: 14, to: 13, relationship: "aggregation" },
+    //     { from: 1, to: 14, relationship: "assotiation" }
+    // ];
 
 
 

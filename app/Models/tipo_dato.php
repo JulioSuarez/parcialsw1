@@ -9,8 +9,13 @@ class tipo_dato extends Model
 {
     use HasFactory;
 
-    public function sintaxis()
+    public function formato()
     {
-        return $this->belongsTo(sintaxis::class);
+        return $this->belongsTo(formato::class);
+    }
+
+    public function atributo()
+    {
+        return $this->belongsTo(atributo::class);
     }
 }

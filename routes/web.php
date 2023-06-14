@@ -2,19 +2,21 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\ClaseController;
 use App\Http\Controllers\FotosController;
 use App\Http\Controllers\VentaController;
-use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\DiagramaController;
 // use App\Http\Controllers\EventoController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\FormatoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DiagramaController;
+use App\Http\Controllers\InvitadoController;
+use App\Http\Controllers\RelationController;
 use App\Http\Controllers\OrdenPagoController;
 use App\Http\Controllers\FotoestudioController;
 use App\Http\Controllers\OrganizadorController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\SintaxiController;
-use App\Http\Controllers\RelationController;
 use Laravel\Cashier\Http\Controllers\WebhookController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
@@ -145,20 +147,38 @@ Route::post(
     [WebhookController::class, 'handleWebhook']
 );
 
-Route::get('cart',[CartController::class,'showCart'])->name('cart.show');
-Route::post('cart.add',[CartController::class,'addToCart'])->name('cart.add');
-Route::post('cart.remove',[CartController::class,'removeFromCart'])->name('cart.remove');
-Route::post('cart.update',[CartController::class,'updateCart'])->name('cart.update');
+Route::get('cart', [CartController::class, 'showCart'])->name('cart.show');
+Route::post('cart.add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('cart.remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('cart.update', [CartController::class, 'updateCart'])->name('cart.update');
 
-route::get('diagramas',[DiagramaController::class,'index'])->name('diagramas');
-route::get('diagramas.edit',[DiagramaController::class,'edit'])->name('diagramas.edit');
-route::post('diagramas.store',[DiagramaController::class,'store'])->name('diagramas.store');
+Route::resource('diagramas', DiagramaController::class)
+    ->Parameters(['diagramas' => 'd'])->names('diagramas')->except(['create','edit','update']);
+Route::get('diagramas.edit', [DiagramaController::class, 'edit'])->name('diagramas.edit');
+Route::get('diagramas.create', [DiagramaController::class, 'create'])->name('diagramas.create');
+Route::post('diagramador', [DiagramaController::class, 'diagramador'])->name('diagramador');
 
-Route::resource('sintaxis', SintaxiController::class)
-    ->Parameters(['sintaxis' => 's'])->names('sintaxis');
+Route::resource('formato', FormatoController::class)
+    ->Parameters(['formato' => 'f'])->names('formato');
+    Route::get('tipo.dato', [FormatoController::class, 'tipoDato'])->name('tipo.dato');
+    Route::post('storeTipoDato', [FormatoController::class, 'storeTipoDato'])->name('storeTipoDato');
+
+Route::resource('clase', ClaseController::class)
+    ->Parameters(['clase' => 'c'])->names('clase')->except(['store','update']);
+
+Route::post('claseStore', [ClaseController::class, 'store'])->name('claseStore');
+Route::put('claseUpdate', [ClaseController::class, 'update'])->name('clase.update');
 
 Route::resource('relaciones', RelationController::class)
     ->Parameters(['relaciones' => 'r'])->names('relaciones');
 
-    Route::get('atributos',[SintaxiController::class,'atributos'])->name('atributos');
-    Route::post('atributoStore',[SintaxiController::class,'atributoStore'])->name('atributoStore');
+Route::post('invitados.create', [InvitadoController::class, 'create'])->name('invitados.create');
+Route::post('invitados', [InvitadoController::class, 'store'])->name('invitados.store');
+Route::get('atributos', [ClaseController::class, 'atributos'])->name('atributos');
+Route::post('atributoStore', [ClaseController::class, 'atributoStore'])->name('atributoStore');
+Route::get('atributoTipo', [ClaseController::class, 'atributoTipo'])->name('atributoTipo');
+Route::post('atributoTipoStore', [ClaseController::class, 'atributoTipoStore'])->name('atributoTipoStore');
+
+
+    // Route::resource('sintaxis', SintaxiController::class)
+    // ->Parameters(['sintaxis' => 's'])->names('sintaxis');   //ya no usar

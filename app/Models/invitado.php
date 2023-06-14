@@ -5,23 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class clase extends Model
+class invitado extends Model
 {
     use HasFactory;
 
-    public function atributos()
-    {
-        // doy la llave foranea de la tabla atributos
-        return $this->hasMany(atributo::class);
-    }
 
-    public function relation()
+    public function invitados()
     {
-        return $this->hasMany(relation::class);
+        return $this->belongsTo(User::class);
     }
 
     public function diagrama()
     {
         return $this->belongsTo(diagrama::class);
     }
+
+
 }

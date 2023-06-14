@@ -69,4 +69,8 @@ class RelationController extends Controller
     {
         //
     }
+
+    public function storeTipoRelation(){
+        
+    }
 }

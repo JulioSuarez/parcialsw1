@@ -14,7 +14,8 @@ class atributo extends Model
         return $this->belongsTo(clase::class);
     }
 
-    public function sintaxis(){
-        return $this->hasMany(sintaxis::class);
+    public function tipo_dato()
+    {
+        return $this->hasMany(tipo_dato::class);
     }
 }

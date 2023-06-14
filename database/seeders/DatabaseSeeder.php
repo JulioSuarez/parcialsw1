@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->roles();
         $this->cargarUsuarioPruebas();
-        $this->cargarEvento();
+        // $this->cargarEvento();
         // $this->cargarClientes();
     }
 
@@ -91,14 +91,14 @@ class DatabaseSeeder extends Seeder
     {
         Stripe::setApiKey('sk_test_51MF8jhEeOK3PttV3mH0ZQV6cLESOq9pILt95PZZmMhrcopvNPtWXraVPHgAlgh2Dj87Cc9sOXKbZYOsJT7GQVA1p00eMA1LNGp');
 
-        $s3 = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-east-1',
-            'credentials' => [
-                'key' => 'AKIAYJVJS4X563AM7AFW',
-                'secret' => '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',
-            ],
-        ]);
+        // $s3 = new S3Client([
+        //     'version' => 'latest',
+        //     'region' => 'us-east-1',
+        //     'credentials' => [
+        //         'key' => 'AKIAYJVJS4X563AM7AFW',
+        //         'secret' => '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',
+        //     ],
+        // ]);
 
 
         $images = [
@@ -191,30 +191,30 @@ class DatabaseSeeder extends Seeder
             $portada = $portadas[$i];
             $portada_name = uniqid() . '.png';
 
-            $result_portada = $s3->putObject([
-                'Bucket' => 'julico-bucket03',
-                'Key' => 'ruta/' . $portada_name,
-                'Body' => fopen($portada, 'r'),
-                'ACL' => 'public-read',
-            ]);
+            // $result_portada = $s3->putObject([
+            //     'Bucket' => 'julico-bucket03',
+            //     'Key' => 'ruta/' . $portada_name,
+            //     'Body' => fopen($portada, 'r'),
+            //     'ACL' => 'public-read',
+            // ]);
 
-            $image = $images[$i];
-            $imageName = uniqid() . '.png';
+            // $image = $images[$i];
+            // $imageName = uniqid() . '.png';
 
-            $result = $s3->putObject([
-                'Bucket' => 'julico-bucket03',
-                'Key' => 'ruta/' . $imageName,
-                'Body' => fopen($image, 'r'),
-                /*
-                'Key' => 'ruta/'.$profilePhotoName,
-                'Body' => fopen($profilePhotoPath, 'r'),
-                */
-                'ACL' => 'public-read',
-            ]);
+            // $result = $s3->putObject([
+            //     'Bucket' => 'julico-bucket03',
+            //     'Key' => 'ruta/' . $imageName,
+            //     'Body' => fopen($image, 'r'),
+            //     /*
+            //     'Key' => 'ruta/'.$profilePhotoName,
+            //     'Body' => fopen($profilePhotoPath, 'r'),
+            //     */
+            //     'ACL' => 'public-read',
+            // ]);
 
-            // Genera una URL pública para acceder a la imagen
-            $imageUrl = $result['ObjectURL'];
-            $portada_s3 = $result_portada['ObjectURL'];
+            // // Genera una URL pública para acceder a la imagen
+            // $imageUrl = $result['ObjectURL'];
+            // $portada_s3 = $result_portada['ObjectURL'];
 
 
 
@@ -226,8 +226,10 @@ class DatabaseSeeder extends Seeder
                 $user->fecha_nacimiento = $users[$i]['fecha_nacimiento'];
                 $user->genero = $users[$i]['genero'];
                 $user->password = bcrypt('password');
-                $user->profile_photo_path = $imageUrl;
-                $user->portada_photo_path = $portada_s3;
+                $user->profile_photo_path = 'img/JCST.png';
+                $user->portada_photo_path = 'img/JCST.png.png';
+                // $user->profile_photo_path = $imageUrl;
+                // $user->portada_photo_path = $portada_s3;
                 $user->assignRole($users[$i]['role']);
                 if (isset($users[$i]['estado'])) {
                     $user->estado = $users[$i]['estado'];

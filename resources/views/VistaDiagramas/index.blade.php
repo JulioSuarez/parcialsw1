@@ -1,293 +1,109 @@
 @extends('index')
 
+@section('encabezado')
+@endsection
+
 @section('jcst')
-    {{-- <button id="add-button">Agregar</button>
-    <!-- Agregar el modal para cambiar el nombre -->
-    <div id="name-modal" class="modal">
-        <div class="modal-content">
-            <h4>Cambiar nombre de la clase</h4>
-            <input type="text" id="class-name-input" placeholder="Nuevo nombre de la clase">
+    @if (session('success'))
+        <div class="bg-green-500 text-white text-center animate-bounce" x-data="{ show: true }" x-show="show"
+            x-init="setTimeout(() => show = false, 5000)">
+            {{ session('success') }}
         </div>
-        <div class="modal-footer">
-            <button class="modal-close waves-effect waves-light btn" id="save-name-button">Guardar</button>
+    @endif
+
+    <div class="flex flex-col justify-center items-center">
+        <h1 class="text-3xl font-bold mb-4">Mis Diagramas</h1>
+        <div class="text-right w-full">
+            <form action="{{ route('diagramas.store') }}" method="POST" class="mb-4">
+                @csrf
+                <div class="flex justify-center mb-8">
+                    <input type="text" name="titulo" placeholder="Nombre del Diagrama" required
+                        class="border border-gray-300 px-4 py-2 rounded-l-md w-64">
+                    <button class="bg-green-500 text-white px-4 py-2 rounded-r-md">Crear</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-300">
+                <thead>
+                    <tr>
+                        <th class="text-left py-2 px-4 border-b">Título</th>
+                        <th class="text-left py-2 px-4 border-b">Colaboradores</th>
+                        <th class="text-center py-2 px-4 border-b">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($diagramas as $d)
+                        {{-- @dd($d['id']) --}}
+                        <tr>
+                            <td class="py-2 px-4 border-b">{{ $d->titulo }}</td>
+
+                            <td class="py-2 px-4 border-b">
+                                @forelse ($invitados as $i)
+                                    @if ($i->id_diagrama == $d->id)
+                                        {{ $i->user_email }} |
+                                    @endif
+                                @empty
+                                    No hay invitados
+                                @endforelse
+                            </td>
+
+                            {{-- <td class="py-2 px-4 border-b">{{ $d['titulo'] }}</td> --}}
+                            {{-- <td class="py-2 px-4 border-b">{{ $d['invitado'] }}</td> --}}
+                            <td class="text-center py-2 px-4 border-b grid grid-cols-3">
+                                {{-- <button class="text-green-500 hover:underline mr-2">Invitar</button>
+                                <button class="text-blue-500 hover:underline mr-2">Editar</button>
+                                <button class="text-red-500 hover:underline">Eliminar</button> --}}
+                                <form id="invitacion" action="{{ route('invitados.create') }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    <input id="invitacion" type="text" hidden name="id_diagrama"
+                                        value="{{ $d->id }}">
+                                    <button id="invitacion" type="submit"
+                                        class="text-green-500 hover:underline mr-2">Invitar</button>
+                                </form>
+
+                                <form id="editDiagrama" action="{{ route('diagramador') }}" method="post" class="inline">
+                                    @csrf
+                                    <input id="editDiagrama" type="text" hidden name="id_diagrama"
+                                        value="{{ $d->id }}">
+                                    <input id="editDiagrama" type="text" hidden name="titulo"
+                                        value="{{ $d->titulo }}">
+                                    <input id="editDiagrama" type="text" hidden name="propietario"
+                                        value="{{ $d->id_propietario }}">
+                                    <button id="editDiagrama" type="submit"
+                                        class="text-blue-500 hover:underline mr-2">Editar</button>
+                                </form>
+
+                                <form id="deletDiagrama" action="{{ route('diagramas.destroy', $d->id) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input id="deletDiagrama" type="text" hidden name="id_diagrama"
+                                        value="{{ $d->id }}">
+                                    <button id="deletDiagrama" type="submit"
+                                        class="text-red-500 hover:underline">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td class="py-2 px-4 border-b">Diagrama 1</td>
+                            <td class="py-2 px-4 border-b">Usuario 1, Usuario 2</td>
+                            <td class="text-center py-2 px-4 border-b">
+                                <button class="text-green-500 hover:underline mr-2">Invitar</button>
+                                <button class="text-blue-500 hover:underline mr-2">Editar</button>
+                                <button class="text-red-500 hover:underline">Eliminar</button>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
-    <div id="diagram-container"></div>
+@endsection
 
 
-    <script src="{{ asset('vendor/mxgraph/js/mxClient.js') }}"></script>
-    <script>
-        let nombre = "nueva clase"
-        document.addEventListener('DOMContentLoaded', function() {
-            var container = document.getElementById('diagram-container');
-            var addButton = document.getElementById('add-button');
-            var graph = new mxGraph(container);
-            var model = graph.getModel();
-
-            // Agregar eventos a los botones
-            addButton.addEventListener('click', function() {
-                // Abrir el modal para cambiar el nombre
-                var modal = document.getElementById('name-modal');
-                var nameInput = document.getElementById('class-name-input');
-
-                // Establecer el valor actual del nombre en el input
-                nameInput.value = nombre;
-
-                var instance = M.Modal.getInstance(modal);
-                instance.open();
-            });
-
-
-            // funcion para agregar una clase
-            addButton.addEventListener('click', function() {
-                var parent = graph.getDefaultParent();
-
-                var vertex = graph.insertVertex(parent, null, nombre, 400, 20, 120, 50);
-                graph.setSelectionCell(vertex);
-            });
-
-
-            // Guardar el nombre cuando se hace clic en el botón de guardar
-            document.getElementById('save-name-button').addEventListener('click', function() {
-                var nameInput = document.getElementById('class-name-input');
-                nombre = nameInput.value; // Guardar el nuevo nombre en la variable
-
-                var selectedCell = graph.getSelectionCell();
-                if (selectedCell) {
-                    model.setValue(selectedCell, nombre); // Cambiar el nombre de la clase en el diagrama
-                }
-
-                var modal = document.getElementById('name-modal');
-                var instance = M.Modal.getInstance(modal);
-                instance.close();
-            });
-
-
-
-            // Función para eliminar utilizando el botón suprimir o la tecla de borrado
-            document.addEventListener('keydown', function(evt) {
-                if (evt.key === 'Delete' || evt.key === 'Backspace') {
-                    var selectedCell = graph.getSelectionCell();
-
-                    if (selectedCell) {
-                        model.remove(selectedCell);
-                    }
-                }
-            });
-
-            // Graficar el diagrama
-            graph.getModel().beginUpdate();
-            try {
-                var parent = graph.getDefaultParent();
-                // Aquí se grafica el diagrama
-            } finally {
-                graph.getModel().endUpdate();
-            }
-        });
-    </script> --}}
-
-
-
-    <button id="add-button">Agregar</button>
-    <div id="diagram-container"></div>
-
-    <script src="{{ asset('vendor/mxgraph/js/mxClient.js') }}"></script>
-    <script>
-        let nombre = "nueva clase"
-        document.addEventListener('DOMContentLoaded', function() {
-            // aqui agrego mis botones
-            var container = document.getElementById('diagram-container');
-            var addButton = document.getElementById('add-button');
-            var graph = new mxGraph(container);
-            var model = graph.getModel();
-
-            // aqui agrego los eventos a los botones
-
-            // funcion para agregar una clase
-            addButton.addEventListener('click', function() {
-                var parent = graph.getDefaultParent();
-
-                var vertex = graph.insertVertex(parent, null, nombre, 400, 20, 120, 50);
-                graph.setSelectionCell(vertex);
-            });
-
-            // funcion para eliminar utilizando el boton suprimit o el borrado backspace
-            document.addEventListener('keydown', function(evt) {
-                if (evt.key === 'Delete' || evt.key === 'Backspace') {
-                    var selectedCell = graph.getSelectionCell();
-
-                    if (selectedCell) {
-                        model.remove(selectedCell);
-                    }
-                }
-            });
-
-            // función para cambiar el nombre de la clase al hacer clic en ella
-            // graph.addListener(mxEvent.CLICK, function(sender, evt) {
-            //     var cell = evt.getProperty('cell');
-
-            //     if (cell && cell.isVertex()) {
-            //         var newValue = prompt('Ingresa el nuevo nombre de la clase', cell.getValue());
-
-            //         if (newValue !== null) {
-            //             model.setValue(cell, newValue);
-            //         }
-            //     }
-            // });
-
-            graph.addListener(mxEvent.CLICK, function(sender, evt) {
-                var cell = evt.getProperty('cell');
-
-                if (cell && cell.isVertex()) {
-                    var input = document.createElement('input');
-                    input.value = cell.getValue();
-
-                    input.addEventListener('blur', function() {
-                        var newValue = input.value;
-                        model.setValue(cell, newValue);
-                        container.removeChild(input);
-                    });
-
-                    container.appendChild(input);
-                    input.focus();
-                }
-            });
-
-            // graficar el diagrama
-            graph.getModel().beginUpdate();
-            try {
-                var parent = graph.getDefaultParent();
-                // aqui se grafica el diagrama
-                var parent = graph.getDefaultParent();
-
-                // Crear las clases iniciales en el gráfico
-                var clase1 = graph.insertVertex(parent, null, 'Clase 1', 20, 20, 120, 50);
-                var clase2 = graph.insertVertex(parent, null, 'Clase 2', 220, 20, 120, 50);
-                var clase3 = graph.insertVertex(parent, null, 'Clase 3', 20, 120, 120, 50);
-                var clase4 = graph.insertVertex(parent, null, 'Clase 4', 220, 120, 120, 50);
-
-                // Crear relaciones entre las clases
-                graph.insertEdge(parent, null, 'VARIABLE', clase1, clase2);
-                graph.insertEdge(parent, null, '', clase2, clase3);
-                graph.insertEdge(parent, null, '', clase3, clase4);
-
-
-
-            } finally {
-                graph.getModel().endUpdate();
-            }
-        });
-    </script>
-
-    {{--
-    <button id="add-button">Agregar</button>
-    <div id="diagram-container"></div>
-
-    <script src="{{ asset('vendor/mxgraph/js/mxClient.js') }}"></script>
-    <script>
-        let nombre = "nueva clase"
-        document.addEventListener('DOMContentLoaded', function() {
-            // aqui agrego mis botones
-            var container = document.getElementById('diagram-container');
-            var addButton = document.getElementById('add-button');
-            var graph = new mxGraph(container);
-            var model = graph.getModel();
-
-            // aqui agrego los eventos a los botones
-
-            // funcion para agregar una clase
-            addButton.addEventListener('click', function() {
-                var parent = graph.getDefaultParent();
-
-                var vertex = graph.insertVertex(parent, null, nombre, 400, 20, 120, 50);
-                graph.setSelectionCell(vertex);
-            });
-
-            // funcion para eliminar utilizando el boton suprimit o el borrado backspace
-            document.addEventListener('keydown', function(evt) {
-                if (evt.key === 'Delete' || evt.key === 'Backspace') {
-                    var selectedCell = graph.getSelectionCell();
-
-                    if (selectedCell) {
-                        model.remove(selectedCell);
-                    }
-                }
-            });
-
-            // graficar el diagrama
-            graph.getModel().beginUpdate();
-            try {
-                var parent = graph.getDefaultParent();
-                // aqui se grafica el diagrama
-            } finally {
-                graph.getModel().endUpdate();
-            }
-        });
-    </script> --}}
-
-
-
-    {{-- funcion de copiar --}}
-    {{-- copyButton.addEventListener('click', function() {
-    var encoder = new mxCodec();
-    var node = encoder.encode(model);
-    var diagramXml = mxUtils.getXml(node);
-
-    // Aquí puedes realizar la acción para copiar el diagrama (por ejemplo, enviarlo al servidor)
-    console.log('Diagrama copiado:', diagramXml);
-}); --}}
-
-
-
-
-    {{-- <div id="diagram-container"></div>
-    <script src="{{ asset('vendor/mxgraph/js/mxClient.js') }}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var container = document.getElementById('diagram-container');
-            var graph = new mxGraph(container);
-
-            graph.getModel().beginUpdate();
-            try {
-                // Crear el diagrama de clase
-                var parent = graph.getDefaultParent();
-
-                // Obtener los usuarios pasados desde el controlador
-                var usuarios = {!! json_encode($usuarios) !!};
-
-                // Iterar sobre los usuarios y crear los nodos en el gráfico
-                var y = 20;
-                usuarios.forEach(function(usuario) {
-                    var label = 'Usuario\n';
-                    label += 'id: ' + usuario.id + '\n';
-                    label += 'name: ' + usuario.name + '\n';
-                    label += 'email: ' + usuario.email + '\n';
-                    label += 'password: ' + usuario.password + '\n';
-                    label += 'timestamp: ' + usuario.timestamp + '\n';
-
-                    var vertex = graph.insertVertex(parent, null, label, 20, y, 200, 120);
-                    y += 140;
-                });
-
-                usuarios.forEach(function(usuario) {
-                    var label = '<div class="p-4 bg-gray-200 border border-gray-400">';
-                    label += '<span class="text-lg font-bold">Usuario</span><br>';
-                    label += '<span><strong>id:</strong> ' + usuario.id + '</span><br>';
-                    label += '<span><strong>name:</strong> ' + usuario.name + '</span><br>';
-                    label += '<span><strong>email:</strong> ' + usuario.email + '</span><br>';
-                    label += '<span><strong>password:</strong> ' + usuario.password + '</span><br>';
-                    label += '<span><strong>timestamp:</strong> ' + usuario.timestamp + '</span><br>';
-                    label += '</div>';
-
-                    var vertex = graph.insertVertex(parent, null, label, 20, y, 200, 'auto');
-                    graph.getModel().setStyle(vertex, 'fillColor=white;strokeColor=gray;rounded=1');
-
-                    y += 140;
-                });
-
-            } finally {
-                graph.getModel().endUpdate();
-            }
-        });
-    </script> --}}
+@section('scripts')
 @endsection

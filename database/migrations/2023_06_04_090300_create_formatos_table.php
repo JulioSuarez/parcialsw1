@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sintaxis', function (Blueprint $table) {
+        Schema::create('formatos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('atributos_id')->unsigned()->nullable();
-            $table->foreign('atributos_id')->references('id')->on('atributos');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sintaxis');
+        Schema::dropIfExists('formatos');
     }
 };

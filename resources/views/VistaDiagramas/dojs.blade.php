@@ -50,107 +50,52 @@
 
             <div class="container mx-auto p-4">
                 <h2 class="text-2xl font-bold mb-4 border-b-2">Agregar Atributo</h2>
-                <form action="#" method="POST" class="w-full max-w-sm">
-                    @csrf
+                <div id="atributos" class="">
                     <div class="mb-4">
-                        <label for="sintaxis" class="block text-gray-700">Tipo de Sintaxis</label>
-                        <select name="sintaxis" id="sintaxis" class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                            <option value="mysql" selected disabled>Elija una opcion</option>
-                            <option value="postgresql">PostgreSQL</option>
-                            <option value="sqlserver">SQL Server</option>
+                        <label for="name" class="block text-gray-700">Nombre del Atributo</label>
+                        <input type="text" name="name" id="name" required
+                            class="w-full border border-gray-300 px-4 py-2 rounded-md">
+                        <input type="text" name="id_diagrama" id="id_diagrama" value="{{ $d->id }}"
+                            class="w-full border border-gray-300 px-4 py-2 rounded-md">
+
+                        @forelse ($clases as $clase)
+                            <input type="text" name="clase_id[]" id="clase[]" value="{{ $clase->id }}">
+                            <input type="text" name="clase_name[]" id="clase[]" value="{{ $clase->name }}">
+                            @foreach ($clase->atributos as $c)
+                                <input type="text" name="atributo_id[]" id="atributo[]" value="{{ $c->id }}">
+                                <input type="text" name="atributo_name[]" id="atributo[]" value="{{ $c->name }}">
+                            @endforeach
+                        @empty
+                        @endforelse
+
+                        {{--
+                        @for ($i = 0; $i < count($clases); $i++)
+                            <input type="text" name="clase[]" id="clase[]" value="{{ $clases[$i]->id }}"
+                                class="w-full border border-gray-300 px-4 py-2 rounded-md">
+                            @for ($j = 0; $j < count($clases[$i]->atributos); $j++)
+                                <input type="text" name="atributo[]" id="atributo[]"
+                                    value="{{ $clases[$i]->atributos[$j]->id }}"
+                                    class="w-full border border-gray-300 px-4 py-2 rounded-md">
+                            @endfor
+                        @endfor --}}
+
+                        {{-- <input type="text" name="id_diagrama" id="id_diagrama" value="{{ $clases }}"
+                            class="w-full border border-gray-300 px-4 py-2 rounded-md"> --}}
+                    </div>
+                    <div class="mb-4">
+                        <label for="data_type" class="block text-gray-700">Tipo de Datos</label>
+                        <select name="data_type" id="data_type" class="w-full border border-gray-300 px-4 py-2 rounded-md">
+                            <option disabled selected>Elija un tipo de dato</option>
+                            @foreach ($tipod as $td)
+                                <option value="{{ $td->name }}">{{ $td->name }}</option>
+                            @endforeach
                         </select>
                     </div>
-
-                    <div id="sqlServerFields" class="hidden">
-                        <div class="mb-4">
-                            <label for="name" class="block text-gray-700">Nombre del Atributo</label>
-                            <input type="text" name="name" id="name" required
-                                class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                        </div>
-                        <div class="mb-4">
-                            <label for="data_type_sqlserver" class="block text-gray-700">Tipo de Datos</label>
-                            <select name="data_type_sqlserver" id="data_type_sqlserver"
-                                class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                                <option value="int">INT</option>
-                                <option value="varchar">VARCHAR</option>
-                                <option value="date">DATE</option>
-                                <option value="float">FLOAT</option>
-                                <option value="bigint">BIGINT</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="select_attribute_type_sql" class="block text-gray-700">Tipo de Atributo</label>
-                            <select name="select_attribute_type_sql" id="llave_sql"
-                                class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                                <option value="default">Default</option>
-                                <option value="primary_key_sql">Llave Primaria</option>
-                                <option value="foreign_key_sql">Llave Foránea</option>
-                            </select>
-                        </div>
-
-                        <div id="SQLForanea" class="hidden">
-                            <div class="mb-4">
-                                <label for="references" class="block text-gray-700">Referencias</label>
-                                <select name="references" id="references"
-                                    class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                                    <option value="table1">Tabla 1</option>
-                                    <option value="table2">Tabla 2</option>
-                                    <option value="table3">Tabla 3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button id="saveButton" class="px-4 py-2 bg-blue-500 text-white rounded-md">Guardar</button>
-                        </div>
+                    <div class="text-center">
+                        <button id="saveButton" class="px-4 py-2 bg-blue-500 text-white rounded-md">Guardar</button>
                     </div>
-
-                    <div id="postgreSQLFields" class="hidden">
-                        <div class="mb-4">
-                            <label for="name" class="block text-gray-700">Nombre del Atributo</label>
-                            <input type="text" name="name" id="name" required
-                                class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                        </div>
-                        <div class="mb-4">
-                            <label for="data_type_postgresql" class="block text-gray-700">Tipo de Datos</label>
-                            <select name="data_type_postgresql" id="data_type_postgresql"
-                                class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                                <option value="integer">INTEGER</option>
-                                <option value="varchar">VARCHAR</option>
-                                <option value="date">DATE</option>
-                                <option value="real">REAL</option>
-                                <option value="serial">SERIAL</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="select_attribute_type_pg" class="block text-gray-700">Tipo de Atributo</label>
-                            <select name="select_attribute_type_pg" id="select_attribute_type_pg"
-                                class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                                <option value="default_pg">Default</option>
-                                <option value="primary_key_pg">Llave Primaria</option>
-                                <option value="foreign_key_pg">Llave Foránea</option>
-                            </select>
-                        </div>
-
-                        <div id="PGForanea_pg" class="hidden">
-                            <div class="mb-4">
-                                <label for="references" class="block text-gray-700">Referencias</label>
-                                <select name="references" id="references"
-                                    class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                                    <option value="table1">Tabla 1</option>
-                                    <option value="table2">Tabla 2</option>
-                                    <option value="table3">Tabla 3</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button id="saveButton" class="px-4 py-2 bg-blue-500 text-white rounded-md">Guardar</button>
-                        </div>
-                    </div>
-
-                </form>
-
+                </div>
             </div>
-
         </div>
     </dialog>
 
@@ -232,7 +177,7 @@
         <script src="{{ resource_path('js/modal.js') }}" async></script> --}}
     <script src="./js/diagrama.js" async></script>
 
-    <script>
+    {{-- <script>
         const sintaxisSelect = document.getElementById('sintaxis');
         const postgreSQLFields = document.getElementById('postgreSQLFields');
         const sqlServerFields = document.getElementById('sqlServerFields');
@@ -273,5 +218,5 @@
                 PGForanea_pg.classList.add('hidden');
             }
         });
-    </script>
+    </script> --}}
 @endsection

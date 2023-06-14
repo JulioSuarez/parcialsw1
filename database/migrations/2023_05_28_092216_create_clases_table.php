@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('clases', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('multiplicidad')->nullable();
+            $table->unsignedBigInteger('id_diagrama');
+            $table->foreign('id_diagrama')->references('id')->on('diagramas')->onDelete('cascade');
             $table->timestamps();
         });
     }
