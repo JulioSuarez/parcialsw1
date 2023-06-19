@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\diagrama;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\clase;
-use App\Models\atributo;
-use App\Models\invitado;
 use App\Models\sintaxi;
+use App\Models\atributo;
+use App\Models\diagrama;
+use App\Models\invitado;
 use App\Models\relation;
-use App\Models\relation_tipo;
 use App\Models\tipo_dato;
 
+
+use App\Exports\DatosExport;
 use Illuminate\Http\Request;
+use App\Models\relation_tipo;
+
+use App\Exports\UsuariosExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DiagramaController extends Controller
 {
@@ -64,7 +71,11 @@ class DiagramaController extends Controller
         $d = diagrama::where('id_propietario', $id)->latest()->first();
         $clases = clase::where('id_diagrama', $d->id)->get();
         $tipod = tipo_dato::get();
-        return view('VistaDiagramas.dojs',compact('d', 'clases', 'tipod'));
+        $a = atributo::get();
+        $r = relation_tipo::get();
+        $relaciones = relation::get();
+
+        return view('VistaDiagramas.dojs', compact('d', 'clases', 'tipod', 'a', 'r', 'relaciones'));
 
         // return $this->diagramador($request);
     }
@@ -98,7 +109,8 @@ class DiagramaController extends Controller
         //
     }
 
-    public function diagramador(Request $request){
+    public function diagramador(Request $request)
+    {
 
         // dd($request);
         $d = diagrama::where('id', $request->id_diagrama)->first();
@@ -107,15 +119,20 @@ class DiagramaController extends Controller
         $tipod = tipo_dato::get();
 
         $clases = clase::where('id_diagrama', $d->id)->get();
+        $a = atributo::get();
+        $r = relation_tipo::get();
+        $relaciones = relation::get();
 
-        return view('VistaDiagramas.dojs',compact('d','tipod','clases'));
+        return view('VistaDiagramas.dojs', compact('d', 'tipod', 'clases', 'a', 'r', 'relaciones'));
     }
     public function edit(Request $request)
     {
         // dd($request);
         $tipod = tipo_dato::get();
-        $d = diagrama::where('titulo', $request->titulo)->where('id_propietario', $id)->order('id', 'desc')->first();
-        return view('VistaDiagramas.dojs',compact('tipod','d'));
+        $d = diagrama::where('titulo', $request->titulo)->order('id', 'desc')->first();
+        // ->where('id_propietario', $id)
+        $a = atributo::get();
+        return view('VistaDiagramas.dojs', compact('tipod', 'd', 'a'));
     }
 
     /**
@@ -173,5 +190,117 @@ class DiagramaController extends Controller
             ]);
         }
         return response()->json('Error al crear el atributo');
+    }
+
+    public function postgresql(diagrama $d)
+    {
+        $array_atributo = [];
+        $array_relacion = [];
+        $array_clase = [];
+        $di = diagrama::where('id', '=', $d->id)->first();
+        $c = clase::where('id_diagrama', '=', $d->id)->get();
+        foreach ($c as $cl) {
+            $re = relation::where('clase_origen', '=', $cl->id)->get();
+            foreach ($re as $r) {
+                $relxd = relation::where('clase_origen', '=', $r->clase_origen)->first();
+                $tr = relation_tipo::where('id', '=', $relxd->tipo_relacion)->first();
+                $clasO = clase::where('id', '=', $relxd->clase_origen)->first();
+                $clasD = clase::where('id', '=', $relxd->clase_destino)->first();
+                $array_relacion[$relxd->id] = [
+                    "clase_origen" => $clasO->name,
+                    "clase_destino" => $clasD->name,
+                    "tipo_relacion" => $tr->name,
+                ];
+            }
+
+            $at = atributo::where('clase_id', '=', $cl->id)->get();
+            foreach ($at as $a) {
+                $td = tipo_dato::where('id', '=', $a->tipo_id)->first();
+                $array_atributo[$a->id] = [
+                    "atributo_name" => $a->name,
+                    "tipo_dato_name" => $td->name,
+                ];
+            }
+            // dd($array_atributo);
+
+            if ($re->where('clase_origen', '=', $cl->id)->first()) {
+                $array_clase[$cl->id] = [
+                    "clase_name" => $cl->name,
+                    "atributos" => $array_atributo,
+                    "relaciones" => $array_relacion,
+                ];
+
+                $array_atributo = [];
+                $array_relacion = [];
+            } else {
+                $array_clase[$cl->id] = [
+                    "clase_name" => $cl->name,
+                    "atributos" => $array_atributo,
+                    "relaciones" => null,
+                ];
+                $array_atributo = [];
+            }
+        }
+
+        $pdf = Pdf::loadView('VistaDiagramas.postgresql', ['array_clase' => $array_clase, 'di' => $di])
+            ->setPaper('letter', 'portrait');
+        $fecha = date('Y-m-d');
+        return $pdf->stream('Script-pg-' . $fecha . '.pdf', ['Attachment' => 'true']);
+    }
+
+    public function sqlserver(diagrama $d)
+    {
+        $array_atributo = [];
+        $array_relacion = [];
+        $array_clase = [];
+        $di = diagrama::where('id', '=', $d->id)->first();
+        $c = clase::where('id_diagrama', '=', $d->id)->get();
+        foreach ($c as $cl) {
+            $re = relation::where('clase_origen', '=', $cl->id)->get();
+            foreach ($re as $r) {
+                $relxd = relation::where('clase_origen', '=', $r->clase_origen)->first();
+                $tr = relation_tipo::where('id', '=', $relxd->tipo_relacion)->first();
+                $clasO = clase::where('id', '=', $relxd->clase_origen)->first();
+                $clasD = clase::where('id', '=', $relxd->clase_destino)->first();
+                $array_relacion[$relxd->id] = [
+                    "clase_origen" => $clasO->name,
+                    "clase_destino" => $clasD->name,
+                    "tipo_relacion" => $tr->name,
+                ];
+            }
+
+            $at = atributo::where('clase_id', '=', $cl->id)->get();
+            foreach ($at as $a) {
+                $td = tipo_dato::where('id', '=', $a->tipo_id)->first();
+                $array_atributo[$a->id] = [
+                    "atributo_name" => $a->name,
+                    "tipo_dato_name" => $td->name,
+                ];
+            }
+            // dd($array_atributo);
+
+            if ($re->where('clase_origen', '=', $cl->id)->first()) {
+                $array_clase[$cl->id] = [
+                    "clase_name" => $cl->name,
+                    "atributos" => $array_atributo,
+                    "relaciones" => $array_relacion,
+                ];
+
+                $array_atributo = [];
+                $array_relacion = [];
+            } else {
+                $array_clase[$cl->id] = [
+                    "clase_name" => $cl->name,
+                    "atributos" => $array_atributo,
+                    "relaciones" => null,
+                ];
+                $array_atributo = [];
+            }
+        }
+
+        $pdf = Pdf::loadView('VistaDiagramas.sqlserver', ['array_clase' => $array_clase, 'di' => $di])
+            ->setPaper('letter', 'portrait');
+        $fecha = date('Y-m-d');
+        return $pdf->stream('Script-pg-' . $fecha . '.pdf', ['Attachment' => 'true']);
     }
 }

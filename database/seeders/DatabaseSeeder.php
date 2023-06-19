@@ -16,6 +16,9 @@ use App\Models\planes;
 use App\Models\cliente;
 use App\Models\organizador;
 use App\Models\album_evento;
+use App\Models\formato;
+use App\Models\relation_tipo;
+use App\Models\tipo_dato;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -31,10 +34,51 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->roles();
+        $this->preDiagrama();
         $this->cargarUsuarioPruebas();
         // $this->cargarEvento();
         // $this->cargarClientes();
     }
+
+    public function preDiagrama(){
+        $formato = new formato();
+        $formato->name = "SQL SERVER";
+        $formato->save();
+        $formato = new formato();
+        $formato->name = "POSTGRESQL";
+        $formato->save();
+
+        $tipoDato = new tipo_dato();
+        $tipoDato->name = "Numerico";
+        $tipoDato->save();
+        $tipoDato = new tipo_dato();
+        $tipoDato->name = "Texto";
+        $tipoDato->save();
+        $tipoDato = new tipo_dato();
+        $tipoDato->name = "Fecha";
+        $tipoDato->save();
+        $tipoDato = new tipo_dato();
+        $tipoDato->name = "Llave primaria";
+        $tipoDato->save();
+        $tipoDato = new tipo_dato();
+        $tipoDato->name = "Llave Foranea";
+        $tipoDato->save();
+
+        $relacion = new relation_tipo();
+        $relacion->name = "generalization";
+        $relacion->save();
+        $relacion = new relation_tipo();
+        $relacion->name = "aggregation";
+        $relacion->save();
+        $relacion = new relation_tipo();
+        $relacion->name = "composition";
+        $relacion->save();
+        $relacion = new relation_tipo();
+        $relacion->name = "association";
+        $relacion->save();
+
+    }
+
 
     public function roles()
     {
@@ -89,7 +133,7 @@ class DatabaseSeeder extends Seeder
 
     public function cargarUsuarioPruebas()
     {
-        Stripe::setApiKey('sk_test_51MF8jhEeOK3PttV3mH0ZQV6cLESOq9pILt95PZZmMhrcopvNPtWXraVPHgAlgh2Dj87Cc9sOXKbZYOsJT7GQVA1p00eMA1LNGp');
+        // Stripe::setApiKey('sk_test_51MF8jhEeOK3PttV3mH0ZQV6cLESOq9pILt95PZZmMhrcopvNPtWXraVPHgAlgh2Dj87Cc9sOXKbZYOsJT7GQVA1p00eMA1LNGp');
 
         // $s3 = new S3Client([
         //     'version' => 'latest',
@@ -237,13 +281,13 @@ class DatabaseSeeder extends Seeder
                 $user->save();
 
                 // Crea un nuevo cliente en Stripe
-                $customer = Customer::create([
-                    'email' => $user->email,
-                    'name' => $user->name,
-                ]);
+                // $customer = Customer::create([
+                //     'email' => $user->email,
+                //     'name' => $user->name,
+                // ]);
 
                 // Asigna el ID del cliente de Stripe al usuario
-                $user->stripe_id = $customer->id;
+                // $user->stripe_id = $customer->id;
                 $user->save();
         }
     }

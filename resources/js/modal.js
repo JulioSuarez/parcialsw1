@@ -1,4 +1,4 @@
-console.log("hola mundo");
+// console.log("hola mundo");
 // document.getElementById('myModal').showModal();
 
 //necesito saber la cantidad cotara

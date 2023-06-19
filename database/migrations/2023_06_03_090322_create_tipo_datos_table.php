@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('size')->nullable();
-            $table->unsignedBigInteger('id_formato')->nullable();
-            $table->foreign('id_formato')->references('id')->on('formatos');
-            $table->unsignedBigInteger('id_atributo')->nullable();
-            $table->foreign('id_atributo')->references('id')->on('atributos');
+            // $table->unsignedBigInteger('id_formato')->nullable();
+            // $table->foreign('id_formato')->references('id')->on('formatos');
+            // $table->unsignedBigInteger('id_atributo')->nullable();
+            // $table->foreign('id_atributo')->references('id')->on('atributos');
             $table->timestamps();
         });
     }

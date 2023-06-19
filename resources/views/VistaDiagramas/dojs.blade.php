@@ -29,6 +29,7 @@
 @endsection
 
 @section('jcst')
+    {{-- @dd($r) --}}
     {{-- <button id="bt_abrir_modal" type="button"
         class=" text-xs font-medium rounded-lg px-1 py-1 border-2 border-black bg-white hover:bg-black hover:text-white  dark:bg-slate-800 text-black dark:border-white dark:hover:bg-white dark:hover:text-black">
         Ver Detalles
@@ -52,35 +53,16 @@
                 <h2 class="text-2xl font-bold mb-4 border-b-2">Agregar Atributo</h2>
                 <div id="atributos" class="">
                     <div class="mb-4">
+                        {{-- datos para mi js by Julico --}}
+                        <input type="text" name="id_diagrama" id="id_diagrama" value="{{ $d->id }}"
+                            class="hidden">
+                        <input type="text" name="clases" id="clases" value="{{ $clases }}" class="hidden">
+                        <input type="text" name="atributos" id="atributos" value="{{ $a }}" class="hidden">
+                        <input type="text" name="relaciones" id="relaciones" value="{{ $relaciones }}" class="hidden">
+
                         <label for="name" class="block text-gray-700">Nombre del Atributo</label>
                         <input type="text" name="name" id="name" required
                             class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                        <input type="text" name="id_diagrama" id="id_diagrama" value="{{ $d->id }}"
-                            class="w-full border border-gray-300 px-4 py-2 rounded-md">
-
-                        @forelse ($clases as $clase)
-                            <input type="text" name="clase_id[]" id="clase[]" value="{{ $clase->id }}">
-                            <input type="text" name="clase_name[]" id="clase[]" value="{{ $clase->name }}">
-                            @foreach ($clase->atributos as $c)
-                                <input type="text" name="atributo_id[]" id="atributo[]" value="{{ $c->id }}">
-                                <input type="text" name="atributo_name[]" id="atributo[]" value="{{ $c->name }}">
-                            @endforeach
-                        @empty
-                        @endforelse
-
-                        {{--
-                        @for ($i = 0; $i < count($clases); $i++)
-                            <input type="text" name="clase[]" id="clase[]" value="{{ $clases[$i]->id }}"
-                                class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                            @for ($j = 0; $j < count($clases[$i]->atributos); $j++)
-                                <input type="text" name="atributo[]" id="atributo[]"
-                                    value="{{ $clases[$i]->atributos[$j]->id }}"
-                                    class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                            @endfor
-                        @endfor --}}
-
-                        {{-- <input type="text" name="id_diagrama" id="id_diagrama" value="{{ $clases }}"
-                            class="w-full border border-gray-300 px-4 py-2 rounded-md"> --}}
                     </div>
                     <div class="mb-4">
                         <label for="data_type" class="block text-gray-700">Tipo de Datos</label>
@@ -115,36 +97,33 @@
 
             <div class="container mx-auto p-4">
                 <h2 class="text-2xl font-bold mb-4">Agregar Relación</h2>
-                <form action="#" method="POST" class="w-full max-w-md">
-                    @csrf
+                <div class="mb-4">
+                    <label for="claseRelacion" class="block text-gray-700">Clase</label>
+                    <select name="claseRelacion" id="claseRelacion"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md">
+                        @forelse ($clases as $c)
+                            <option value="{{ $c->id }}">{{ $c->name }}({{ $c->id }})</option>
+                        @empty
+                            <option value="1">PROBLEMA AL CARGAR</option>
+                        @endforelse
+                    </select>
+                </div>
 
-                    <div class="mb-4">
-                        <label for="clase" class="block text-gray-700">Clase</label>
-                        <select name="clase" id="clase" class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                            <option value="1">Clase 1 (id)</option>
-                            <option value="11">Clase 11 (id)</option>
-                            <option value="12">Clase 12 (id)</option>
-                            <option value="13">Clase 13 (id)</option>
-                            <option value="14">Clase 14 (id)</option>
-                            <!-- Agrega las opciones restantes aquí -->
-                        </select>
-                    </div>
+                <div class="mb-4">
+                    <label for="tipo_relacion" class="block text-gray-700">Tipo de Relación</label>
+                    <select name="tipo_relacion" id="tipo_relacion"
+                        class="w-full border border-gray-300 px-4 py-2 rounded-md">
+                        @forelse ($r as $re)
+                            <option value="{{ $re->id }}">{{ $re->name }}</option>
+                        @empty
+                            <option value="0">ALGO SALIO MAL</option>
+                        @endforelse
+                    </select>
+                </div>
 
-                    <div class="mb-4">
-                        <label for="tipo_relacion" class="block text-gray-700">Tipo de Relación</label>
-                        <select name="tipo_relacion" id="tipo_relacion"
-                            class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                            <option value="agregacion">Agregación</option>
-                            <option value="composicion">Composición</option>
-                            <option value="herencia">Herencia</option>
-                            <option value="asociacion">Asociación</option>
-                        </select>
-                    </div>
-
-                    <div class="text-right">
-                        <button id="saveRelation" class="px-4 py-2 bg-blue-500 text-white rounded-md">Guardar</button>
-                    </div>
-                </form>
+                <div class="text-right">
+                    <button id="saveRelation" class="px-4 py-2 bg-blue-500 text-white rounded-md">Guardar</button>
+                </div>
             </div>
 
 
@@ -156,7 +135,14 @@
         <div class="container mx-auto p-4 text-center">
             <button id="addButton" class="px-4 py-2 bg-blue-500 text-white rounded-md">Agregar nuevo diagrama de
                 clase</button>
-            <button id="exportar" class="px-4 py-2 bg-blue-500 text-white rounded-md">Exportar</button>
+
+            <a href="{{ route('postgresql', $d->id) }}" target="_blank"
+                class="px-4 py-2 bg-blue-500 text-white rounded-md">Exportar
+                PostgreSQL</a>
+            <a href="{{ route('sqlserver', $d->id) }}" target="_blank"
+                class="px-4 py-2 bg-blue-500 text-white rounded-md">Exportar SQL
+                Server</a>
+
         </div>
         <div class="flex justify-center">
             {{-- <div class="w-1/5 bg-gray-200 p-4 rounded-md mr-2">

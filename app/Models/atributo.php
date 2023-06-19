@@ -18,4 +18,9 @@ class atributo extends Model
     {
         return $this->hasMany(tipo_dato::class);
     }
+
+    public function tipo()
+    {
+        return $this->belongsTo(tipo_dato::class);
+    }
 }

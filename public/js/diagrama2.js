@@ -9,15 +9,13 @@ function init() {
                     { // esto solo se presenta en nodos de árboles conectados por enlaces de "generalización"
                         angle: 90,
                         path: go.TreeLayout.PathSource,  // los enlaces van del hijo al padre
-                        setsPortSpot: true,  // mantener Spot.AllSides para el punto de conexión del enlace
-                        setsChildPortSpot: true,  // mantener Spot.AllSides
+                        setsPortSpot: false,  // mantener Spot.AllSides para el punto de conexión del enlace
+                        setsChildPortSpot: false,  // mantener Spot.AllSides
                         // los nodos no conectados por enlaces de "generalización" se disponen horizontalmente
                         arrangement: go.TreeLayout.ArrangementHorizontal
                     })
             });
 
-
-    var linkdata = [];
 
     // mostrar visibilidad o acceso como un solo carácter al principio de cada propiedad o método
     function convertVisibility(v) {
@@ -147,17 +145,16 @@ function init() {
         switch (r) {
             case "generalization": return "Triangle";
             case "aggregation": return "StretchedDiamond";
-            case "composition": return "Diamond";
-            // case "composition": return "Circle";
+            case "composition": return "Circle";
             case "association": return "";
             default: return "";
         }
     }
 
-    // variables globales para crear un nuevo diagrama de clase by Julico
+
     var nombre = "NewClassXD";
     var id = "id";
-    var tipo_dato = "Llave primaria";
+    var tipo_dato = "Primary key";
 
     // agregar una nueva clase al diagrama
     function addNewClassDiagram() {
@@ -170,10 +167,10 @@ function init() {
             ],
             methods: []
         };
+        // console.log(nombre);
         guardarClase(newClassDiagram);
 
-        // console.log("clase id: ", newClassDiagram.key);
-        // console.log("clase name: ", newClassDiagram.name);
+        console.log("nombre de la clase: ", newClassDiagram.key);
         // Agrega el nuevo objeto nodedata al arreglo nodeDataArray del modelo del diagrama
         myDiagram.model.addNodeData(newClassDiagram);
     }
@@ -185,6 +182,12 @@ function init() {
         addNewClassDiagram();
     });
     // fin de agregar un nuevo diagrama de clase
+
+
+
+
+
+
 
 
     function guardarClase(data) {
@@ -272,7 +275,7 @@ function init() {
                         var itempanel = node.findObject("PROPERTIES");
                         var itemdata = node.data;
                         var list = itemdata.properties || [];
-                        console.log("id Clase: ", itemdata.key);
+                        console.log("itemdata: ", itemdata.key);
 
 
                         document.getElementById('myModal').showModal();
@@ -292,47 +295,15 @@ function init() {
                             // Actualiza Panel.itemArray y visualiza
                             itempanel.itemArray = list;
 
-                            let tipoDeDato = select_data_type.value;
-                            console.log(tipoDeDato);
-                            switch (tipoDeDato) {
-                                case "Numerico":
-                                    tipoDeDato = 1;
-                                    break;
-                                case "Texto":
-                                    tipoDeDato = 2;
-                                    break;
-                                case "Fecha":
-                                    tipoDeDato = 3;
-                                    break;
-                                case "Llave primaria":
-                                    tipoDeDato = 4;
-                                    break;
-                                case "Llave Foranea" :
-                                    tipoDeDato = 5;
-                                    break;
-                                default:
-                                    tipoDeDato = "ERROR";
-                                    break;
-                            }
-
-                            console.log("id del tipo de relacion",tipoDeDato);
-
                             let token = document.querySelector('meta[name="csrf-token"]')
                                 .getAttribute("content");
                             const id_diagrama = document.getElementById("id_diagrama").value;
 
-                            console.log("FORMULARIO REGISTRA ATRIBUTOS NUEVOS1");
                             let formulario = new FormData();
                             formulario.append("name", nombreAtributo);
-                            formulario.append("tipoDeDato", tipoDeDato);
+                            formulario.append("formato", select_data_type);
                             formulario.append("id_clase", itemdata.key);
                             formulario.append("id_diagrama", id_diagrama);
-
-                            console.log("FORMULARIO REGISTRA ATRIBUTOS NUEVOS2");
-                            console.log("name", nombreAtributo);
-                            console.log("tipoDeDato", tipoDeDato);
-                            console.log("id_clase", itemdata.key);
-                            console.log("id_diagrama", id_diagrama);
 
                             // la ruta debe ser de tipo navegador con un slash al inicio
                             fetch('/atributoStore', {
@@ -345,6 +316,7 @@ function init() {
                                 .then((data) => {
                                     console.log(data);
                                 });
+                            // }
 
                             // Cierra el modal
                             document.getElementById('myModal').close();
@@ -362,93 +334,42 @@ function init() {
                         var itemdata = node.data;
                         var list = itemdata.relationships || [];
 
-                        console.log("List: ", itemdata)
-                        console.log("ID de la clase que ejecuta: ", itemdata.key)
+                        var relacion = [];
+                        var tipo_de_relacion = [];
 
                         document.getElementById('relacion').showModal();
 
                         var saveRelation = document.getElementById('saveRelation');
                         saveRelation.onclick = function () {
-                            const SelectClaseRelacion = document.getElementById('claseRelacion').value;
-                            const tipo_relacion = document.getElementById('tipo_relacion').value;
+                            const clase = document.getElementById('clase');
+                            const tipo_relacion = document.getElementById('tipo_relacion');
 
-                            let relacionxd;
-                            switch (parseInt(tipo_relacion)) {
-                                case 1:
-                                    relacionxd = "generalization";
-                                    break;
-                                case 2:
-                                    relacionxd = "aggregation";
-                                    break;
-                                case 3:
-                                    relacionxd = "composition";
-                                    break;
-                                case 4:
-                                    relacionxd = "association";
-                                    break;
-                                default:
-                                    relacionxd = "ERROR";
-                                    break;
+                            // Comprueba la sintaxis seleccionada y agrega los datos correspondientes a la lista
+                            if (clase.value === '1') {
+                                relacion.push({ from: 1, to: 11 });
                             }
-                            //EJEMPLO { from: 12, to: 11, relationship: "generalization" }
-                            console.log("Tipo de la relacionar: ", relacionxd);
-                            const newRelationship = { from: itemdata.key, to: SelectClaseRelacion, relationship: relacionxd };
-                            list.push(newRelationship);
-                            console.log("Así quedó la relación: ", list);
 
-                            // Crear el enlace en el diagrama
-                            myDiagram.startTransaction("addRelationship");
-                            myDiagram.model.addLinkData(newRelationship);
-                            myDiagram.commitTransaction("addRelationship");
+                            if (tipo_relacion.value === 'agreacion') {
+                                tipo_de_relacion.push({ relationship: "aggregation" });
+                            }
 
-
-
-
-
-                            let token = document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute("content");
-
-                            let formulario = new FormData();
-                            formulario.append("claseOrigen", itemdata.key);
-                            formulario.append("claseDestino", SelectClaseRelacion);
-                            formulario.append("tipoRelacion", parseInt(tipo_relacion));
-
-                            // la ruta debe ser de tipo navegador con un slash al inicio
-                            fetch('/relacionStore', {
-                                headers: {
-                                    "X-CSRF-TOKEN": token,
-                                },
-                                method: 'POST',
-                                body: formulario
-                            }).then((data) => data.json())
-                                .then((data) => {
-                                    console.log(data);
-                                });
-
-
-
-
-
-
-
-
-
-                            // let newRelationship = { from: itemdata.key, to: parseInt(SelectClaseRelacion), relationship: relacionxd };
-
-                            // if (newRelationship) {
-                            //     console.log("entreee: ",newRelationship)
-                            //     list.push(newRelationship);
-                            //     // list.push({ from: itemdata.key, to: parseInt(SelectClaseRelacion), relationship: relacionxd });
-                            //     linkdata.push({ from: itemdata.key, to: parseInt(SelectClaseRelacion), relationship: relacionxd });
-                            // }
-                            // console.log("asdasdasda");
+                            console.log(relacion);
+                            console.log(tipo_de_relacion);
+                            list.merge(relacion, tipo_de_relacion);
+                            console.log(list);
 
                             // Actualiza Panel.itemArray y visualiza
-                            // itempanel.itemArray = list;
+                            itempanel.itemArray = list;
 
                             // Cierra el modal
-                            document.getElementById('relacion').close();
 
+                            let bt_cerrar_modal2 = document.getElementById('bt_cerrar_modal2');
+                            bt_cerrar_modal2.addEventListener('click', e => {
+                                //prevenir el evnto que viene por default
+                                e.preventDefault();
+                                console.warn('entre al modal de relaciones!');
+                                document.getElementById('relacion').close();
+                            });
 
                         };
                     }
@@ -456,109 +377,6 @@ function init() {
                 $(go.TextBlock, "Relacion", { font: "bold 12pt sans-serif", stroke: "blue" })
             )
         );
-
-    let bt_cerrar_modal2 = document.getElementById('bt_cerrar_modal2');
-    bt_cerrar_modal2.addEventListener('click', e => {
-        //prevenir el evento que viene por default
-        e.preventDefault();
-        console.warn('entre al modal de relaciones!');
-        document.getElementById('relacion').close();
-    });
-
-
-    // evento que reconoce cuando elimna una relacion
-    myDiagram.addDiagramListener("SelectionDeleted", function (e) {
-        var diagram = e.diagram;
-        var selection = e.subject; // Elementos seleccionados eliminados
-        console.log("Me parece que quieres eliminar una relacion", selection);
-        selection.each(function (part) {
-            if (part instanceof go.Link) {
-                var link = part; // Obtener la relación eliminada
-                var linkData = link.data;
-
-                console.log("idClaseOrigen ", link.data.from);
-                console.log("idClaseDestino ", link.data.to);
-                console.log("tipoRelacion ", link.data.relationship);
-                //formulario para eliminar de la bd la relacion
-                let token = document.querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content");
-
-                let formulario = new FormData();
-                formulario.append("idClaseOrigen", link.data.from);
-                formulario.append("idClaseDestino", link.data.to);
-                formulario.append("tipoRelacion", link.data.relationship);
-
-                console.log("formulario Eliminar Relacion");
-
-                // la ruta debe ser de tipo navegador con un slash al inicio
-                fetch('/relacionDestroy', {
-                    headers: {
-                        "X-CSRF-TOKEN": token,
-                    },
-                    method: 'POST',
-                    body: formulario
-                }).then((data) => data.json())
-                    .then((data) => {
-                        console.log(data);
-                    });
-                console.log("Relación eliminada:", linkData);
-            }
-        });
-    });
-
-
-    // Evento para cambiar el nombre de un nodo al hacer doble clic
-    myDiagram.addDiagramListener("ObjectDoubleClicked", function (e) {
-        var part = e.subject.part;
-        if (part instanceof go.Node) {
-            var node = part;
-            var oldName = node.data.name;
-            var keyClase = node.data.key;
-            var newName = prompt("Ingrese el nuevo nombre:", oldName);
-
-            // Verificar si se ingresó un nuevo nombre
-            console.log("Id de la clase que seleccione:", keyClase);
-            if (newName !== null) {
-                // Actualizar el nombre del nodo
-                console.log("Nuevo nombre:", newName);
-                myDiagram.startTransaction("updateNodeName");
-                myDiagram.model.setDataProperty(node.data, "name", newName);
-                myDiagram.commitTransaction("updateNodeName");
-
-                // Formulario para actualizar los nombres de las clases
-
-                let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-
-                let formulario = new FormData();
-                formulario.append("idClase", keyClase);
-                formulario.append("NuevoNombre", newName);
-
-                console.log("Formulario para actualizar nombre de mis clases by julico");
-                console.log(keyClase);
-                console.log(newName);
-
-                // La ruta debe ser de tipo navegador con una barra diagonal al inicio
-                fetch('/claseUpdate', {
-                    headers: {
-                        "X-CSRF-TOKEN": token,
-                    },
-                    method: 'POST',
-                    body: formulario
-                }).then((data) => data.json())
-                    .then((data) => {
-                        console.log(data);
-                    });
-            }
-        }
-    });
-
-
-
-
-
-
-
-
 
 
 
@@ -575,23 +393,20 @@ function init() {
 
 
 
-    console.log('---------------------------')
+    console.log('hola mnjdon!!!0')
 
     var nodedata = [];
+    var linkdata = [];
     var propiedades = [];
     var clasesxd = document.querySelectorAll('input[name="clases"]');
     var atributosxd = document.querySelectorAll('input[name="atributos"]');
 
     var claseObj = JSON.parse(clasesxd[0].value);
     var atributoObj = JSON.parse(atributosxd[0].value);
-
     console.log("all clases: ", claseObj);
     console.log("all atributos: ", atributoObj);
-    console.log("all Relaciones: ", relacionesObj);
-
     var contadorClase = 0;
     var contadorAtributo = 0;
-
     for (const co of claseObj) {
 
         let aux_nodedata = {
@@ -605,84 +420,27 @@ function init() {
         let contador = 0;
         for (const iterator of atributoObj) {
             // console.log("entre com:",contador);
-            console.warn(co.id, iterator.clase_id)
+            console.warn(co.id ,iterator.clase_id)
             if (co.id === iterator.clase_id) {
-                console.log("entre en:", contador);
-                let opcion;
+                // const contador = 0;
+                console.log("entre en:",contador);
 
-                switch (iterator.tipo_id) {
-                    case 1:
-                        opcion = "Numerico";
-                        break;
-                    case 2:
-                        opcion = "Texto";
-                        break;
-                    case 3:
-                        opcion = "Fecha";
-                        break;
-                    case 4:
-                        opcion = "Llave primaria";
-                        break;
-                    case 5:
-                        opcion = "Llave Foranea";
-                        break;
-                    default:
-                        opcion = "ERROR";
-                        break;
-                }
 
                 aux_nodedata['properties'].push({
-                    name: iterator.name,
-                    type: opcion,
-                    visibility: "public",
-                });
+                        name: iterator.name,
+                        type: "iterator.formato",
+                        visibility: "public",
+                    });
 
             }
             contador++;
         }
-        console.warn("ABAJO ", aux_nodedata['properties']);
+        console.warn("ABAJO ",aux_nodedata['properties']);
 
         nodedata.push(aux_nodedata);
     }
-    console.warn("NODE", nodedata);
+    console.warn("NODE",nodedata);
 
-
-    var relaciones = document.querySelectorAll('input[name="relaciones"]');
-    var relacionesObj = JSON.parse(relaciones[0].value);
-    for (let rel of relacionesObj) {
-
-        console.log("relacion_id ", rel.id);
-        console.log("relacion_origen ", rel.clase_origen);
-        console.log("relacion_destino ", rel.clase_destino);
-        console.log("relacion_tipo ", rel.tipo_relacion);
-
-        let relacion_tipo;
-        switch (parseInt(rel.tipo_relacion)) {
-            case 1:
-                relacion_tipo = "generalization";
-                break;
-            case 2:
-                relacion_tipo = "aggregation";
-                break;
-            case 3:
-                relacion_tipo = "composition";
-                break;
-            case 4:
-                relacion_tipo = "association";
-                break;
-            default:
-                relacion_tipo = "ERROR";
-                break;
-        }
-
-        linkdata.push({ from: rel.clase_origen, to: rel.clase_destino, relationship: relacion_tipo });
-    }
-    /*
-        case "generalization": return "Triangle";
-        case "aggregation": return "StretchedDiamond";
-        case "composition": return "Circle";
-        case "association": return "";
-    */
     // var linkdata = [
     //     { from: 12, to: 11, relationship: "generalization" },
     //     { from: 13, to: 11, relationship: "generalization" },
@@ -697,8 +455,8 @@ function init() {
             nodeDataArray: nodedata,
             linkDataArray: linkdata
         },
-        console.log("nodeDataArray: ", nodedata),
-        console.log("linkDataArray: ", linkdata),
+        console.log("nodeDataArray: ",nodedata),
+        console.log("linkDataArray: ",linkdata),
     );
 }
 

@@ -156,6 +156,7 @@ Route::resource('diagramas', DiagramaController::class)
     ->Parameters(['diagramas' => 'd'])->names('diagramas')->except(['create','edit','update']);
 Route::get('diagramas.edit', [DiagramaController::class, 'edit'])->name('diagramas.edit');
 Route::get('diagramas.create', [DiagramaController::class, 'create'])->name('diagramas.create');
+
 Route::post('diagramador', [DiagramaController::class, 'diagramador'])->name('diagramador');
 
 Route::resource('formato', FormatoController::class)
@@ -166,8 +167,11 @@ Route::resource('formato', FormatoController::class)
 Route::resource('clase', ClaseController::class)
     ->Parameters(['clase' => 'c'])->names('clase')->except(['store','update']);
 
+Route::post('relacionStore', [ClaseController::class, 'relacionStore'])->name('relacionStore');
+Route::post('relacionUpdate', [ClaseController::class, 'relacionUpdate'])->name('relacionUpdate');
+Route::post('relacionDestroy', [ClaseController::class, 'relacionDestroy'])->name('relacionDestroy');
 Route::post('claseStore', [ClaseController::class, 'store'])->name('claseStore');
-Route::put('claseUpdate', [ClaseController::class, 'update'])->name('clase.update');
+Route::post('claseUpdate', [ClaseController::class, 'update'])->name('clase.update');
 
 Route::resource('relaciones', RelationController::class)
     ->Parameters(['relaciones' => 'r'])->names('relaciones');
@@ -179,6 +183,9 @@ Route::post('atributoStore', [ClaseController::class, 'atributoStore'])->name('a
 Route::get('atributoTipo', [ClaseController::class, 'atributoTipo'])->name('atributoTipo');
 Route::post('atributoTipoStore', [ClaseController::class, 'atributoTipoStore'])->name('atributoTipoStore');
 
+
+Route::get('postgresql{d}', [DiagramaController::class, 'postgresql'])->name('postgresql');
+Route::get('sqlserver{d}', [DiagramaController::class, 'sqlserver'])->name('sqlserver');
 
     // Route::resource('sintaxis', SintaxiController::class)
     // ->Parameters(['sintaxis' => 's'])->names('sintaxis');   //ya no usar

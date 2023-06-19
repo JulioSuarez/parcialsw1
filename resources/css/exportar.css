@@ -1,0 +1,326 @@
+html {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    /* 4 */
+    src: local('img/fotosPDF/cotizacion.png');
+}
+
+.up {
+    text-transform: uppercase;
+}
+
+.invoice-box {
+    background-color: rgb(255, 255, 255);
+    color: #2a2a2a;
+    font-size: 13px;
+    height: auto;
+    line-height: 15px;
+    margin: 0 auto;
+    max-width: 21.5cm;
+}
+
+.hidden {
+    display: none;
+}
+
+.invoice-box table {
+    width: 100%;
+    line-height: inherit;
+    text-align: left;
+}
+
+.items-table .total {
+    border-bottom: 2px solid #eee;
+    border-top: 1px solid #000;
+    border-left: 2px solid rgb(255, 255, 255);
+    border-right: 2px solid rgb(255, 255, 255);
+    font-weight: bold;
+    text-align: right;
+}
+
+.items-table td {
+    padding: 5px;
+    vertical-align: top;
+    vertical-align: inherit;
+    border: 1px solid #000;
+}
+
+.items-table th {
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 5px;
+    /* color de fondo */
+    background: #1e293b;
+    color: white;
+    font-weight: bold;
+}
+
+.tnota {
+    /* margin: 20px; */
+    /* margin-top: 4cm; */
+    /* margin-left: 1cm; */
+    /* margin-right: 1cm; */
+    margin-bottom: 10px;
+}
+
+.nota {
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 10px;
+    background: white;
+    color: black;
+    font-weight: bold;
+}
+
+.cliente {
+    padding: 3px;
+    /* color de fondo */
+    background: #1e293b;
+    color: white;
+    /* border-bottom: 1px solid #ddd; */
+    font-weight: bold;
+}
+
+.right {
+    /* display: flex; */
+    /* justify-content: flex-end; */
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.mt {
+    margin-top: 0.5cm;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.options {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.button {
+    border: none;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: #6abe84;
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-block;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+@media print {
+    div.saltopagina {
+        display: block;
+        page-break-before: always;
+    }
+
+    .invoice-box {
+        margin: 0;
+        padding: 0;
+    }
+
+    .options {
+        display: none;
+    }
+}
+
+@page {
+    margin: 1.1cm;
+    /* margin-top: 1.2cm;
+    margin-left: 2cm;
+    margin-right: 2cm;
+    margin-bottom: 0.5cm; */
+}
+
+#header {
+    position: fixed;
+    /* position: absolute; */
+    top: 0cm;
+    left: 0cm;
+    right: 0cm;
+    height: 0cm;
+}
+
+.headerr {
+    top: 0cm;
+    left: 0cm;
+    right: 0cm;
+    /* height: 80px; */
+    /* margin-bottom: cm; */
+    /* padding-bottom: 1cm; */
+    /* padding: 0px 0px; */
+    position: sticky;
+}
+
+.headerxD {
+    position: fixed;
+    top: 0cm;
+    left: 0cm;
+    right: 0cm;
+    height: 2cm;
+    background-color: #F93855;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+}
+
+.footerxD {
+    position: fixed;
+    bottom: 0cm;
+    left: 0cm;
+    right: 0cm;
+    height: 2cm;
+    background-color: #F93855;
+    color: white;
+    text-align: center;
+    line-height: 35px;
+}
+
+footer {
+    position: fixed;
+    position: sticky;
+    bottom: 0cm;
+    left: 0cm;
+    right: 0cm;
+    height: 0cm;
+}
+
+/* desde aqui pondre estilos para mis hoja de script 2do parcial jcst */
+.container {
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.rounded-lg {
+    border-radius: 0.5rem
+        /* 8px */
+    ;
+}
+
+.shadow-lg {
+    --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.p-6 {
+    padding: 1.5rem
+        /* 24px */
+    ;
+}
+
+.mb-4 {
+    margin-bottom: 1rem
+        /* 16px */
+    ;
+}
+
+.mb-10 {
+    margin-bottom: 2.5rem
+        /* 40px */
+    ;
+}
+
+.text-2xl {
+    font-size: 1.5rem
+        /* 24px */
+    ;
+    line-height: 2rem
+        /* 32px */
+    ;
+}
+
+.text-lg {
+    font-size: 1.125rem
+        /* 18px */
+    ;
+    line-height: 1.75rem
+        /* 28px */
+    ;
+}
+
+.my-0 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.mt-0 {
+    margin-top: 0px;
+}
+
+.ml-4 {
+    margin-left: 1rem
+        /* 16px */
+    ;
+}
+
+.text-red-500 {
+    --tw-text-opacity: 1;
+    color: #F93855
+}
+
+.text-gray-400 {
+    --tw-text-opacity: 1;
+    color: #9ca3af
+}
+
+
+.bg-gray-400 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+}
+.bg-red-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}

@@ -43,7 +43,7 @@
 
 
     {{-- servidor socket --}}
-    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+    {{-- <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
         integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
     <script type="importmap">
@@ -72,7 +72,7 @@
             console.log(respuesta);
         });
 
-    </script>
+    </script> --}}
 
 
 </head>

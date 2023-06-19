@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('atributos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('tipo_id')->nullable();
+            $table->foreign('tipo_id')->references('id')->on('tipo_datos');
             $table->bigInteger('clase_id')->unsigned();
             $table->foreign('clase_id')->references('id')->on('clases')->onDelete('cascade');
             $table->timestamps();
