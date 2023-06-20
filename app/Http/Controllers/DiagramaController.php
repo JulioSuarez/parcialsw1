@@ -31,33 +31,15 @@ class DiagramaController extends Controller
         $id = auth()->user()->id;
         $diagramas = Diagrama::where('id_propietario', $id)->orderBy('id', 'desc')->get();
         $invitados = invitado::get();
-        // $coleccion = collect([]);
-        // $invitadosArray = collect([]);
-        // foreach ($diagramas as $diagrama) {
-        //     $invitado = Invitado::where('id_diagrama', $diagrama->id)->get();
-        //     if ($invitado) {
-        //         foreach ($invitado as $inv) {
-        //             $invitadosArray->push($inv->user_email);
-        //         }
-        //         // dd($invitadosArray);
-        //         $coleccion->push([
-        //             'id' => $diagrama->id,
-        //             'titulo' => $diagrama->titulo,
-        //             'invitados' => $invitadosArray,
-        //             'fecha' => $diagrama->created_at,
-        //         ]);
-        //         // dd($coleccion);
-        //     } else {
-        //         $coleccion->push([
-        //             'id' => $diagrama->id,
-        //             'titulo' => $diagrama->titulo,
-        //             'invitado' => 'No hay invitados',
-        //             'fecha' => $diagrama->created_at,
-        //         ]);
-        //     }
-        // }
-        // dd($coleccion);
-        return view('VistaDiagramas.index', compact('invitados', 'diagramas'));
+
+        $in = invitado::where('user_email', auth()->user()->email)->first();
+        if ($in) {
+            $diagramaInvitado = diagrama::where('id', $in->id_diagrama)->get();
+        } else {
+            $diagramaInvitado = null;
+        }
+
+        return view('VistaDiagramas.index', compact('invitados', 'diagramas', 'diagramaInvitado'));
     }
 
     /**

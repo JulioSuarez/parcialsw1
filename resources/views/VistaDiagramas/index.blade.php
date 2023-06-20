@@ -94,8 +94,8 @@
                         </tr>
                     @empty
                         <tr>
-                            <td class="py-2 px-4 border-b">Diagrama 1</td>
-                            <td class="py-2 px-4 border-b">Usuario 1, Usuario 2</td>
+                            <td class="py-2 px-4 border-b text-red-500">EJEMPLO</td>
+                            <td class="py-2 px-4 border-b text-red-500">Usuario 1, Usuario 2</td>
                             <td class="text-center py-2 px-4 border-b">
                                 <button class="text-green-500 hover:underline mr-2">Invitar</button>
                                 <button class="text-blue-500 hover:underline mr-2">Editar</button>
@@ -106,6 +106,90 @@
                 </tbody>
             </table>
         </div>
+        @if (is_null($diagramaInvitado))
+            esta nulo
+        @else
+            <div class="w-full overflow-x-auto mt-20">
+                <table class="min-w-full bg-white border border-gray-300">
+                    <thead>
+                        <tr>
+                            <th class="text-left py-2 px-4 border-b">Título</th>
+                            <th class="text-left py-2 px-4 border-b">Colaboradores</th>
+                            <th class="text-center py-2 px-4 border-b">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($diagramaInvitado as $d)
+                            {{-- @dd($d['id']) --}}
+                            <tr>
+                                <td class="py-2 px-4 border-b">
+                                    <p>
+                                        {{ $d->titulo }}
+                                    </p>
+                                    <p>
+                                        Propietario: {{ $d->id_propietario }}
+                                    </p>
+                                </td>
+
+                                <td class="py-2 px-4 border-b">
+                                    @forelse ($invitados as $i)
+                                        @if ($i->id_diagrama == $d->id)
+                                            {{ $i->user_email }} |
+                                        @endif
+                                    @empty
+                                        No hay invitados
+                                    @endforelse
+                                </td>
+                                <td class="text-center py-2 px-4 border-b grid grid-cols-3">
+                                    <form id="invitacion" action="{{ route('invitados.create') }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        {{-- @dd($d) --}}
+                                        <input id="invitacion" type="text" hidden name="id_diagrama"
+                                            value="{{ $d->id }}">
+                                        <button id="invitacion" type="submit"
+                                            class="text-green-500 hover:underline mr-2">Invitar</button>
+                                    </form>
+
+                                    <form id="editDiagrama" action="{{ route('diagramador') }}" method="post"
+                                        class="inline">
+                                        @csrf
+                                        <input id="editDiagrama" type="text" hidden name="id_diagrama"
+                                            value="{{ $d->id }}">
+                                        <input id="editDiagrama" type="text" hidden name="titulo"
+                                            value="{{ $d->titulo }}">
+                                        <input id="editDiagrama" type="text" hidden name="propietario"
+                                            value="{{ $d->id_propietario }}">
+                                        <button id="editDiagrama" type="submit"
+                                            class="text-blue-500 hover:underline mr-2">Editar</button>
+                                    </form>
+
+                                    <form id="deletDiagrama" action="{{ route('diagramas.destroy', $d->id) }}"
+                                        method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input id="deletDiagrama" type="text" hidden name="id_diagrama"
+                                            value="{{ $d->id }}">
+                                        <button id="deletDiagrama" type="submit"
+                                            class="text-red-500 hover:underline">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td class="py-2 px-4 border-b text-red-500">EJEMPLO</td>
+                                <td class="py-2 px-4 border-b text-red-500">Usuario 1, Usuario 2</td>
+                                <td class="text-center py-2 px-4 border-b">
+                                    <button class="text-green-500 hover:underline mr-2">Invitar</button>
+                                    <button class="text-blue-500 hover:underline mr-2">Editar</button>
+                                    <button class="text-red-500 hover:underline">Eliminar</button>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </div>
 @endsection
 
