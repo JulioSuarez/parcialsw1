@@ -36,7 +36,10 @@
     <link href="./assets/css/tooltips.css" rel="stylesheet" />
     <link href="./assets/css/tooltips.css" rel="stylesheet" />
 
-    <link href="./build/manifest.json"/>
+    <link href="./build/manifest.json" />
+
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+    <link rel="stylesheet" href="{{ public_path('css/app.css') }}" />
 
 
     @livewireStyles()
