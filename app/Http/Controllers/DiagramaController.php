@@ -166,6 +166,10 @@ class DiagramaController extends Controller
         $reference = $database->getReference('clases');
         $snapshot = $reference->getSnapshot();
         $cl = $snapshot->getValue();
+        if($cl == null){
+            $cl = [];
+        }
+        // dd($cl);
 
         return view('VistaDiagramas.dojs', compact('d', 'tipod', 'clases','cl', 'a', 'r', 'relaciones'));
     }
