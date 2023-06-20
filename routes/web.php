@@ -193,6 +193,7 @@ Route::get('sqlserver{d}', [DiagramaController::class, 'sqlserver'])->name('sqls
 // Route::resource('sintaxis', SintaxiController::class)
 // ->Parameters(['sintaxis' => 's'])->names('sintaxis');   //ya no usar
 
-Route::get('/iprueba', function () {
-    return view('VistaEmail.index');
-});
+Route::get('pruebas', [DiagramaController::class, 'readData'])->name('pruebas');
+// Route::get('/iprueba', function () {
+//     return view('VistaEmail.index');
+// });

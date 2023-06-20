@@ -21,11 +21,36 @@ use App\Exports\UsuariosExport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 
+
+use Kreait\Firebase\Contract\Database;
+use Kreait\Laravel\Firebase\Facades\Firebase;
+
 class DiagramaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function readData()
+    {
+        $database = app(Database::class);
+        $reference = $database->getReference('clases');
+        $snapshot = $reference->getSnapshot();
+        $value = $snapshot->getValue();
+
+        // dd($value);
+        // Haz algo con los datos obtenidos de Firebase
+        return view('VistaPruebas.prueba', compact('value'));
+    }
+
+    public function writeData()
+    {
+        $database = app(Database::class);
+        $reference = $database->getReference('users');
+        $reference->push([
+            'name' => 'John Doe',
+            'email' => 'johndoe@example.com',
+        ]);
+
+        // El dato se ha escrito en Firebase
+    }
+
     public function index()
     {
         $id = auth()->user()->id;
@@ -57,7 +82,15 @@ class DiagramaController extends Controller
         $r = relation_tipo::get();
         $relaciones = relation::get();
 
-        return view('VistaDiagramas.dojs', compact('d', 'clases', 'tipod', 'a', 'r', 'relaciones'));
+
+        $database = app(Database::class);
+        $reference = $database->getReference('clases');
+        $snapshot = $reference->getSnapshot();
+        $cl = $snapshot->getValue();
+
+        return view('VistaDiagramas.dojs', compact('d', 'tipod', 'clases','cl', 'a', 'r', 'relaciones'));
+
+        // return view('VistaDiagramas.dojs', compact('d', 'clases', 'tipod', 'a', 'r', 'relaciones'));
 
         // return $this->diagramador($request);
     }
@@ -76,6 +109,29 @@ class DiagramaController extends Controller
 
         // $d = diagrama::where('titulo', $request->titulo)->where('id_propietario', $id)->first();
         $d = diagrama::where('id_propietario', $id)->latest()->first();
+
+
+        $database = app(Database::class);
+        $reference = $database->getReference('diagramas');
+        $reference->push([
+            'id' => $d->id,
+            'titulo' => $d->titulo,
+            'id_propietario' => $d->id_propietario,
+        ]);
+
+        // $diagramas = [];
+        // $diagramas[] = [
+        //     $d->id => [
+        //         'id' => $d->id,
+        //         'titulo' => $d->titulo,
+        //         'id_propietario' => $d->id_propietario,
+        //     ]
+        // ];
+        // // dd($diagramas);
+        // $reference->push($diagramas);
+        // dd($reference);
+
+
 
         return redirect()->route('diagramas.create', ['diagrama' => $d]);
 
@@ -105,7 +161,13 @@ class DiagramaController extends Controller
         $r = relation_tipo::get();
         $relaciones = relation::get();
 
-        return view('VistaDiagramas.dojs', compact('d', 'tipod', 'clases', 'a', 'r', 'relaciones'));
+
+        $database = app(Database::class);
+        $reference = $database->getReference('clases');
+        $snapshot = $reference->getSnapshot();
+        $cl = $snapshot->getValue();
+
+        return view('VistaDiagramas.dojs', compact('d', 'tipod', 'clases','cl', 'a', 'r', 'relaciones'));
     }
     public function edit(Request $request)
     {

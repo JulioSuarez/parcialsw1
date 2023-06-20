@@ -8,6 +8,11 @@ use App\Models\relation;
 use App\Models\tipo_dato;
 use Illuminate\Http\Request;
 
+
+use Kreait\Firebase\Contract\Database;
+use Kreait\Laravel\Firebase\Facades\Firebase;
+
+
 class ClaseController extends Controller
 {
     /**
@@ -45,6 +50,26 @@ class ClaseController extends Controller
         $atributo->clase_id = $c->id;
         $atributo->tipo_id = $td->id;
         $atributo->save();
+
+        $a = atributo::where('name', '=', 'id')->where('clase_id', '=', $c->id)->orderBy('id', 'desc')->first();
+
+        $database = app(Database::class);
+        $reference = $database->getReference('clases');
+        $reference->push([
+            'id' => $c->id,
+            'name' => $c->name,
+            'id_diagrama' => $c->id_diagrama,
+        ]);
+
+        $database = app(Database::class);
+        $reference = $database->getReference('atributos');
+        $reference->push([
+            'id' => $a->id,
+            'name' => $a->name,
+            'tipo_id' => $a->tipo_id,
+            'clase_id' => $a->clase_id,
+        ]);
+
 
         if ($clase) {
             return response()->json([

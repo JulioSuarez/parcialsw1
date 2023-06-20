@@ -24,16 +24,12 @@
 
 
 
-    {{-- by julico --}}
-    @yield('encabezado')
-
-
 
     {{-- RECURSOS xD --}}
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.min.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4']) --}}
     {{-- RECURSOS PARA PRODUCCION --}}
 
-    <link href="./assets/app-326a11bd.css" rel="stylesheet" />
+    <link href="./build/assets/app-326a11bd.css" rel="stylesheet" />
     <link href="./assets/nucleo-icons.css" rel="stylesheet" />
     <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
     <link href="./assets/css/perfect-scrollvar.css" rel="stylesheet" />
@@ -55,6 +51,10 @@
 
 
     @livewireStyles()
+
+
+    {{-- by julico --}}
+    @yield('encabezado')
 
 
 
@@ -421,11 +421,12 @@
     <script src="{{ asset('js/goSamples.js') }}"></script>
     <script src="{{ asset('js/portada.js') }}"></script>
     <script src="{{ asset('js/prism.js') }}"></script> --}}
+    <script src="./build/assets/app-42d29486.js"></script>
     <script src="./assets/js/chart-1.js"></script>
     <script src="./assets/js/chart-2.js"></script>
     <script src="./assets/js/dropdown.js"></script>
     <script src="./assets/js/fixed-plugin.js"></script>
-    <script src="./assets/js/nav-pills2.js"></script>
+    <script src="./assets/js/nav-pills.js"></script>
     <script src="./assets/js/navbar-collapse.js"></script>
     <script src="./assets/js/navbar-sticky.js"></script>
     <script src="./assets/js/perfect-scrollbar.js"></script>

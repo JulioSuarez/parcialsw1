@@ -155,7 +155,7 @@ function init() {
     }
 
     // variables globales para crear un nuevo diagrama de clase by Julico
-    var nombre = "NewClassXD";
+    var nombre = "Clase";
     var id = "id";
     var tipo_dato = "Llave primaria";
 
@@ -192,21 +192,13 @@ function init() {
             .getAttribute("content");
         const id_diagrama = document.getElementById("id_diagrama").value;
 
+        console.log("formulario para registrar clases");
+
         let formulario = new FormData();
-        // agrego el id del diagrama
         formulario.append("id_diagrama", id_diagrama);
-        console.log("Guardar: ", id_diagrama);
-
-        // agrego los datos de la clase
-        // agrego el nombre de la clase al formulario
         formulario.append("nombre", data.name);
-        console.log("Guardar: ", data.name);
-        // no estoy agregando el nombre del primer atributo porque es obvio que es ID primary key
-        // solo agrego el tipo de atributo
         formulario.append("tipo", data.properties[0].type);
-        console.log("Guardar: ", data.properties[0].type);
 
-        // console.log(formulario);
         fetch('/claseStore', {
             headers: {
                 "X-CSRF-TOKEN": token,

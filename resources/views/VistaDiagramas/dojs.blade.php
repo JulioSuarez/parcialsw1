@@ -125,8 +125,8 @@
                     <label for="claseRelacion" class="block text-gray-700">Clase</label>
                     <select name="claseRelacion" id="claseRelacion"
                         class="w-full border border-gray-300 px-4 py-2 rounded-md">
-                        @forelse ($clases as $c)
-                            <option value="{{ $c->id }}">{{ $c->name }}({{ $c->id }})</option>
+                        @forelse ($cl as $c)
+                            <option value="{{ $c['id'] }}">{{ $c['name'] }}({{ $c['id'] }})</option>
                         @empty
                             <option value="1">PROBLEMA AL CARGAR</option>
                         @endforelse
