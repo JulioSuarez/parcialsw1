@@ -31,7 +31,9 @@
         <p class="text-lg mb-6">Si estás interesado en unirte a nosotros, simplemente sigue los siguientes pasos:</p>
 
         <ol class="list-decimal list-inside text-lg mb-6">
-            <li>Haz clic en el siguiente enlace para registrarte en nuestra plataforma: [Enlace de registro]</li>
+            <li>Haz clic en el siguiente enlace para registrarte en nuestra plataforma:
+                <a href="https://julicosuarez.tech/">DIAGRAMADOR UML</a>
+            </li>
             <li>Completa el proceso de registro y crea tu perfil.</li>
             <li>Ve a la seccion de diagramas y podras ver la lista de diagramas en colaboracion.</li>
         </ol>
