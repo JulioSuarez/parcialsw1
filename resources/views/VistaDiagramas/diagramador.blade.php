@@ -1,6 +1,10 @@
-@extends('index')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('encabezado')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://gojs.net/latest/release/go.js"></script>
 
     <style>
@@ -50,27 +54,17 @@
             ;
         }
 
-        .grandeJulico {
-            height: 700px;
-            /* height: 100vh; */
-            /* width: 100vw; */
-        }
-
-        .ancho {
-            width: 90%;
+        .grande {
+            height: 500px;
         }
     </style>
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
-@endsection
+    <title>Julico Suarez</title>
+</head>
 
-@section('suarez')
-    {{-- @dd($r) --}}
-    {{-- <button id="bt_abrir_modal" type="button"
-        class=" text-xs font-medium rounded-lg px-1 py-1 border-2 border-black bg-white hover:bg-black hover:text-white  dark:bg-slate-800 text-black dark:border-white dark:hover:bg-white dark:hover:text-black">
-        Ver Detalles
-    </button> --}}
+<body>
 
     <dialog id="myModal" class="h-1/1 w-80 lg:w-96  p-3 rounded-2xl ">
 
@@ -94,8 +88,10 @@
                         <input type="text" name="id_diagrama" id="id_diagrama" value="{{ $d->id }}"
                             class="hidden">
                         <input type="text" name="clases" id="clases" value="{{ $clases }}" class="hidden">
-                        <input type="text" name="atributos" id="atributos" value="{{ $a }}" class="hidden">
-                        <input type="text" name="relaciones" id="relaciones" value="{{ $relaciones }}" class="hidden">
+                        <input type="text" name="atributos" id="atributos" value="{{ $a }}"
+                            class="hidden">
+                        <input type="text" name="relaciones" id="relaciones" value="{{ $relaciones }}"
+                            class="hidden">
 
                         <label for="name" class="block text-gray-700">Nombre del Atributo</label>
                         <input type="text" name="name" id="name" required
@@ -103,7 +99,8 @@
                     </div>
                     <div class="mb-4">
                         <label for="data_type" class="block text-gray-700">Tipo de Datos</label>
-                        <select name="data_type" id="data_type" class="w-full border border-gray-300 px-4 py-2 rounded-md">
+                        <select name="data_type" id="data_type"
+                            class="w-full border border-gray-300 px-4 py-2 rounded-md">
                             <option disabled selected>Elija un tipo de dato</option>
                             @foreach ($tipod as $td)
                                 <option value="{{ $td->name }}">{{ $td->name }}</option>
@@ -168,8 +165,8 @@
     </dialog>
 
 
-    <div id="suarez" class="relative flex flex-col flex-auto min-w-0 p-16 mx-6 mt-8 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white bg-clip-border backdrop-blur-2xl backdrop-saturate-200 ">
-        <div class="container mx-auto pt-4 text-center">
+    <div id="suarez" class="container mx-auto p-4 grande">
+        <div class="container mx-auto p-4 text-center">
             <button id="addButton" class="px-4 py-2 bg-blue-500 text-white rounded-md">Agregar nuevo diagrama de
                 clase</button>
 
@@ -183,66 +180,18 @@
                 Exportar PNG</button> --}}
             <button class="button is-success" id="btnCapturar">Tomar captura</button>
         </div>
-        <div id="screnDIV" class="flex justify-center items-center">
-            <div class="ancho bg-gray-100 p-4 rounded-md border-black my-4">
-                <div id="myDiagramDiv" class="p-4 w-full grandeJulico"></div>
+        <div id="screnDIV" class="flex justify-center items-center ">
+            <div class="w-4/5 bg-white p-4 rounded-md border-black ">
+                <div id="myDiagramDiv" class="p-4 w-full grande"></div>
             </div>
+            <p>quiero salir en la foto xD</p>
         </div>
     </div>
-@endsection
 
-
-@section('scripts')
-    {{-- @vite(['resources/js/modal.js']) --}}
-    <!-- Agrega los scripts necesarios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/gojs/release/go.js"></script>
-    {{-- NO funciono
-        <script src="{{ resource_path('js/modal.js') }}" async></script> --}}
+
     <script src="./js/diagrama.js" async></script>
-
-    {{-- <script>
-        const sintaxisSelect = document.getElementById('sintaxis');
-        const postgreSQLFields = document.getElementById('postgreSQLFields');
-        const sqlServerFields = document.getElementById('sqlServerFields');
-
-
-        const select_attribute_type_sql = document.getElementById('llave_sql');
-        const SQLForanea = document.getElementById('SQLForanea');
-
-        const select_attribute_type_pg = document.getElementById('select_attribute_type_pg');
-        const PGForanea_pg = document.getElementById('PGForanea_pg');
-
-
-        sintaxisSelect.addEventListener('change', function() {
-            if (sintaxisSelect.value === 'postgresql') {
-                postgreSQLFields.classList.remove('hidden');
-                sqlServerFields.classList.add('hidden');
-            } else if (sintaxisSelect.value === 'sqlserver') {
-                postgreSQLFields.classList.add('hidden');
-                sqlServerFields.classList.remove('hidden');
-            }
-        });
-        select_attribute_type_sql.addEventListener('change', function() {
-            if (select_attribute_type_sql.value === 'foreign_key_sql') {
-                SQLForanea.classList.remove('hidden');
-            } else if (select_attribute_type_sql.value === 'primary_key_sql') {
-                SQLForanea.classList.add('hidden');
-            } else if (select_attribute_type_sql.value === 'default') {
-                SQLForanea.classList.add('hidden');
-            }
-        });
-
-        select_attribute_type_pg.addEventListener('change', function() {
-            if (select_attribute_type_pg.value === 'foreign_key_pg') {
-                PGForanea_pg.classList.remove('hidden');
-            } else if (select_attribute_type_pg.value === 'primary_key_pg') {
-                PGForanea_pg.classList.add('hidden');
-            } else if (select_attribute_type_pg.value === 'default_pg') {
-                PGForanea_pg.classList.add('hidden');
-            }
-        });
-    </script> --}}
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.1/dist/html2canvas.min.js">
     </script>
@@ -251,7 +200,7 @@
         //Definimos el botón para escuchar su click
         const $boton = document.querySelector("#btnCapturar"), // El botón que desencadena
             // $objetivo = document.body; // A qué le tomamos la foto
-            $objetivo = document.getElementById("screnDIV"); // A qué le tomamos la foto
+            $objetivo = document.getElementById("suarez"); // A qué le tomamos la foto
 
 
         const enviarCapturaAServidor = canvas => {
@@ -296,4 +245,6 @@
                 .then(enviarCapturaAServidor); // Cuando se resuelva, enviarla al servidor
         });
     </script>
-@endsection
+</body>
+
+</html>

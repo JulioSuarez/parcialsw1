@@ -23,8 +23,6 @@
     {{-- <script src="https://unpkg.com/@popperjs/core@2"></script> --}}
 
 
-
-
     {{-- RECURSOS xD --}}
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.min.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4']) --}}
     {{-- RECURSOS PARA PRODUCCION --}}
@@ -37,17 +35,8 @@
     <link href="./assets/css/soft-ui-dashboard-tailwind.min.css" rel="stylesheet" />
     <link href="./assets/css/tooltips.css" rel="stylesheet" />
     <link href="./assets/css/tooltips.css" rel="stylesheet" />
-    {{-- <link href="{{ asset('build/assets/app-326a11bd.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/nucleo-icons.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/css/perfect-scrollvar.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/css/soft-ui-dashboard-tailwind.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/css/soft-ui-dashboard-tailwind.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/css/tooltips.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/css/tooltips.css') }}" rel="stylesheet" /> --}}
 
-    {{-- <link href="{{ asset('build/assets/app-42d29486.js') }}" rel="stylesheet" /> --}}
-    <link href="{{ asset('build/manifest.json') }}" />
+    <link href="./build/manifest.json"/>
 
 
     @livewireStyles()
@@ -358,8 +347,10 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
+        @yield('suarez')
         <!-- cards -->
         <div class="w-full px-6 py-6 mx-auto">
             <!-- row 1 -->
@@ -396,31 +387,6 @@
     </main>
 
 
-    {{-- <script src="{{ asset('build/assets/js/chart-1.js') }}"></script>
-    <script src="{{ asset('build/assets/js/chart-2.js') }}"></script>
-    <script src="{{ asset('build/assets/js/dropdown.js') }}"></script>
-    <script src="{{ asset('build/assets/js/fixed-plugin.js') }}"></script>
-    <script src="{{ asset('build/assets/js/nav-pills2.js') }}"></script>
-    <script src="{{ asset('build/assets/js/navbar-collapse.js') }}"></script>
-    <script src="{{ asset('build/assets/js/navbar-sticky.js') }}"></script>
-    <script src="{{ asset('build/assets/js/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('build/assets/js/sidenav-burger.js') }}"></script>
-    <script src="{{ asset('build/assets/js/soft-ui-dashboard-tailwind.js') }}"></script>
-    <script src="{{ asset('build/assets/js/soft-ui-dashboard-tailwind.min.js') }}"></script>
-    <script src="{{ asset('build/assets/js/tooltips.js') }}"></script>
-    <script src="{{ asset('build/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('build/assets/js/plugins/chartjs.min.js') }}"></script>
-    <script src="{{ asset('build/assets/js/plugins/Chart.extension.js') }}"></script>
-
-
-    <script src="{{ asset('build/assets/js/modal.js') }}"></script>
-    <script src="{{ asset('build/assets/js/jcst-kit.js') }}"></script>
-
-    <script src="{{ asset('js/diagrama.js') }}"></script>
-    <script src="{{ asset('js/goDoc.js') }}"></script>
-    <script src="{{ asset('js/goSamples.js') }}"></script>
-    <script src="{{ asset('js/portada.js') }}"></script>
-    <script src="{{ asset('js/prism.js') }}"></script> --}}
     <script src="./build/assets/app-42d29486.js"></script>
     <script src="./assets/js/chart-1.js"></script>
     <script src="./assets/js/chart-2.js"></script>
@@ -442,11 +408,6 @@
     <script src="./assets/js/modal.js"></script>
     <script src="./assets/js/jcst-kit.js"></script>
 
-    {{-- <script src="./assets/js/diagrama.js"></script>
-    <script src="./assets/js/goDoc.js"></script>
-    <script src="./assets/js/goSamples.js"></script>
-    <script src="./assets/js/portada.js"></script>
-    <script src="./assets/js/prism.js"></script> --}}
     <script src="./js/diagrama.js" async></script>
     <script src="./js/goDoc.js" async></script>
     <script src="./js/goSamples.js" async></script>
@@ -463,9 +424,9 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- main script file  -->
     <script src="./assets/js/soft-ui-dashboard-tailwind.js?v=1.0.4" async></script>
-    @stack('modals')
+    {{-- @stack('modals')
     @livewireScripts
-    @stack('js')
+    @stack('js') --}}
 </body>
 
 </html>
