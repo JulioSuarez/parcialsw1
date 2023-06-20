@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\diagrama;
 use App\Models\invitado;
 use Illuminate\Http\Request;
+use App\Mail\CorreosMailable;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class InvitadoController extends Controller
 {
@@ -22,11 +25,9 @@ class InvitadoController extends Controller
     public function create(Request $request)
     {
         // dd($request);
-        $diagrama = diagrama::find($request)->first();
-        // $invitacion = invitado::where('id_diagrama','=',$diagrama->id)->first();
-
+        $diagrama = diagrama::Where('id','=',$request->id_diagrama)->first();
         // dd($diagrama);
-        return view('VistaDiagramas.invitadoStore',compact('diagrama'));
+        return view('VistaDiagramas.invitadoStore', compact('diagrama'));
     }
 
     /**
@@ -34,16 +35,29 @@ class InvitadoController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->id_diagrama);
+        // dd($request);
+        // marcoantorniocruzrojas@gmail.com
+        $diagrama = diagrama::Where('id','=',$request->id_diagrama)->first();
+        $propietario = User::Where('id','=',$diagrama->id_propietario)->first();
+
+        $d = $diagrama->titulo;
+        $p = $propietario->name;
+
+
         $invitados = explode(',', $request->input('invitados'));
-        foreach ($invitados as $e){
+        foreach ($invitados as $e) {
             // dd($e);
             $i = new invitado();
             $i->user_email = $e;
             $i->id_diagrama = $request->id_diagrama;
             $i->save();
+
+            $correo = new CorreosMailable($d, $p, $e);
+            Mail::to($e)->send($correo);
         }
-        return redirect()->route('diagramas.index')->with('success','Invitaciones enviadas');
+
+
+        return redirect()->route('diagramas.index')->with('success', 'Invitaciones enviadas');
     }
 
     /**

@@ -307,7 +307,7 @@ function init() {
                                 case "Llave primaria":
                                     tipoDeDato = 4;
                                     break;
-                                case "Llave Foranea" :
+                                case "Llave Foranea":
                                     tipoDeDato = 5;
                                     break;
                                 default:
@@ -315,7 +315,7 @@ function init() {
                                     break;
                             }
 
-                            console.log("id del tipo de relacion",tipoDeDato);
+                            console.log("id del tipo de relacion", tipoDeDato);
 
                             let token = document.querySelector('meta[name="csrf-token"]')
                                 .getAttribute("content");
@@ -555,8 +555,46 @@ function init() {
 
 
 
+    // Agrega un evento al botón con el ID "screenDiagram"
+    var xd = document.getElementById("screenDiagram");
+    xd.onclick = function () {
+        var diagram = go.Diagram.fromDiv("myDiagramDiv");
 
+        // Realiza una disposición completa del diagrama antes de generar la imagen
+        diagram.layoutDiagram(true);
 
+        // Obtiene el tamaño del contenido del diagrama
+        var bounds = diagram.documentBounds;
+        var padding = 10; // Margen adicional alrededor del contenido
+        var imgWidth = bounds.width + padding;
+        var imgHeight = bounds.height + padding;
+
+        // Crea un elemento de lienzo temporal para generar la imagen
+        var canvas = document.createElement("canvas");
+        canvas.width = imgWidth;
+        canvas.height = imgHeight;
+
+        // Obtiene el contexto 2D del lienzo
+        var ctx = canvas.getContext("2d");
+
+        // Establece el fondo del lienzo en blanco
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, imgWidth, imgHeight);
+
+        // Renderiza el diagrama en el lienzo
+        diagram.renderCanvas(ctx, new go.Rect(0, 0, imgWidth, imgHeight));
+
+        // Convierte el lienzo en una imagen
+        var image = canvas.toDataURL("image/png");
+
+        // Crea un enlace para descargar la imagen
+        var link = document.createElement("a");
+        link.href = image;
+        link.download = "diagrama.png";
+
+        // Dispara el evento de clic en el enlace para iniciar la descarga de la imagen
+        link.click();
+    };
 
 
 

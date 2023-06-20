@@ -58,8 +58,13 @@
                                 <form id="invitacion" action="{{ route('invitados.create') }}" method="POST"
                                     class="inline">
                                     @csrf
+                                    {{-- @dd($d) --}}
                                     <input id="invitacion" type="text" hidden name="id_diagrama"
                                         value="{{ $d->id }}">
+                                    {{-- <input id="invitacion" type="text" hidden name="propietario"
+                                        value="{{ $d->id_propietario }}">
+                                    <input id="invitacion" type="text" hidden name="diagrama_name"
+                                        value="{{ $d->titulo }}"> --}}
                                     <button id="invitacion" type="submit"
                                         class="text-green-500 hover:underline mr-2">Invitar</button>
                                 </form>

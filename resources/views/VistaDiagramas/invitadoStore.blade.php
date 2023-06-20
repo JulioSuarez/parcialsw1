@@ -8,6 +8,7 @@
         @csrf
         <div class="flex justify-center mb-8">
             <input type="text" name="id_diagrama" value="{{ $diagrama->id }}" hidden>
+            {{-- <input type="text" name="id_diagrama" value="{{ $propietario->id }}" hidden> --}}
             <textarea name="invitados" placeholder="Correos de los invitados separados por comas" required
                 class="border border-gray-300 px-4 py-2 rounded-l-md w-64"></textarea>
             <button class="bg-green-500 text-white px-4 py-2 rounded-r-md">Invitar</button>

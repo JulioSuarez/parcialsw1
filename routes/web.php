@@ -19,6 +19,8 @@ use App\Http\Controllers\FotoestudioController;
 use App\Http\Controllers\OrganizadorController;
 use Laravel\Cashier\Http\Controllers\WebhookController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Mail\CorreosMailable;
+use illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -177,7 +179,8 @@ Route::resource('relaciones', RelationController::class)
     ->Parameters(['relaciones' => 'r'])->names('relaciones');
 
 Route::post('invitados.create', [InvitadoController::class, 'create'])->name('invitados.create');
-Route::post('invitados', [InvitadoController::class, 'store'])->name('invitados.store');
+Route::post('invitados.store', [InvitadoController::class, 'store'])->name('invitados.store');
+// Route::post('invitados', [CorreosMailable::])->name('invitados.store');
 Route::get('atributos', [ClaseController::class, 'atributos'])->name('atributos');
 Route::post('atributoStore', [ClaseController::class, 'atributoStore'])->name('atributoStore');
 Route::get('atributoTipo', [ClaseController::class, 'atributoTipo'])->name('atributoTipo');
@@ -187,5 +190,9 @@ Route::post('atributoTipoStore', [ClaseController::class, 'atributoTipoStore'])-
 Route::get('postgresql{d}', [DiagramaController::class, 'postgresql'])->name('postgresql');
 Route::get('sqlserver{d}', [DiagramaController::class, 'sqlserver'])->name('sqlserver');
 
-    // Route::resource('sintaxis', SintaxiController::class)
-    // ->Parameters(['sintaxis' => 's'])->names('sintaxis');   //ya no usar
+// Route::resource('sintaxis', SintaxiController::class)
+// ->Parameters(['sintaxis' => 's'])->names('sintaxis');   //ya no usar
+
+Route::get('/iprueba', function () {
+    return view('VistaEmail.index');
+});

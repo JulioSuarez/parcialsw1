@@ -2,23 +2,34 @@
 
 namespace App\Mail;
 
+use App\Models\User;
+use App\Models\diagrama;
+use AWS\CRT\HTTP\Request;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CorreosMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
+
+    public $d;
+    public $p;
+    public $e;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($d,$p,$e)
     {
-        //
+        $this->d = $d;
+        $this->p = $p;
+        $this->e = $e;
     }
 
     /**
@@ -27,19 +38,27 @@ class CorreosMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Correos Mailable',
+            subject: 'Invitacion a la plataforma de diagramas',
         );
     }
 
     /**
      * Get the message content definition.
      */
-    public function content(): Content
+    public function build()
     {
-        return new Content(
-            view: 'view.name',
-        );
+        return $this->view('VistaEmail.index',[
+            'd' => $this->d,
+            'p' => $this->p,
+            'e' => $this->e,
+        ]);
     }
+    // public function content(): Content
+    // {
+    //     return $this->view('VistaEmail.index');
+    // }
+
+
 
     /**
      * Get the attachments for the message.

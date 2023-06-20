@@ -142,7 +142,8 @@
             <a href="{{ route('sqlserver', $d->id) }}" target="_blank"
                 class="px-4 py-2 bg-blue-500 text-white rounded-md">Exportar SQL
                 Server</a>
-
+            <button id="screenDiagram" class="px-4 py-2 bg-blue-500 text-white rounded-md">
+                Exportar PNG</button>
         </div>
         <div class="flex justify-center">
             {{-- <div class="w-1/5 bg-gray-200 p-4 rounded-md mr-2">
@@ -159,6 +160,9 @@
 
 @section('scripts')
     @vite(['resources/js/modal.js'])
+    <!-- Agrega los scripts necesarios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/gojs/release/go.js"></script>
     {{-- NO funciono
         <script src="{{ resource_path('js/modal.js') }}" async></script> --}}
     <script src="./js/diagrama.js" async></script>
