@@ -30,13 +30,29 @@
 
 
     {{-- RECURSOS xD --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.min.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/nucleo-icons.css', 'resources/css/nucleo-svg.css', 'resources/css/soft-ui-dashboard-tailwind.min.css', 'resources/css/soft-ui-dashboard-tailwind.css?v=1.0.4']) --}}
     {{-- RECURSOS PARA PRODUCCION --}}
-    {{--
-     <link href="{{ asset('build/assets/app-8a8e309e.css') }}" rel="stylesheet" />
-     <link href="{{ asset('build/assets/app-20106add.js') }}" rel="stylesheet" />
-     <link href="{{ asset('build/manifest.json') }}" />
-     --}}
+
+    <link href="./assets/app-326a11bd.css" rel="stylesheet" />
+    <link href="./assets/nucleo-icons.css" rel="stylesheet" />
+    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="./assets/css/perfect-scrollvar.css" rel="stylesheet" />
+    <link href="./assets/css/soft-ui-dashboard-tailwind.css" rel="stylesheet" />
+    <link href="./assets/css/soft-ui-dashboard-tailwind.min.css" rel="stylesheet" />
+    <link href="./assets/css/tooltips.css" rel="stylesheet" />
+    <link href="./assets/css/tooltips.css" rel="stylesheet" />
+    {{-- <link href="{{ asset('build/assets/app-326a11bd.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/assets/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/assets/css/perfect-scrollvar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/assets/css/soft-ui-dashboard-tailwind.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/assets/css/soft-ui-dashboard-tailwind.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/assets/css/tooltips.css') }}" rel="stylesheet" />
+    <link href="{{ asset('build/assets/css/tooltips.css') }}" rel="stylesheet" /> --}}
+
+    {{-- <link href="{{ asset('build/assets/app-42d29486.js') }}" rel="stylesheet" /> --}}
+    <link href="{{ asset('build/manifest.json') }}" />
+
 
     @livewireStyles()
 
@@ -224,7 +240,8 @@
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink">
                                                 <title>credit-card</title>
-                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g stroke="none" stroke-width="1" fill="none"
+                                                    fill-rule="evenodd">
                                                     <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
                                                         fill-rule="nonzero">
                                                         <g transform="translate(1716.000000, 291.000000)">
@@ -378,8 +395,65 @@
         <!-- end cards -->
     </main>
 
+
+    {{-- <script src="{{ asset('build/assets/js/chart-1.js') }}"></script>
+    <script src="{{ asset('build/assets/js/chart-2.js') }}"></script>
+    <script src="{{ asset('build/assets/js/dropdown.js') }}"></script>
+    <script src="{{ asset('build/assets/js/fixed-plugin.js') }}"></script>
+    <script src="{{ asset('build/assets/js/nav-pills2.js') }}"></script>
+    <script src="{{ asset('build/assets/js/navbar-collapse.js') }}"></script>
+    <script src="{{ asset('build/assets/js/navbar-sticky.js') }}"></script>
+    <script src="{{ asset('build/assets/js/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('build/assets/js/sidenav-burger.js') }}"></script>
+    <script src="{{ asset('build/assets/js/soft-ui-dashboard-tailwind.js') }}"></script>
+    <script src="{{ asset('build/assets/js/soft-ui-dashboard-tailwind.min.js') }}"></script>
+    <script src="{{ asset('build/assets/js/tooltips.js') }}"></script>
+    <script src="{{ asset('build/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('build/assets/js/plugins/chartjs.min.js') }}"></script>
+    <script src="{{ asset('build/assets/js/plugins/Chart.extension.js') }}"></script>
+
+
+    <script src="{{ asset('build/assets/js/modal.js') }}"></script>
+    <script src="{{ asset('build/assets/js/jcst-kit.js') }}"></script>
+
+    <script src="{{ asset('js/diagrama.js') }}"></script>
+    <script src="{{ asset('js/goDoc.js') }}"></script>
+    <script src="{{ asset('js/goSamples.js') }}"></script>
+    <script src="{{ asset('js/portada.js') }}"></script>
+    <script src="{{ asset('js/prism.js') }}"></script> --}}
+    <script src="./assets/js/chart-1.js"></script>
+    <script src="./assets/js/chart-2.js"></script>
+    <script src="./assets/js/dropdown.js"></script>
+    <script src="./assets/js/fixed-plugin.js"></script>
+    <script src="./assets/js/nav-pills2.js"></script>
+    <script src="./assets/js/navbar-collapse.js"></script>
+    <script src="./assets/js/navbar-sticky.js"></script>
+    <script src="./assets/js/perfect-scrollbar.js"></script>
+    <script src="./assets/js/sidenav-burger.js"></script>
+    {{-- <script src="./assets/js/soft-ui-dashboard-tailwind.js"></script> --}}
+    <script src="./assets/js/soft-ui-dashboard-tailwind.min.js"></script>
+    <script src="./assets/js/tooltips.js"></script>
+    {{-- <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script> --}}
+    <script src="./assets/js/plugins/chartjs.min.js"></script>
+    <script src="./assets/js/plugins/Chart.extension.js"></script>
+
+
+    <script src="./assets/js/modal.js"></script>
+    <script src="./assets/js/jcst-kit.js"></script>
+
+    {{-- <script src="./assets/js/diagrama.js"></script>
+    <script src="./assets/js/goDoc.js"></script>
+    <script src="./assets/js/goSamples.js"></script>
+    <script src="./assets/js/portada.js"></script>
+    <script src="./assets/js/prism.js"></script> --}}
+    <script src="./js/diagrama.js" async></script>
+    <script src="./js/goDoc.js" async></script>
+    <script src="./js/goSamples.js" async></script>
+    <script src="./js/portada.js" async></script>
+    <script src="./js/prism.js" async></script>
+
     <!-- plugin for charts  -->
-    <script src="./assets/js/plugins/chartjs.min.js" async></script>
+    {{-- <script src="./assets/js/plugins/chartjs.min.js" async></script> --}}
     <!-- plugin for scrollbar  -->
     <script src="./assets/js/plugins/perfect-scrollbar.min.js" async></script>
     {{-- Scripts by julico xD --}}

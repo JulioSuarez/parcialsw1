@@ -1,0 +1,3 @@
+.jcst-form{
+    @apply relative flex flex-row items-center flex-auto min-w-fit p-6 break-words bg-transparent border border-solid shadow-none rounded-xl border-slate-100 bg-clip-border
+}

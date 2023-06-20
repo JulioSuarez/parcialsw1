@@ -4,6 +4,10 @@
     <script src="https://gojs.net/latest/release/go.js"></script>
 
     <style>
+        .h-screen {
+            height: 100vh;
+        }
+
         dialog[open] {
             animation: appear .15s cubic-bezier(0, 1.8, 1, 1.8);
         }
@@ -24,6 +28,26 @@
                 opacity: 1;
                 transform: translateX(0);
             }
+        }
+
+        .px-4 {
+            padding-left: 1rem
+                /* 16px */
+            ;
+            padding-right: 1rem
+                /* 16px */
+            ;
+        }
+
+        .bg-blue-500 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+        }
+
+        .rounded-md {
+            border-radius: 0.375rem
+                /* 6px */
+            ;
         }
     </style>
 @endsection
@@ -159,7 +183,7 @@
 
 
 @section('scripts')
-    @vite(['resources/js/modal.js'])
+    {{-- @vite(['resources/js/modal.js']) --}}
     <!-- Agrega los scripts necesarios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/gojs/release/go.js"></script>

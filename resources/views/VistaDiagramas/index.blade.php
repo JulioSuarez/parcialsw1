@@ -1,6 +1,111 @@
 @extends('index')
 
 @section('encabezado')
+    <style>
+        .bg-green-500 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(-25%);
+                animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+            }
+
+            50% {
+                transform: none;
+                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            }
+        }
+
+        .animate-bounce {
+            animation: bounce 1s infinite;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .bg-green-500 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+        }
+
+        .rounded-r-md {
+            border-top-right-radius: 0.375rem
+                /* 6px */
+            ;
+            border-bottom-right-radius: 0.375rem
+                /* 6px */
+            ;
+        }
+
+        .overflow-x-auto {
+            overflow-x: auto;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .min-w-full {
+            min-width: 100%;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem
+                /* 8px */
+            ;
+            padding-bottom: 0.5rem
+                /* 8px */
+            ;
+        }
+
+        .px-4 {
+            padding-left: 1rem
+                /* 16px */
+            ;
+            padding-right: 1rem
+                /* 16px */
+            ;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem
+                /* 32px */
+            ;
+        }
+
+        .mt-20 {
+            margin-top: 5rem
+                /* 80px */
+            ;
+        }
+
+        .rounded-l-md {
+            border-top-left-radius: 0.375rem
+                /* 6px */
+            ;
+            border-bottom-left-radius: 0.375rem
+                /* 6px */
+            ;
+        }
+    </style>
 @endsection
 
 @section('jcst')
